@@ -3,196 +3,400 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ubaid Ur Rehman · ML & AI Engineer</title>
-<meta name="description" content="Ubaid Ur Rehman: Machine Learning & AI Engineer. Edge AI, LLM/RAG, data science and applied ML.">
+<title>Ubaid Ur Rehman · Machine Learning & AI Engineer</title>
+<meta name="description" content="Ubaid Ur Rehman, Machine Learning & AI Engineer: Edge AI, LLM / RAG systems and data science. Based in Lille, France.">
+<meta property="og:title" content="Ubaid Ur Rehman · Machine Learning & AI Engineer">
+<meta property="og:description" content="Edge AI, LLM / RAG systems and data science. Based in Lille, France.">
+<meta property="og:image" content="https://ubaidur404786.github.io/photo.jpg">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230f766e'/><text x='16' y='22' font-size='16' font-family='Arial' font-weight='700' fill='white' text-anchor='middle'>U</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0b1020; --bg2:#121933; --card:#151d3b; --line:#26305a;
-  --text:#e7ebf7; --muted:#9aa4c7; --accent:#5eead4; --accent2:#818cf8;
+  --bg:#fafaf7; --surface:#ffffff; --soft:#f2f3ee; --line:#e4e5df;
+  --text:#14171c; --muted:#5b6170; --faint:#8b909c;
+  --accent:#0f766e; --accent-soft:#e6f2f0; --accent-ink:#ffffff;
+  --shadow:0 1px 2px rgba(20,23,28,.04),0 8px 24px rgba(20,23,28,.06);
+  --shadow-lg:0 2px 4px rgba(20,23,28,.05),0 20px 48px rgba(20,23,28,.10);
 }
-@media (prefers-color-scheme: light){
-  :root{--bg:#f7f8fc;--bg2:#eef1fa;--card:#ffffff;--line:#dde2f0;--text:#141a2e;--muted:#5a6384;--accent:#0d9488;--accent2:#4f46e5;}
+:root[data-theme="dark"]{
+  --bg:#0d1014; --surface:#141920; --soft:#1a2029; --line:#262d38;
+  --text:#e9ecf1; --muted:#a3abba; --faint:#6f7787;
+  --accent:#2dd4bf; --accent-soft:#12302d; --accent-ink:#04201d;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+  --shadow-lg:0 2px 4px rgba(0,0,0,.3),0 20px 48px rgba(0,0,0,.4);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
 a{color:inherit;text-decoration:none}
-.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
-nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-nav .wrap{display:flex;justify-content:space-between;align-items:center;height:60px}
-.logo{font-family:"JetBrains Mono",monospace;font-weight:500;color:var(--accent)}
-nav ul{display:flex;gap:22px;list-style:none;font-size:.93rem;color:var(--muted)}
-nav ul a:hover{color:var(--text)}
-@media (max-width:640px){nav ul{display:none}}
+img{display:block;max-width:100%}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+.mono{font-family:"JetBrains Mono",monospace}
+.serif{font-family:Fraunces,Georgia,serif;font-weight:500;letter-spacing:-.015em}
 
-.hero{padding:96px 0 72px;position:relative;overflow:hidden}
-.hero::before{content:"";position:absolute;inset:-40% -10% auto auto;width:560px;height:560px;border-radius:50%;
-  background:radial-gradient(circle,color-mix(in srgb,var(--accent2) 35%,transparent),transparent 65%);filter:blur(20px);z-index:-1}
-.tag{display:inline-block;font-size:.8rem;padding:5px 12px;border:1px solid var(--line);border-radius:99px;color:var(--accent);margin-bottom:20px}
-.tag::before{content:"● ";color:#22c55e}
-h1{font-size:clamp(2.2rem,6vw,3.6rem);line-height:1.1;letter-spacing:-.02em}
-h1 span{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
-.lead{margin:20px 0 32px;max-width:640px;font-size:1.1rem;color:var(--muted)}
+/* progress bar */
+#progress{position:fixed;top:0;left:0;height:2px;width:0;background:var(--accent);z-index:100}
+
+/* nav */
+nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid transparent;transition:border-color .3s}
+nav.scrolled{border-color:var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{font-weight:700;letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
+.brand i{width:28px;height:28px;border-radius:8px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-style:normal;font-size:.9rem}
+.links{display:flex;align-items:center;gap:28px;font-size:.92rem;color:var(--muted)}
+.links a{position:relative;padding:4px 0}
+.links a::after{content:"";position:absolute;left:0;bottom:-2px;height:1.5px;width:100%;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.links a:hover,.links a.active{color:var(--text)}
+.links a:hover::after,.links a.active::after{transform:scaleX(1)}
+#theme{background:none;border:1px solid var(--line);color:var(--text);width:36px;height:36px;border-radius:10px;cursor:pointer;display:grid;place-items:center;transition:.2s}
+#theme:hover{border-color:var(--accent);color:var(--accent)}
+@media (max-width:760px){.links a{display:none}}
+
+/* hero */
+.hero{padding:88px 0 96px}
+.hero .wrap{display:grid;grid-template-columns:1.25fr .9fr;gap:64px;align-items:center}
+.status{display:inline-flex;align-items:center;gap:10px;font-size:.85rem;color:var(--muted);background:var(--surface);border:1px solid var(--line);padding:6px 14px 6px 10px;border-radius:99px;box-shadow:var(--shadow)}
+.dot{width:8px;height:8px;border-radius:50%;background:#16a34a;position:relative}
+.dot::after{content:"";position:absolute;inset:-4px;border-radius:50%;background:#16a34a;opacity:.35;animation:pulse 2s ease-out infinite}
+@keyframes pulse{from{transform:scale(.6);opacity:.5}to{transform:scale(1.8);opacity:0}}
+.hero h1{font-size:clamp(2.6rem,5.6vw,4.2rem);line-height:1.04;margin:26px 0 8px}
+.role{font-size:clamp(1.05rem,2vw,1.25rem);color:var(--accent);font-weight:600;min-height:1.6em}
+.role .cursor{display:inline-block;width:2px;height:1.05em;background:var(--accent);vertical-align:-2px;margin-left:3px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.hero p.lead{margin:22px 0 34px;color:var(--muted);font-size:1.08rem;max-width:560px}
 .btns{display:flex;flex-wrap:wrap;gap:12px}
-.btn{padding:11px 20px;border-radius:10px;font-weight:600;font-size:.95rem;border:1px solid var(--line);transition:.2s}
-.btn.primary{background:var(--accent);color:#06201c;border-color:var(--accent)}
-.btn:hover{transform:translateY(-2px)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:12px;font-weight:600;font-size:.94rem;border:1px solid var(--line);background:var(--surface);transition:transform .2s,box-shadow .2s,border-color .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn svg{width:17px;height:17px}
+.btn .arr{transition:transform .2s}
+.btn:hover .arr{transform:translateX(3px)}
 
-section{padding:64px 0}
-h2{font-size:1.6rem;margin-bottom:28px;display:flex;align-items:center;gap:12px}
-h2::after{content:"";flex:1;height:1px;background:var(--line)}
-.k{font-family:"JetBrains Mono",monospace;color:var(--accent);font-size:1rem}
+.portrait{position:relative;justify-self:center;width:100%;max-width:360px}
+.portrait .frame{position:relative;border-radius:24px;overflow:hidden;aspect-ratio:4/5;box-shadow:var(--shadow-lg);background:var(--soft)}
+.portrait img{width:100%;height:100%;object-fit:cover;object-position:center 18%;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.portrait:hover img{transform:scale(1.04)}
+.portrait::before{content:"";position:absolute;inset:18px -18px -18px 18px;border:1.5px solid var(--accent);border-radius:24px;opacity:.5;z-index:-1;transition:inset .4s}
+.portrait:hover::before{inset:12px -12px -12px 12px}
+.badge{position:absolute;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px 14px;box-shadow:var(--shadow-lg);font-size:.82rem;line-height:1.35;animation:float 6s ease-in-out infinite}
+.badge b{display:block;font-size:1rem;color:var(--text)}
+.badge span{color:var(--muted)}
+.badge.b1{left:-34px;bottom:56px}
+.badge.b2{right:-26px;top:36px;animation-delay:-3s}
+@keyframes float{50%{transform:translateY(-8px)}}
+@media (max-width:860px){
+  .hero{padding:48px 0 64px}
+  .hero .wrap{grid-template-columns:1fr;gap:56px}
+  .portrait{max-width:300px;order:-1}
+  .badge.b1{left:-12px}.badge.b2{right:-8px}
+}
 
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
-.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
-.stat b{display:block;font-size:1.8rem;color:var(--accent)}
-.stat small{color:var(--muted)}
+/* sections */
+section{padding:88px 0;scroll-margin-top:40px}
+.eyebrow{font-family:"JetBrains Mono",monospace;font-size:.8rem;color:var(--accent);letter-spacing:.08em;text-transform:uppercase}
+h2{font-size:clamp(1.8rem,3.4vw,2.4rem);margin:8px 0 40px;line-height:1.15}
+.alt{background:var(--soft);border-block:1px solid var(--line)}
 
-.job{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px;margin-bottom:16px}
-.job header{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px}
-.job h3{font-size:1.1rem}
-.job .org{color:var(--accent2);font-weight:500}
-.job time{color:var(--muted);font-size:.9rem;font-family:"JetBrains Mono",monospace}
-.job ul{margin:12px 0 0 18px;color:var(--muted)}
-.job li{margin:4px 0}
+/* metrics */
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.metric{background:var(--surface);padding:28px 24px;transition:background .3s}
+.metric:hover{background:var(--accent-soft)}
+.metric .n{font-size:2.1rem;font-weight:700;letter-spacing:-.02em;color:var(--text)}
+.metric .n em{font-style:normal;color:var(--accent)}
+.metric p{color:var(--muted);font-size:.9rem;margin-top:4px}
+@media (max-width:860px){.metrics{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:460px){.metrics{grid-template-columns:1fr}}
 
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;transition:.2s}
-.card:hover{border-color:var(--accent);transform:translateY(-3px)}
-.card h3{font-size:1.05rem;margin-bottom:8px}
+/* timeline */
+.timeline{position:relative;padding-left:32px}
+.timeline::before{content:"";position:absolute;left:7px;top:8px;bottom:8px;width:2px;background:linear-gradient(var(--accent),var(--line))}
+.item{position:relative;margin-bottom:28px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:26px 28px;box-shadow:var(--shadow);transition:transform .25s,box-shadow .25s,border-color .25s}
+.item:hover{transform:translateX(4px);box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
+.item::before{content:"";position:absolute;left:-32px;top:30px;width:16px;height:16px;border-radius:50%;background:var(--bg);border:3px solid var(--accent)}
+.item header{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.item h3{font-size:1.12rem}
+.item .org{color:var(--accent);font-weight:500;font-size:.95rem}
+.item time{font-family:"JetBrains Mono",monospace;font-size:.82rem;color:var(--faint);background:var(--soft);padding:3px 10px;border-radius:99px}
+.item ul{margin-top:14px;list-style:none}
+.item li{position:relative;padding-left:20px;margin:7px 0;color:var(--muted)}
+.item li::before{content:"";position:absolute;left:2px;top:.72em;width:8px;height:1.5px;background:var(--accent)}
+.item li b{color:var(--text);font-weight:600}
+
+/* projects */
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin:-16px 0 32px}
+.filters button{font:inherit;font-size:.87rem;padding:7px 15px;border-radius:99px;border:1px solid var(--line);background:var(--surface);color:var(--muted);cursor:pointer;transition:.2s}
+.filters button:hover{color:var(--text);border-color:var(--accent)}
+.filters button.on{background:var(--text);color:var(--bg);border-color:var(--text)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:20px}
+.card{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:26px;display:flex;flex-direction:column;overflow:hidden;transition:transform .3s,box-shadow .3s,border-color .3s,opacity .3s}
+.card::before{content:"";position:absolute;inset:0;background:radial-gradient(400px circle at var(--mx,50%) var(--my,0%),color-mix(in srgb,var(--accent) 10%,transparent),transparent 45%);opacity:0;transition:opacity .3s;pointer-events:none}
+.card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
+.card:hover::before{opacity:1}
+.card.hide{display:none}
+.card .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.ico{width:42px;height:42px;border-radius:12px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center}
+.ico svg{width:21px;height:21px}
+.kind{font-size:.74rem;font-family:"JetBrains Mono",monospace;color:var(--faint);text-transform:uppercase;letter-spacing:.06em}
+.card h3{font-size:1.1rem;margin-bottom:8px}
 .card p{color:var(--muted);font-size:.93rem;flex:1}
-.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
-.chip{font-size:.75rem;padding:3px 9px;border-radius:99px;background:var(--bg2);color:var(--muted);border:1px solid var(--line)}
-.card .lnk{margin-top:14px;font-size:.88rem;color:var(--accent);font-weight:600}
-.label{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--accent2);margin-bottom:6px}
+.result{margin-top:16px;padding:10px 12px;background:var(--soft);border-radius:10px;font-size:.84rem;color:var(--text);font-family:"JetBrains Mono",monospace}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.chip{font-size:.76rem;padding:4px 10px;border-radius:7px;background:var(--soft);color:var(--muted);border:1px solid var(--line);transition:.2s}
+.chip:hover{color:var(--accent);border-color:var(--accent)}
+.card .go{margin-top:18px;font-size:.88rem;font-weight:600;color:var(--accent);display:inline-flex;align-items:center;gap:6px}
+.card .go span{transition:transform .2s}
+.card:hover .go span{transform:translate(3px,-3px)}
 
-.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
-.skills div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
-.skills h4{margin-bottom:10px;font-size:.95rem}
+/* skills */
+.skills{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.skill{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px;transition:transform .25s,box-shadow .25s}
+.skill:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+.skill h4{font-size:.98rem;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.skill h4::before{content:"";width:6px;height:6px;border-radius:2px;background:var(--accent)}
+@media (max-width:860px){.skills{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.skills{grid-template-columns:1fr}}
 
-.contact{text-align:center;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:48px 20px}
-.contact p{color:var(--muted);margin:10px 0 24px}
-.contact .btns{justify-content:center}
-footer{text-align:center;color:var(--muted);font-size:.85rem;padding:32px 0}
+/* education */
+.edu{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.edu .item{margin:0}
+.edu .item::before{display:none}
+@media (max-width:760px){.edu{grid-template-columns:1fr}}
+
+/* contact */
+.cta{position:relative;overflow:hidden;background:var(--text);color:var(--bg);border-radius:24px;padding:64px 40px;text-align:center}
+.cta::before{content:"";position:absolute;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--accent) 45%,transparent),transparent 65%);top:-260px;left:50%;transform:translateX(-50%);animation:glow 8s ease-in-out infinite}
+@keyframes glow{50%{transform:translateX(-50%) scale(1.15)}}
+.cta>*{position:relative}
+.cta h2{margin:10px 0 14px}
+.cta p{opacity:.75;max-width:520px;margin:0 auto 32px}
+.cta .btns{justify-content:center}
+.cta .btn{background:transparent;color:var(--bg);border-color:color-mix(in srgb,var(--bg) 30%,transparent)}
+.cta .btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.cta .eyebrow{color:var(--accent)}
+footer{padding:36px 0;color:var(--faint);font-size:.85rem}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
 </style>
 </head>
 <body>
-<nav><div class="wrap">
-  <a class="logo" href="#">&lt;ubaid /&gt;</a>
-  <ul><li><a href="#about">About</a></li><li><a href="#experience">Experience</a></li><li><a href="#projects">Projects</a></li><li><a href="#skills">Skills</a></li><li><a href="#contact">Contact</a></li></ul>
+<div id="progress"></div>
+
+<nav id="nav"><div class="wrap">
+  <a class="brand" href="#top"><i>U</i>Ubaid Ur Rehman</a>
+  <div class="links">
+    <a href="#experience">Experience</a><a href="#projects">Projects</a><a href="#skills">Skills</a><a href="#education">Education</a><a href="#contact">Contact</a>
+    <button id="theme" aria-label="Toggle dark mode"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+  </div>
 </div></nav>
 
-<header class="hero"><div class="wrap">
-  <span class="tag">Open to work · Lille, France · Immediately available</span>
-  <h1>Hi, I'm Ubaid.<br><span>I build AI that ships.</span></h1>
-  <p class="lead">Machine Learning &amp; AI Engineer: lightweight models for edge devices, LLM / RAG assistants, and data science grounded in solid statistics. MSc Data Science &amp; AI, with a software engineering background.</p>
-  <div class="btns">
-    <a class="btn primary" href="#projects">View projects</a>
-    <a class="btn" href="https://github.com/ubaidur404786" target="_blank" rel="noopener">GitHub</a>
-    <a class="btn" href="https://www.linkedin.com/in/ubaid-ur-rehman-422212177" target="_blank" rel="noopener">LinkedIn</a>
+<header class="hero" id="top"><div class="wrap">
+  <div>
+    <span class="status reveal"><span class="dot"></span>Immediately available · Lille, France</span>
+    <h1 class="serif reveal">Ubaid Ur Rehman</h1>
+    <div class="role mono reveal"><span id="typed">Machine Learning Engineer</span><span class="cursor"></span></div>
+    <p class="lead reveal">I design and ship machine learning systems end to end: compact models that run on microcontrollers, LLM assistants with measured accuracy, and data analysis built on sound statistics. MSc Data Science &amp; AI, with a background in production software engineering.</p>
+    <div class="btns reveal">
+      <a class="btn primary" href="#projects">View my work <span class="arr">→</span></a>
+      <a class="btn" href="https://github.com/ubaidur404786" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.6 18.3 5 18.3 5c.7 1.7.3 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5z"/></svg>GitHub</a>
+      <a class="btn" href="https://www.linkedin.com/in/ubaid-ur-rehman-422212177" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.4 20.5h-3.6v-5.6c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9v5.7H9.4V9h3.4v1.6c.5-.9 1.6-1.8 3.4-1.8 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2zM7.1 20.5H3.5V9h3.6v11.5zM22.2 0H1.8C.8 0 0 .8 0 1.7v20.6c0 .9.8 1.7 1.8 1.7h20.4c1 0 1.8-.8 1.8-1.7V1.7C24 .8 23.2 0 22.2 0z"/></svg>LinkedIn</a>
+    </div>
+  </div>
+  <div class="portrait reveal">
+    <div class="frame"><img src="photo.jpg" alt="Portrait of Ubaid Ur Rehman" width="640" height="896"></div>
+    <div class="badge b1"><b>~94% accuracy</b><span>Edge AI model, Inria</span></div>
+    <div class="badge b2"><b>200K+</b><span>app downloads</span></div>
   </div>
 </div></header>
 
-<section id="about"><div class="wrap">
-  <h2><span class="k">01.</span> Highlights</h2>
-  <div class="stats">
-    <div class="stat"><b>~89 → 94%</b><small>accuracy with SEA-NET, a lighter time-series model (Inria / CRIStAL)</small></div>
-    <div class="stat"><b>200K+</b><small>downloads on Android apps with AI features</small></div>
-    <div class="stat"><b>32 → 82%</b><small>accuracy on LC-MS bacteria recognition (medical AI)</small></div>
-    <div class="stat"><b>Under review</b><small>research paper at a major ML conference</small></div>
+<section class="alt" style="padding:56px 0"><div class="wrap">
+  <div class="metrics reveal">
+    <div class="metric"><div class="n"><span data-count="94">0</span><em>%</em></div><p>SEA-NET accuracy, up from ~89% with a smaller model</p></div>
+    <div class="metric"><div class="n"><span data-count="200">0</span><em>K+</em></div><p>downloads on Android apps with AI features</p></div>
+    <div class="metric"><div class="n"><span data-count="82">0</span><em>%</em></div><p>LC-MS bacteria recognition, up from 32%</p></div>
+    <div class="metric"><div class="n"><span data-count="100">0</span><em>%</em></div><p>SQL execution &amp; routing accuracy in TelcoAssist</p></div>
   </div>
 </div></section>
 
 <section id="experience"><div class="wrap">
-  <h2><span class="k">02.</span> Experience</h2>
-  <article class="job">
-    <header><div><h3>Machine Learning Engineer Intern · Edge AI / TinyML</h3><div class="org">CRIStAL Laboratory (FOX Team) &amp; Inria Lille</div></div><time>Apr 2026 – Sep 2026</time></header>
-    <ul>
-      <li>Analysed the MILLET baseline for explainable time-series classification and designed SEA-NET, a lighter architecture (separable TCN, Top-k Conjunction Pooling).</li>
-      <li>Raised accuracy from ~89% to ~94% while cutting model size for microcontroller deployment.</li>
-      <li>Ran end-to-end experimentation: design, tracked experiments, evaluation and compression; work submitted as a research paper.</li>
-    </ul>
-  </article>
-  <article class="job">
-    <header><div><h3>Mobile Application Developer | AI Integration</h3><div class="org">TheX Solution</div></div><time>2022 – 2024</time></header>
-    <ul>
-      <li>Built Android apps in Kotlin/Java, including an AI Image Enhancer / Video Downloader with 200K+ Play Store downloads.</li>
-      <li>Integrated computer vision and NLP features with TFLite, quantization and pruning for on-device inference.</li>
-      <li>Designed database schemas and SQL queries, integrated APIs and prepared end-to-end flows for QA.</li>
-    </ul>
-  </article>
-  <article class="job">
-    <header><div><h3>Education</h3><div class="org">MSc Data Science &amp; AI · Université Côte d'Azur</div></div><time>Sep 2024 – Sep 2026</time></header>
-    <ul><li>BSc Software Engineering, CUST University, Islamabad (2018 – 2022), Bronze Medalist (3rd of 93).</li></ul>
-  </article>
+  <div class="eyebrow reveal">01 · Experience</div>
+  <h2 class="serif reveal">Where I've worked</h2>
+  <div class="timeline">
+    <article class="item reveal">
+      <header><div><h3>Machine Learning Engineer Intern · Edge AI / TinyML</h3><div class="org">CRIStAL Laboratory (FOX Team) &amp; Inria Lille</div></div><time>Apr 2026 – Sep 2026</time></header>
+      <ul>
+        <li>Analysed the MILLET baseline for explainable time-series classification and designed <b>SEA-NET</b>, a lighter architecture using separable TCN blocks and Top-k Conjunction Pooling.</li>
+        <li>Raised accuracy from <b>~89% to ~94%</b> while reducing model size for microcontroller deployment.</li>
+        <li>Owned the full cycle: architecture design, tracked experiments, evaluation and model compression. Research paper currently under review at a major ML conference.</li>
+      </ul>
+    </article>
+    <article class="item reveal">
+      <header><div><h3>Mobile Application Developer | AI Integration</h3><div class="org">TheX Solution</div></div><time>2022 – 2024</time></header>
+      <ul>
+        <li>Built Android applications in Kotlin and Java, including an AI Image Enhancer / Video Downloader with <b>200K+ Play Store downloads</b>.</li>
+        <li>Integrated computer vision and NLP features on device with TFLite, quantization and pruning.</li>
+        <li>Designed database schemas and SQL queries, integrated backend and AI APIs, and prepared end-to-end flows for QA.</li>
+      </ul>
+    </article>
+  </div>
 </div></section>
 
-<section id="projects"><div class="wrap">
-  <h2><span class="k">03.</span> Projects</h2>
+<section id="projects" class="alt"><div class="wrap">
+  <div class="eyebrow reveal">02 · Projects</div>
+  <h2 class="serif reveal">Selected work</h2>
+  <div class="filters reveal">
+    <button class="on" data-f="all">All</button><button data-f="llm">LLM &amp; RAG</button><button data-f="data">Data Science</button><button data-f="edge">Edge AI</button><button data-f="academic">Academic</button>
+  </div>
   <div class="grid">
-    <div class="card"><div class="label">LLM · RAG</div><h3>TelcoAssist</h3>
-      <p>Support assistant combining an LLM router, text-to-SQL and RAG over SQLite and support docs. Benchmarked open-source LLMs on golden sets: 100% SQL execution, router accuracy and retrieval hit-rate@3.</p>
+    <a class="card reveal" data-t="llm" href="https://github.com/ubaidur404786" target="_blank" rel="noopener">
+      <div class="top"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><span class="kind">LLM · RAG</span></div>
+      <h3>TelcoAssist</h3>
+      <p>Support assistant that routes each question to text-to-SQL or RAG over SQLite and support documents. Open-source LLMs benchmarked on golden evaluation sets.</p>
+      <div class="result">100% SQL exec · 100% routing · 100% hit@3</div>
       <div class="chips"><span class="chip">LangChain</span><span class="chip">Llama 3.3 70B</span><span class="chip">SQLite</span><span class="chip">Chroma</span></div>
-      <a class="lnk" href="https://github.com/ubaidur404786" target="_blank" rel="noopener">GitHub →</a></div>
-    <div class="card"><div class="label">Document AI</div><h3>DossierCheck</h3>
-      <p>100% local check of French loan files: OCR, page classification, LLM field extraction and cross-document checks. 97.7% exact fields, 6/6 planted mismatches caught, 0 false alerts on 30 synthetic files.</p>
-      <div class="chips"><span class="chip">Tesseract</span><span class="chip">PyMuPDF</span><span class="chip">Ollama</span><span class="chip">pydantic</span></div>
-      <a class="lnk" href="https://github.com/ubaidur404786/dossier-check-local" target="_blank" rel="noopener">GitHub →</a></div>
-    <div class="card"><div class="label">Data Science</div><h3>Data Analysis Experiments</h3>
-      <p>16 notebooks on statistics and experimentation. A 90K-player A/B test: power analysis, SRM check, z-test, bootstrap; found a 0.82-pt day-7 retention drop (p = 0.0016). Peeking simulation: false alarms 4.8% → 25.2%.</p>
+      <span class="go">View on GitHub <span>↗</span></span></a>
+
+    <a class="card reveal" data-t="llm" href="https://github.com/ubaidur404786/dossier-check-local" target="_blank" rel="noopener">
+      <div class="top"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15l2 2 4-4"/></svg></div><span class="kind">Document AI</span></div>
+      <h3>DossierCheck</h3>
+      <p>Fully local review of French loan files: OCR, page classification, LLM field extraction with pydantic validation and cross-document consistency checks. No cloud AI, GDPR-friendly.</p>
+      <div class="result">97.7% exact fields · 0 false alerts</div>
+      <div class="chips"><span class="chip">Tesseract</span><span class="chip">PyMuPDF</span><span class="chip">Ollama</span><span class="chip">scikit-learn</span></div>
+      <span class="go">View on GitHub <span>↗</span></span></a>
+
+    <a class="card reveal" data-t="data" href="https://github.com/ubaidur404786/data-analysis-experiments" target="_blank" rel="noopener">
+      <div class="top"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></div><span class="kind">Statistics</span></div>
+      <h3>Data Analysis Experiments</h3>
+      <p>16 notebooks on statistics and experimentation. End-to-end A/B test on 90K players with power analysis, SRM check, z-test, bootstrap and logistic regression.</p>
+      <div class="result">−0.82 pt day-7 retention · p = 0.0016</div>
       <div class="chips"><span class="chip">SciPy</span><span class="chip">statsmodels</span><span class="chip">pandas</span><span class="chip">A/B testing</span></div>
-      <a class="lnk" href="https://github.com/ubaidur404786/data-analysis-experiments" target="_blank" rel="noopener">GitHub →</a></div>
-    <div class="card"><div class="label">Medical AI · Academic</div><h3>LC-MS Bacteria Recognition</h3>
-      <p>Deep-learning pipeline for 28 bacterial species from LC-MS spectra with CHU Laval: autoencoders, batch-effect correction, Optuna and MLflow. Accuracy 32% → 82%.</p>
+      <span class="go">View on GitHub <span>↗</span></span></a>
+
+    <div class="card reveal" data-t="academic">
+      <div class="top"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 2v6l-5 9a3 3 0 0 0 2.6 4.5h10.8A3 3 0 0 0 20 17l-5-9V2M8 2h8"/></svg></div><span class="kind">Medical AI · Academic</span></div>
+      <h3>LC-MS Bacteria Recognition</h3>
+      <p>Deep-learning pipeline for 28 bacterial species from high-dimensional LC-MS spectra, with Université Côte d'Azur and CHU Laval: autoencoders and batch-effect correction.</p>
+      <div class="result">Accuracy 32% → 82%</div>
       <div class="chips"><span class="chip">PyTorch</span><span class="chip">VAE</span><span class="chip">Optuna</span><span class="chip">MLflow</span></div></div>
-    <div class="card"><div class="label">LLM · Academic</div><h3>LLM Fine-Tuning &amp; Knowledge Graph (SAP)</h3>
-      <p>QLoRA fine-tuned an LLM for technical questions over knowledge-base articles; built a knowledge graph and used semantic clustering to improve retrieval precision.</p>
+
+    <div class="card reveal" data-t="academic llm">
+      <div class="top"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><path d="M7 6h10M6 8l5 8M18 8l-5 8"/></svg></div><span class="kind">LLM · Academic</span></div>
+      <h3>LLM Fine-Tuning &amp; Knowledge Graph (SAP)</h3>
+      <p>QLoRA fine-tuned an LLM for technical questions over knowledge-base articles; built a knowledge graph of system entities and used semantic clustering to sharpen retrieval.</p>
       <div class="chips"><span class="chip">QLoRA</span><span class="chip">Hugging Face</span><span class="chip">Knowledge Graph</span></div></div>
-    <div class="card"><div class="label">Edge AI</div><h3>EdgeBench</h3>
-      <p>Takes a PyTorch model to an ESP32-S3 and checks that on-chip outputs match the laptop outputs.</p>
+
+    <a class="card reveal" data-t="edge" href="https://github.com/ubaidur404786" target="_blank" rel="noopener">
+      <div class="top"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg></div><span class="kind">Edge AI</span></div>
+      <h3>EdgeBench</h3>
+      <p>Deploys a PyTorch model to an ESP32-S3 microcontroller and verifies that on-chip outputs match the laptop reference after int8 conversion.</p>
       <div class="chips"><span class="chip">PyTorch</span><span class="chip">TFLite Micro</span><span class="chip">ESP32-S3</span></div>
-      <a class="lnk" href="https://github.com/ubaidur404786" target="_blank" rel="noopener">GitHub →</a></div>
-    <div class="card"><div class="label">LLM Evaluation</div><h3>RAG Evaluation Framework</h3>
-      <p>DeepEval-style pipeline that tests whether an assistant's answers are correct, with a live Streamlit demo.</p>
-      <div class="chips"><span class="chip">RAG</span><span class="chip">Streamlit</span><span class="chip">Evaluation</span></div>
-      <a class="lnk" href="https://github.com/ubaidur404786" target="_blank" rel="noopener">GitHub →</a></div>
-    <div class="card"><div class="label">Explainable AI</div><h3>MILLET on ECG</h3>
-      <p>Interpretable ECG classifier that shows which signal segment drove each decision.</p>
+      <span class="go">View on GitHub <span>↗</span></span></a>
+
+    <a class="card reveal" data-t="llm" href="https://github.com/ubaidur404786" target="_blank" rel="noopener">
+      <div class="top"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><span class="kind">LLM Evaluation</span></div>
+      <h3>RAG Evaluation Framework</h3>
+      <p>DeepEval-style pipeline that tests whether an assistant's answers are correct and grounded, with a live Streamlit demo.</p>
+      <div class="chips"><span class="chip">RAG</span><span class="chip">Evaluation</span><span class="chip">Streamlit</span></div>
+      <span class="go">View on GitHub <span>↗</span></span></a>
+
+    <a class="card reveal" data-t="edge" href="https://github.com/ubaidur404786" target="_blank" rel="noopener">
+      <div class="top"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h4l3-8 4 16 3-8h6"/></svg></div><span class="kind">Explainable AI</span></div>
+      <h3>MILLET on ECG</h3>
+      <p>Interpretable ECG classifier that highlights which segment of the signal drove each prediction.</p>
       <div class="chips"><span class="chip">Time series</span><span class="chip">MIL</span><span class="chip">XAI</span></div>
-      <a class="lnk" href="https://github.com/ubaidur404786" target="_blank" rel="noopener">GitHub →</a></div>
-    <div class="card"><div class="label">IoT · CV</div><h3>Smart Aquaponic System</h3>
-      <p>Crop disease detection from photos with alerts sent to a phone app.</p>
+      <span class="go">View on GitHub <span>↗</span></span></a>
+
+    <a class="card reveal" data-t="edge" href="https://github.com/ubaidur404786" target="_blank" rel="noopener">
+      <div class="top"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10z"/><path d="M2 21c0-3 1.9-5.4 5.1-6"/></svg></div><span class="kind">Computer Vision · IoT</span></div>
+      <h3>Smart Aquaponic System</h3>
+      <p>Crop disease detection from plant photos, with alerts pushed to a companion phone app.</p>
       <div class="chips"><span class="chip">Computer Vision</span><span class="chip">Mobile</span></div>
-      <a class="lnk" href="https://github.com/ubaidur404786" target="_blank" rel="noopener">GitHub →</a></div>
+      <span class="go">View on GitHub <span>↗</span></span></a>
   </div>
 </div></section>
 
 <section id="skills"><div class="wrap">
-  <h2><span class="k">04.</span> Skills</h2>
+  <div class="eyebrow reveal">03 · Skills</div>
+  <h2 class="serif reveal">Toolkit</h2>
   <div class="skills">
-    <div><h4>ML &amp; Deep Learning</h4><div class="chips"><span class="chip">PyTorch</span><span class="chip">TensorFlow</span><span class="chip">scikit-learn</span><span class="chip">OpenCV</span><span class="chip">Time series</span></div></div>
-    <div><h4>LLM / RAG / Agents</h4><div class="chips"><span class="chip">LangChain</span><span class="chip">LangGraph</span><span class="chip">Hugging Face</span><span class="chip">QLoRA</span><span class="chip">Chroma</span><span class="chip">Ollama</span><span class="chip">OpenAI API</span></div></div>
-    <div><h4>Data &amp; Statistics</h4><div class="chips"><span class="chip">pandas</span><span class="chip">NumPy</span><span class="chip">SciPy</span><span class="chip">statsmodels</span><span class="chip">A/B testing</span><span class="chip">SQL</span><span class="chip">PostgreSQL</span></div></div>
-    <div><h4>Edge AI</h4><div class="chips"><span class="chip">TFLite</span><span class="chip">ONNX</span><span class="chip">ESP32-S3</span><span class="chip">Edge Impulse</span><span class="chip">Quantization</span></div></div>
-    <div><h4>Engineering &amp; MLOps</h4><div class="chips"><span class="chip">FastAPI</span><span class="chip">Flask</span><span class="chip">Docker</span><span class="chip">Git</span><span class="chip">GitHub Actions</span><span class="chip">MLflow</span><span class="chip">Optuna</span><span class="chip">Streamlit</span></div></div>
-    <div><h4>Languages</h4><div class="chips"><span class="chip">Python</span><span class="chip">Kotlin</span><span class="chip">Java</span><span class="chip">C/C++</span><span class="chip">English (fluent)</span><span class="chip">French (basic)</span></div></div>
+    <div class="skill reveal"><h4>ML &amp; Deep Learning</h4><div class="chips"><span class="chip">PyTorch</span><span class="chip">TensorFlow</span><span class="chip">scikit-learn</span><span class="chip">OpenCV</span><span class="chip">Time series</span><span class="chip">Computer Vision</span></div></div>
+    <div class="skill reveal"><h4>LLM / RAG / Agents</h4><div class="chips"><span class="chip">LangChain</span><span class="chip">LangGraph</span><span class="chip">Hugging Face</span><span class="chip">QLoRA</span><span class="chip">Chroma</span><span class="chip">Ollama</span><span class="chip">OpenAI API</span></div></div>
+    <div class="skill reveal"><h4>Data &amp; Statistics</h4><div class="chips"><span class="chip">pandas</span><span class="chip">NumPy</span><span class="chip">SciPy</span><span class="chip">statsmodels</span><span class="chip">A/B testing</span><span class="chip">SQL</span><span class="chip">PostgreSQL</span></div></div>
+    <div class="skill reveal"><h4>Edge AI</h4><div class="chips"><span class="chip">TFLite</span><span class="chip">TFLite Micro</span><span class="chip">ONNX</span><span class="chip">ESP32-S3</span><span class="chip">Edge Impulse</span><span class="chip">Quantization</span></div></div>
+    <div class="skill reveal"><h4>Engineering &amp; MLOps</h4><div class="chips"><span class="chip">FastAPI</span><span class="chip">Flask</span><span class="chip">Docker</span><span class="chip">Git</span><span class="chip">GitHub Actions</span><span class="chip">MLflow</span><span class="chip">Optuna</span><span class="chip">Streamlit</span></div></div>
+    <div class="skill reveal"><h4>Languages</h4><div class="chips"><span class="chip">Python</span><span class="chip">SQL</span><span class="chip">Kotlin</span><span class="chip">Java</span><span class="chip">C/C++</span><span class="chip">English · fluent</span><span class="chip">French · basic</span></div></div>
+  </div>
+</div></section>
+
+<section id="education" class="alt"><div class="wrap">
+  <div class="eyebrow reveal">04 · Education</div>
+  <h2 class="serif reveal">Education</h2>
+  <div class="edu">
+    <article class="item reveal"><header><div><h3>MSc Data Science &amp; AI</h3><div class="org">Université Côte d'Azur</div></div><time>Sep 2024 – Sep 2026</time></header>
+      <ul><li>Deep learning, NLP, computer vision, statistics and MLOps; academic projects with SAP and CHU Laval.</li></ul></article>
+    <article class="item reveal"><header><div><h3>BSc Software Engineering</h3><div class="org">CUST University, Islamabad</div></div><time>2018 – 2022</time></header>
+      <ul><li><b>Bronze Medalist</b>, ranked 3rd of 93.</li></ul></article>
   </div>
 </div></section>
 
 <section id="contact"><div class="wrap">
-  <div class="contact">
-    <h2 style="justify-content:center"><span class="k">05.</span>&nbsp;Let's talk</h2>
-    <p>Looking for ML, AI or Data Science roles in France. Based in Lille, immediately available.</p>
+  <div class="cta reveal">
+    <div class="eyebrow">05 · Contact</div>
+    <h2 class="serif">Let's build something useful.</h2>
+    <p>Open to Machine Learning, AI Engineering and Data Science roles in France. Based in Lille, available immediately.</p>
     <div class="btns">
-      <a class="btn primary" href="mailto:ubaidfr404786@gmail.com">Email me</a>
-      <a class="btn" href="https://github.com/ubaidur404786" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn primary" href="mailto:ubaidfr404786@gmail.com">ubaidfr404786@gmail.com</a>
       <a class="btn" href="https://www.linkedin.com/in/ubaid-ur-rehman-422212177" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="https://github.com/ubaidur404786" target="_blank" rel="noopener">GitHub</a>
     </div>
   </div>
 </div></section>
 
-<footer>© 2026 Ubaid Ur Rehman</footer>
+<footer><div class="wrap"><span>© 2026 Ubaid Ur Rehman</span><span>Lille, France</span></div></footer>
+
+<script>
+// theme
+const root=document.documentElement;
+try{const s=localStorage.getItem('theme');if(s)root.dataset.theme=s;else if(matchMedia('(prefers-color-scheme: dark)').matches)root.dataset.theme='dark'}catch(e){}
+document.getElementById('theme').onclick=()=>{root.dataset.theme=root.dataset.theme==='dark'?'light':'dark';try{localStorage.setItem('theme',root.dataset.theme)}catch(e){}};
+
+// scroll progress + nav border + active link
+const nav=document.getElementById('nav'),bar=document.getElementById('progress'),links=[...document.querySelectorAll('.links a')];
+addEventListener('scroll',()=>{
+  const h=document.documentElement;bar.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+  nav.classList.toggle('scrolled',scrollY>10);
+  let cur='';document.querySelectorAll('section[id]').forEach(s=>{if(scrollY>=s.offsetTop-120)cur=s.id});
+  links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur));
+},{passive:true});
+
+// reveal with stagger
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=((i%4)*70)+'ms';io.observe(el)});
+
+// counters
+const co=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const el=e.target,end=+el.dataset.count,t0=performance.now();
+  (function step(t){const p=Math.min((t-t0)/1400,1);el.textContent=Math.round(end*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(step)})(t0);co.unobserve(el)}),{threshold:.6});
+document.querySelectorAll('[data-count]').forEach(el=>co.observe(el));
+
+// typed roles
+const roles=['Machine Learning Engineer','AI Engineer','Edge AI / TinyML','Data Scientist','LLM & RAG Engineer'],tEl=document.getElementById('typed');
+let ri=0,ci=roles[0].length,del=true;
+setTimeout(function tick(){const w=roles[ri];
+  if(del){ci--;if(ci===0){del=false;ri=(ri+1)%roles.length}}else{ci++;if(ci===roles[ri].length){del=true;tEl.textContent=roles[ri];return setTimeout(tick,2200)}}
+  tEl.textContent=roles[ri].slice(0,ci);setTimeout(tick,del?40:75)},2400);
+
+// card spotlight
+document.querySelectorAll('.card').forEach(c=>c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect();c.style.setProperty('--mx',e.clientX-r.left+'px');c.style.setProperty('--my',e.clientY-r.top+'px')}));
+
+// project filters
+document.querySelectorAll('.filters button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('.filters button').forEach(x=>x.classList.toggle('on',x===b));
+  const f=b.dataset.f;document.querySelectorAll('.card').forEach(c=>c.classList.toggle('hide',f!=='all'&&!c.dataset.t.split(' ').includes(f)));
+});
+</script>
 </body>
 </html>
