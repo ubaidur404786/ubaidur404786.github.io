@@ -62,7 +62,8 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 @keyframes pulse{from{transform:scale(.6);opacity:.5}to{transform:scale(1.8);opacity:0}}
 .hero h1{font-size:clamp(2.6rem,5.6vw,4.2rem);line-height:1.04;margin:26px 0 8px}
 .role{font-size:clamp(1.05rem,2vw,1.25rem);color:var(--accent);font-weight:600;min-height:1.6em}
-.role .cursor{display:inline-block;width:2px;height:1.05em;background:var(--accent);vertical-align:-2px;margin-left:3px;animation:blink 1s steps(1) infinite}
+.subrole{font-size:clamp(.92rem,1.6vw,1.02rem);color:var(--muted);min-height:1.6em;margin-top:4px}
+.subrole .cursor{display:inline-block;width:2px;height:1.05em;background:var(--accent);vertical-align:-2px;margin-left:3px;animation:blink 1s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
 .hero p.lead{margin:22px 0 34px;color:var(--muted);font-size:1.08rem;max-width:560px}
 .btns{display:flex;flex-wrap:wrap;gap:12px}
@@ -204,7 +205,8 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
   <div>
     <span class="status reveal"><span class="dot"></span>Immediately available · Lille, France</span>
     <h1 class="serif reveal">Ubaid Ur Rehman</h1>
-    <div class="role mono reveal"><span id="typed">Machine Learning Engineer</span><span class="cursor"></span></div>
+    <div class="role mono reveal">Machine Learning &amp; AI Engineer</div>
+    <div class="subrole mono reveal">also: <span id="typed">Edge AI Developer</span><span class="cursor"></span></div>
     <div class="degrees reveal">MSc Data Science &amp; AI<span>|</span>BSc Software Engineering</div>
     <p class="lead reveal">I design and ship machine learning systems end to end: compact models that run on microcontrollers, LLM assistants with measured accuracy, and data analysis built on sound statistics. MSc Data Science &amp; AI, with a background in production software engineering.</p>
     <div class="btns reveal">
@@ -238,9 +240,11 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
     <article class="item reveal">
       <header><div><h3>Machine Learning Engineer Intern · Edge AI / TinyML</h3><div class="org">CRIStAL Laboratory (FOX Team) &amp; Inria Lille</div></div><time>Apr 2026 – Sep 2026</time></header>
       <ul>
-        <li>Analysed the MILLET baseline for explainable time-series classification and designed <b>SEA-NET</b>, a lighter architecture using separable TCN blocks and Top-k Conjunction Pooling.</li>
-        <li>Raised accuracy from <b>~89% to ~94%</b> while reducing model size for microcontroller deployment.</li>
-        <li>Owned the full cycle: architecture design, tracked experiments, evaluation and model compression. Research paper currently under review at a major ML conference.</li>
+        <li>Problem: most time-series classifiers are black boxes. They give a label but not the part of the signal that led to it, which makes them hard to trust in health or industrial use.</li>
+        <li>Started from <a href="https://github.com/JAEarly/MILTimeSeriesClassification" target="_blank" rel="noopener">MILLET</a>, which gives both a prediction and a per-timestep explanation. It works well, but the model is too large to run on tiny devices.</li>
+        <li>Designed <b>SEA-NET</b> (separable TCN blocks + Top-k Conjunction Pooling) that keeps the built-in explanations with only <b>~41K parameters</b>.</li>
+        <li>Results: <b>~10× faster inference</b> and accuracy up from <b>~89% to ~94%</b>, small enough for a microcontroller, so the model can be used day to day and still show why it made each decision.</li>
+        <li>Handled the whole cycle: architecture, tracked experiments, evaluation and compression. Paper under review at a major ML conference.</li>
       </ul>
     </article>
     <article class="item reveal">
@@ -258,9 +262,16 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
   <div class="eyebrow reveal">02 · Projects</div>
   <h2 class="serif reveal">Selected work</h2>
   <div class="filters reveal">
-    <button class="on" data-f="all">All</button><button data-f="llm">LLM &amp; RAG</button><button data-f="data">Data Science</button><button data-f="edge">Edge AI</button><button data-f="academic">Academic</button>
+    <button class="on" data-f="all">All</button><button data-f="llm">LLM &amp; RAG</button><button data-f="data">Data Science</button><button data-f="mlops">MLOps</button><button data-f="edge">Edge AI</button><button data-f="academic">Academic</button>
   </div>
   <div class="grid">
+    <a class="card reveal" data-t="mlops" href="https://github.com/ubaidur404786/azure-churn-mlops" target="_blank" rel="noopener">
+      <div class="top"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg></div><span class="kind">MLOps · Cloud</span></div>
+      <h3>Azure Churn MLOps</h3>
+      <p>End-to-end churn model on Azure: trained in Azure ML, versioned in the model registry and served as a public HTTPS API on Container Apps. Infrastructure in Bicep; GitHub Actions tests and deploys every change and signs in to Azure with OIDC, no stored secrets.</p>
+      <div class="chips"><span class="chip">Azure ML</span><span class="chip">Container Apps</span><span class="chip">Bicep</span><span class="chip">GitHub Actions</span><span class="chip">OIDC</span></div>
+      <span class="go">View on GitHub <span>↗</span></span></a>
+
     <a class="card reveal" data-t="llm" href="https://github.com/ubaidur404786" target="_blank" rel="noopener">
       <div class="top"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><span class="kind">LLM · RAG</span></div>
       <h3>TelcoAssist</h3>
@@ -392,7 +403,7 @@ const co=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return
 document.querySelectorAll('[data-count]').forEach(el=>co.observe(el));
 
 // typed roles
-const roles=['Machine Learning Engineer','AI Engineer','Edge AI / TinyML','Data Scientist','LLM & RAG Engineer'],tEl=document.getElementById('typed');
+const roles=['Edge AI Developer','MLOps Engineer','Data Scientist','LLM & RAG Engineer','AI Python Backend Developer','Android AI Developer'],tEl=document.getElementById('typed');
 let ri=0,ci=roles[0].length,del=true;
 setTimeout(function tick(){const w=roles[ri];
   if(del){ci--;if(ci===0){del=false;ri=(ri+1)%roles.length}}else{ci++;if(ci===roles[ri].length){del=true;tEl.textContent=roles[ri];return setTimeout(tick,2200)}}
