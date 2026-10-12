@@ -206,7 +206,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
     <span class="status reveal"><span class="dot"></span>Immediately available · Lille, France</span>
     <h1 class="serif reveal">Ubaid Ur Rehman</h1>
     <div class="role mono reveal">Machine Learning &amp; AI Engineer</div>
-    <div class="subrole mono reveal">also strong in: <span id="typed">Edge AI</span><span class="cursor"></span></div>
+    <div class="subrole mono reveal">also strong in: <span id="typed">Data Science</span><span class="cursor"></span></div>
     <div class="degrees reveal">MSc Data Science &amp; AI<span>|</span>BSc Software Engineering</div>
     <p class="lead reveal">I design and ship machine learning systems end to end: compact models that run on microcontrollers, LLM assistants with measured accuracy, and data analysis built on sound statistics. MSc Data Science &amp; AI, with a background in production software engineering.</p>
     <div class="btns reveal">
@@ -405,7 +405,7 @@ const co=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return
 document.querySelectorAll('[data-count]').forEach(el=>co.observe(el));
 
 // typed roles
-const roles=['Edge AI','MLOps','Data Science','LLM & RAG','Python AI Backend','Android AI'],tEl=document.getElementById('typed');
+const roles=['Data Science','LLM & RAG','Python AI Backend','MLOps','Edge AI','Android AI'],tEl=document.getElementById('typed');
 let ri=0,ci=roles[0].length,del=true;
 setTimeout(function tick(){const w=roles[ri];
   if(del){ci--;if(ci===0){del=false;ri=(ri+1)%roles.length}}else{ci++;if(ci===roles[ri].length){del=true;tEl.textContent=roles[ri];return setTimeout(tick,2200)}}
