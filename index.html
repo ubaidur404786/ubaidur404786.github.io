@@ -8,21 +8,21 @@
 <meta property="og:title" content="Ubaid Ur Rehman · Machine Learning & AI Engineer">
 <meta property="og:description" content="Edge AI, LLM / RAG systems and data science. Based in Lille, France.">
 <meta property="og:image" content="https://ubaidur404786.github.io/photo.jpg">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%232563eb'/><text x='16' y='22' font-size='16' font-family='Arial' font-weight='700' fill='white' text-anchor='middle'>U</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230b5f58'/><text x='16' y='22' font-size='16' font-family='Arial' font-weight='700' fill='white' text-anchor='middle'>U</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#f8fafc; --surface:#ffffff; --soft:#f1f5f9; --line:#e2e8f0;
-  --text:#0f172a; --muted:#475569; --faint:#64748b;
-  --accent:#2563eb; --accent-soft:#eaf1fe; --accent-ink:#ffffff;
+  --bg:#f3f4ef; --surface:#ffffff; --soft:#eaece5; --line:#dcdfd6;
+  --text:#11151a; --muted:#545a66; --faint:#7f8590;
+  --accent:#0b5f58; --accent-soft:#e1eeeb; --accent-ink:#ffffff;
   --shadow:0 1px 2px rgba(20,23,28,.04),0 8px 24px rgba(20,23,28,.06);
   --shadow-lg:0 2px 4px rgba(20,23,28,.05),0 20px 48px rgba(20,23,28,.10);
 }
 :root[data-theme="dark"]{
-  --bg:#0b1120; --surface:#111a2e; --soft:#16213a; --line:#23304a;
-  --text:#e6edf7; --muted:#a5b1c6; --faint:#7483a0;
-  --accent:#60a5fa; --accent-soft:#16284a; --accent-ink:#0b1120;
+  --bg:#090c0f; --surface:#10151b; --soft:#151b22; --line:#222a33;
+  --text:#e6eae8; --muted:#a0a9b4; --faint:#6b7480;
+  --accent:#14b8a6; --accent-soft:#0f2a27; --accent-ink:#03201c;
   --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
   --shadow-lg:0 2px 4px rgba(0,0,0,.3),0 20px 48px rgba(0,0,0,.4);
 }
@@ -81,8 +81,8 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 .portrait:hover img{transform:scale(1.04)}
 .portrait::before{content:"";position:absolute;inset:18px -18px -18px 18px;border:1.5px solid var(--accent);border-radius:24px;opacity:.5;z-index:-1;transition:inset .4s}
 .portrait:hover::before{inset:12px -12px -12px 12px}
-.badge{--icon-shadow:rgba(37,99,235,.35);position:absolute;width:80px;height:80px;display:grid;place-items:center;color:var(--accent);animation:float 6s ease-in-out infinite;transition:transform .3s;z-index:2}
-:root[data-theme="dark"] .badge{--icon-shadow:rgba(96,165,250,.45)}
+.badge{--icon-shadow:rgba(11,95,88,.35);position:absolute;width:80px;height:80px;display:grid;place-items:center;color:var(--accent);animation:float 6s ease-in-out infinite;transition:transform .3s;z-index:2}
+:root[data-theme="dark"] .badge{--icon-shadow:rgba(20,184,166,.45)}
 .badge svg{width:100%!important;height:100%!important;stroke-width:1.8;filter:drop-shadow(0 6px 6px var(--icon-shadow)) drop-shadow(0 14px 18px rgba(0,0,0,.18))}
 .badge:hover{animation-play-state:paused;transform:scale(1.12)}
 .badge.b1{left:-96px;top:20%}
@@ -118,8 +118,8 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 .portrait .badge,.portrait .badge.b5,.portrait .badge.b6{--gap:clamp(22px,3.4vw,46px);--s:clamp(30px,3.6vw,46px);width:var(--s);height:var(--s);right:auto;bottom:auto;
   left:calc(50% + var(--x)*(50% + var(--gap)));top:calc(50% + var(--y)*38%);translate:-50% -50%;animation-duration:5s}
 .portrait .badge svg{stroke-width:1.5;filter:drop-shadow(0 0 6px var(--icon-shadow)) drop-shadow(0 8px 10px rgba(0,0,0,.18))}
-:root[data-theme="dark"] .badge{--icon-shadow:rgba(96,165,250,.28)}
-.badge{--icon-shadow:rgba(37,99,235,.22)}
+:root[data-theme="dark"] .badge{--icon-shadow:rgba(20,184,166,.28)}
+.badge{--icon-shadow:rgba(11,95,88,.22)}
 .badge.b1{--x:-1;--y:-1;animation-delay:0s}.badge.b5{--x:-1;--y:0;animation-delay:-1.6s}.badge.b4{--x:-1;--y:1;animation-delay:-3.2s}
 .badge.b6{--x:1;--y:-1;animation-delay:-.8s}.badge.b2{--x:1;--y:0;animation-delay:-2.4s}.badge.b3{--x:1;--y:1;animation-delay:-4s}
 @media (max-width:860px){.portrait .badge,.portrait .badge.b5,.portrait .badge.b6{--gap:clamp(22px,7vw,40px);--s:clamp(30px,8vw,42px)}}
