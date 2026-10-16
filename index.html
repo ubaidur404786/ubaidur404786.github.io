@@ -129,13 +129,14 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 /* new projects slider */
 .slider{position:relative;overflow:hidden;border-radius:22px;border:1px solid var(--line);background:var(--surface);box-shadow:var(--shadow-lg)}
 .slides{display:flex;transition:transform .6s cubic-bezier(.2,.7,.2,1);touch-action:pan-y}
-.slide{flex:0 0 100%;display:grid;grid-template-columns:1.4fr 1fr;gap:32px;align-items:center;padding:40px 48px 56px}
+.slide{flex:0 0 100%;display:grid;grid-template-columns:1.1fr 1fr;gap:32px;align-items:center;padding:40px 48px 56px}
 .slide .tag{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;color:var(--accent-ink);background:var(--accent);padding:3px 10px;border-radius:99px;margin-bottom:14px}
 .slide h3{font-size:clamp(1.5rem,3vw,2rem);line-height:1.15;margin-bottom:10px}
 .slide p{color:var(--muted);max-width:560px}
 .slide .btns{margin-top:22px}
-.slide .art{justify-self:center;width:100%;max-width:260px;aspect-ratio:1;border-radius:20px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center}
-.slide .art svg{width:55%;height:55%}
+.slide .art{justify-self:stretch;width:100%;aspect-ratio:16/10;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:var(--soft);box-shadow:var(--shadow-lg);transform:perspective(900px) rotateY(-6deg);transition:transform .5s}
+.slide:hover .art{transform:none}
+.slide .art img{width:100%;height:100%;object-fit:cover;object-position:top left}
 .snav{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--text);cursor:pointer;font-size:1.1rem;display:grid;place-items:center;transition:.2s;z-index:2}
 .snav:hover{border-color:var(--accent);color:var(--accent)}
 .snav.prev{left:10px}.snav.next{right:10px}
@@ -144,7 +145,7 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 .dots button.on{width:26px;background:var(--accent)}
 @media (max-width:760px){
   .slide{grid-template-columns:1fr;padding:28px 24px 56px;text-align:left}
-  .slide .art{display:none}
+  .slide .art{order:-1;transform:none}
   .snav{top:auto;bottom:8px;transform:none;width:34px;height:34px}
 }
 
@@ -284,21 +285,21 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
           <h3 class="serif">SEA-Net Studio</h3>
           <p>Try interpretable time-series AI in the browser: a ~41K-parameter SEA-Net model labels a signal, highlights the moments behind its decision, and an LLM explains it in plain English.</p>
           <div class="btns"><a class="btn primary" href="https://github.com/ubaidur404786/seanet-studio" target="_blank" rel="noopener">View on GitHub <span class="arr">→</span></a><a class="btn" href="https://ubaidur404786.github.io/seanet-studio/" target="_blank" rel="noopener">Live app ↗</a></div></div>
-        <div class="art"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+        <div class="art"><img src="img/seanet.png" alt="SEA-Net Studio app classifying an ECG beat" loading="lazy"></div>
       </div>
       <div class="slide">
         <div><span class="tag">New · Document AI</span>
           <h3 class="serif">DossierCheck</h3>
           <p>100% local verification of French loan files: OCR, page classification, LLM field extraction and cross-document checks. One file checked in ~8 s on a 6 GB GPU, 97.7% exact fields, 0 false alerts.</p>
           <div class="btns"><a class="btn primary" href="https://github.com/ubaidur404786/dossier-check-local" target="_blank" rel="noopener">View on GitHub <span class="arr">→</span></a><a class="btn" href="https://ubaidur404786.github.io/dossier-check-local/report_en.html" target="_blank" rel="noopener">Live report ↗</a></div></div>
-        <div class="art"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15l2 2 4-4"/></svg></div>
+        <div class="art"><img src="img/dossiercheck.png" alt="DossierCheck loan file report" loading="lazy"></div>
       </div>
       <div class="slide">
         <div><span class="tag">New · AIOps</span>
           <h3 class="serif">PulseOps</h3>
           <p>Finds which service broke, explains why, and asks a human before fixing anything. Z-score anomaly detection across microservice metrics, rule-based root-cause ranking with written reasons, runbook fixes and an approval audit log.</p>
           <div class="btns"><a class="btn primary" href="https://github.com/ubaidur404786/pulseops" target="_blank" rel="noopener">View on GitHub <span class="arr">→</span></a><a class="btn" href="https://pulseops-ecck.onrender.com" target="_blank" rel="noopener">Live app ↗</a></div></div>
-        <div class="art"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 12h4l2-5 4 10 2-5h6"/><circle cx="12" cy="12" r="10"/></svg></div>
+        <div class="art"><img src="img/pulseops.png" alt="PulseOps incident dashboard" loading="lazy"></div>
       </div>
     </div>
     <button class="snav prev" aria-label="Previous project">‹</button><button class="snav next" aria-label="Next project">›</button>
