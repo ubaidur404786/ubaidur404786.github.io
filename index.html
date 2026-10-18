@@ -641,8 +641,11 @@ document.querySelectorAll('.card').forEach(c=>c.addEventListener('mousemove',e=>
 // new-projects slider
 (()=>{const s=document.querySelector('.slider'),track=s.querySelector('.slides'),n=track.children.length,dots=s.querySelector('.dots');let i=0,timer;
   for(let k=0;k<n;k++){const d=document.createElement('button');d.setAttribute('aria-label','Slide '+(k+1));d.onclick=()=>go(k);dots.appendChild(d)}
+  let visible=false;
   function go(k){i=(k+n)%n;track.style.transform=`translateX(-${i*100}%)`;[...dots.children].forEach((d,j)=>d.classList.toggle('on',j===i));restart()}
-  function restart(){clearInterval(timer);timer=setInterval(()=>go(i+1),6000)}
+  function restart(){clearInterval(timer);if(visible)timer=setInterval(()=>go(i+1),6000)}
+  // autoplay only while the slider is on screen, starting from the first slide
+  new IntersectionObserver(([e])=>{if(e.isIntersecting&&!visible){visible=true;go(0)}else if(!e.isIntersecting){visible=false;clearInterval(timer)}},{threshold:.5}).observe(s);
   s.querySelector('.prev').onclick=()=>go(i-1);s.querySelector('.next').onclick=()=>go(i+1);
   s.addEventListener('mouseenter',()=>clearInterval(timer));s.addEventListener('mouseleave',restart);
   let x0=null;track.addEventListener('touchstart',e=>x0=e.touches[0].clientX,{passive:true});
