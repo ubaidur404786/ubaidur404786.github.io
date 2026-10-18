@@ -192,6 +192,10 @@ h2{font-size:clamp(1.8rem,3.4vw,2.4rem);margin:8px 0 40px;line-height:1.15}
 .card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
 .card:hover::before{opacity:1}
 .card.hide{display:none}
+.card.more{display:none}
+.see-more{display:flex;justify-content:center;margin-top:28px}
+.see-more[hidden]{display:none}
+.see-more .btn{cursor:pointer;font:inherit;font-weight:600;color:var(--text)}
 .lead a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
 .card.best .top{padding-right:36px}
 .hot{position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:#f2601d;background:color-mix(in srgb,#f2601d 14%,var(--surface));z-index:1;animation:flame 2.4s ease-in-out infinite}
@@ -552,6 +556,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
       <div class="chips"><span class="chip">Computer Vision</span><span class="chip">Mobile</span></div>
       <span class="go">View on GitHub <span>↗</span></span></a>
   </div>
+  <div class="see-more"><button class="btn" id="seeMore" type="button"></button></div>
 
   <div class="lab reveal">
     <h3>Learning lab</h3>
@@ -657,15 +662,28 @@ document.querySelectorAll('.card').forEach(c=>c.addEventListener('mousemove',e=>
   track.addEventListener('touchend',e=>{if(x0===null)return;const dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>40)go(i+(dx<0?1:-1));x0=null});
   go(0)})();
 
-// project filters
+// project filters + "see more"
 document.querySelectorAll('#projects .card').forEach((c,i)=>c.dataset.i=i);
+const grid=document.querySelector('#projects .grid'),more=document.getElementById('seeMore');
+let filter='all',open=false;
+function render(){
+  const k='order'+filter[0].toUpperCase()+filter.slice(1),cards=[...grid.querySelectorAll('.card')];
+  // some filters list their main projects first; others keep the default order
+  cards.sort((a,b)=>(+a.dataset[k]||99)-(+b.dataset[k]||99)||a.dataset.i-b.dataset.i).forEach(c=>grid.appendChild(c));
+  const shown=cards.filter(c=>{const on=filter==='all'||c.dataset.t.split(' ').includes(filter);c.classList.toggle('hide',!on);return on});
+  // collapsed: two rows (at least 4 cards on narrow screens)
+  const cols=getComputedStyle(grid).gridTemplateColumns.split(' ').length,limit=Math.max(cols*2,4);
+  shown.forEach((c,j)=>{c.classList.toggle('more',!open&&j>=limit);if(j<limit||open)c.classList.add('in')});
+  more.parentElement.hidden=shown.length<=limit;
+  more.textContent=open?'Show less':`See more (${shown.length-limit})`;
+}
 document.querySelectorAll('.filters button').forEach(b=>b.onclick=()=>{
   document.querySelectorAll('.filters button').forEach(x=>x.classList.toggle('on',x===b));
-  const f=b.dataset.f;document.querySelectorAll('.card').forEach(c=>c.classList.toggle('hide',f!=='all'&&!c.dataset.t.split(' ').includes(f)));
-  // some filters list their main projects first; others keep the newest-first order
-  const g=document.querySelector('#projects .grid'),k='order'+f[0].toUpperCase()+f.slice(1);
-  [...g.querySelectorAll('.card')].sort((a,b)=>(+a.dataset[k]||99)-(+b.dataset[k]||99)||a.dataset.i-b.dataset.i).forEach(c=>g.appendChild(c));
+  filter=b.dataset.f;open=false;render();
 });
+more.onclick=()=>{const was=open;open=!open;render();if(was)document.getElementById('projects').scrollIntoView()};
+let rw;addEventListener('resize',()=>{clearTimeout(rw);rw=setTimeout(render,150)});
+render();
 </script>
 </body>
 </html>
