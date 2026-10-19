@@ -247,6 +247,16 @@ a.chip{text-decoration:none}
 .cta .btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
 .cta .eyebrow{color:var(--accent)}
 footer{padding:36px 0;color:var(--faint);font-size:.85rem}
+.cvfab{position:fixed;right:20px;bottom:20px;z-index:60}
+.cvfab>button{display:flex;align-items:center;gap:8px;font:600 .9rem Inter,sans-serif;padding:11px 18px;border-radius:99px;border:none;background:var(--accent);color:var(--accent-ink);cursor:pointer;box-shadow:var(--shadow-lg);transition:transform .2s}
+.cvfab>button:hover{transform:translateY(-2px)}
+.cvfab .menu{position:absolute;right:0;bottom:calc(100% + 10px);min-width:220px;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow-lg);padding:6px;opacity:0;visibility:hidden;transform:translateY(6px);transition:.2s}
+.cvfab.open .menu{opacity:1;visibility:visible;transform:none}
+.cvfab .menu a{display:block;padding:9px 12px;border-radius:9px;color:var(--text);font-size:.9rem;font-weight:600}
+.cvfab .menu a span{display:block;font-weight:400;font-size:.8rem;color:var(--muted)}
+.cvfab .menu a:hover{background:var(--accent-soft)}
+@media (max-width:600px){.cvfab{right:14px;bottom:14px}.cvfab>button{padding:10px 15px}}
+@media print{.cvfab{display:none}}
 footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 
 /* reveal */
@@ -614,6 +624,14 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 
 <footer><div class="wrap"><span>© 2026 Ubaid Ur Rehman</span><span>Lille, France</span></div></footer>
 
+<div class="cvfab" id="cvfab">
+  <div class="menu" role="menu">
+    <a href="cv.html?pages=1" target="_blank" rel="noopener" role="menuitem">CV · 1 page<span>Concise, English</span></a>
+    <a href="cv.html?pages=2" target="_blank" rel="noopener" role="menuitem">CV · 2 pages<span>Full detail, English</span></a>
+  </div>
+  <button aria-haspopup="true" aria-expanded="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>Download CV</button>
+</div>
+
 <script>
 // theme
 const root=document.documentElement;
@@ -684,6 +702,10 @@ document.querySelectorAll('.filters button').forEach(b=>b.onclick=()=>{
 more.onclick=()=>{const was=open;open=!open;render();if(was)document.getElementById('projects').scrollIntoView()};
 let rw;addEventListener('resize',()=>{clearTimeout(rw);rw=setTimeout(render,150)});
 render();
+// CV download menu
+(()=>{const f=document.getElementById('cvfab'),b=f.querySelector('button');
+  b.onclick=e=>{e.stopPropagation();const o=f.classList.toggle('open');b.setAttribute('aria-expanded',o)};
+  document.addEventListener('click',()=>{f.classList.remove('open');b.setAttribute('aria-expanded',false)})})();
 </script>
 </body>
 </html>
