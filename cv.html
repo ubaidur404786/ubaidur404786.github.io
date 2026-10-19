@@ -25,6 +25,9 @@ a{color:inherit;text-decoration:none}
 h1{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:2.55em;letter-spacing:-.02em;line-height:1.05}
 .role{font-family:"JetBrains Mono",monospace;color:var(--accent);font-weight:500;font-size:1.08em;margin-top:1.2mm}
 .deg{font-weight:600;font-size:.95em;margin-top:.8mm}
+.web{text-align:center;font-weight:700;line-height:1.35;align-self:center}
+.web span{display:block;font-size:.82em;color:var(--muted);letter-spacing:.04em}
+.web a{color:var(--accent);font-size:1.08em}
 .contact{text-align:right;font-size:.9em;color:var(--muted);line-height:1.55}
 .contact b{color:var(--text);font-weight:600}
 .summary{margin:3mm 0 0;color:var(--muted)}
@@ -106,7 +109,8 @@ fetch('index.html?cv='+Date.now()).then(r=>r.text()).then(html=>{
   const metrics=$$(d,'.metric').map(m=>({n:m.querySelector('[data-count]').dataset.count+T($(m,'em')),p:T($(m,'p'))}));
 
   const head=`<div class="top"><div><h1>${esc(name)}</h1><div class="role">${esc(role)}</div><div class="deg">${esc(deg)}</div></div>
-    <div class="contact"><b>${esc(email)}</b><br>${esc(short(li))}<br>${esc(short(gh))} · ${esc(site)}<br>${esc(loc)} · Available immediately</div></div>`;
+    <div class="web"><span>Profile Website</span><a href="https://${esc(site)}">${esc(site)}</a></div>
+    <div class="contact"><b>${esc(email)}</b><br>${esc(short(li))}<br>${esc(short(gh))}<br>${esc(loc)} · Available immediately</div></div>`;
   const job=(j,n)=>`<div class="entry"><div class="eh"><h3>${esc(j.t)}</h3><time>${esc(j.d)}</time></div><div class="org">${esc(j.o)}</div>
     <ul>${(n?pick(j.b,n):j.b).map(b=>`<li>${b}</li>`).join('')}</ul></div>`;
   // one-page: prefer bullets with concrete results (bold numbers)
