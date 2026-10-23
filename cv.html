@@ -52,10 +52,12 @@ li b,.entry p b{color:var(--text);font-weight:600}
 .skills{display:grid;grid-template-columns:auto 1fr;gap:1mm 5mm}
 .skills dt{font-weight:600}
 .skills dd{color:var(--muted)}
-.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:3mm;margin-top:3mm}
-.metrics div{background:var(--accent-soft);border-radius:2mm;padding:2mm 2.6mm}
-.metrics strong{display:block;font-size:1.35em;color:var(--accent)}
-.metrics span{font-size:.82em;color:var(--muted);line-height:1.3;display:block}
+.hl{display:grid;grid-template-columns:repeat(3,1fr);gap:2.4mm;margin-top:3mm}
+.hl div{background:var(--accent-soft);border-radius:2mm;padding:2mm 2.6mm;break-inside:avoid}
+.hl strong{display:block;font-size:1em;color:var(--accent);margin-bottom:.5mm}
+.hl p{font-size:.86em;color:var(--muted);line-height:1.35}
+.hl em{display:block;font-style:normal;font-family:"JetBrains Mono",monospace;font-size:.76em;color:var(--text);margin-top:.8mm}
+.hl-note{font-size:.8em;color:var(--faint);text-align:right;margin-top:1mm}
 .og{margin-bottom:2.2mm}
 .ogh{font-size:1.02em;color:var(--accent);border-bottom:1px dotted var(--line);padding-bottom:.4mm;margin-bottom:1mm}
 .ogh b{font-weight:700}.ogh span{color:var(--faint);font-weight:400;font-size:.9em}
@@ -80,8 +82,6 @@ li b,.entry p b{color:var(--text);font-weight:600}
 </head>
 <body>
 <div class="bar">
-  <a href="?pages=1" id="m1">One page</a>
-  <a href="?pages=2" id="m2">Two pages</a>
   <button class="dl" id="dl">Download PDF</button>
   <a href="./">← Back to site</a>
   <small>In the print dialog, choose “Save as PDF”.</small>
@@ -89,8 +89,7 @@ li b,.entry p b{color:var(--text);font-weight:600}
 <div class="wrapx"><div class="sheet" id="cv"><div class="page"><p style="color:#7f8590">Loading…</p></div></div></div>
 
 <script>
-const P=new URLSearchParams(location.search),two=P.get('pages')==='2';
-document.getElementById(two?'m2':'m1').classList.add('on');
+const P=new URLSearchParams(location.search);
 document.getElementById('dl').onclick=()=>print();
 const $=(r,s)=>r.querySelector(s),$$=(r,s)=>[...r.querySelectorAll(s)];
 const T=el=>el?el.textContent.replace(/\s+/g,' ').trim():'';
@@ -117,47 +116,43 @@ fetch('index.html?cv='+Date.now()).then(r=>r.text()).then(html=>{
     chips:$$(c,'.chip').map(T),href:c.getAttribute('href')||''}));
   const skills=$$(d,'#skills .skill').map(s=>({h:T($(s,'h4')),c:$$(s,'.chip').map(T)}));
   const edu=$$(d,'#education .item').map(it=>({t:T($(it,'h3')),o:T($(it,'.org')),d:T($(it,'time')),b:$$(it,'li').map(rich)}));
-  const metrics=$$(d,'.metric').map(m=>({n:m.querySelector('[data-count]').dataset.count+T($(m,'em')),p:T($(m,'p'))}));
+  // what I do and how I work, each pointing to the projects that show it
+  const highlights=[
+    ['Production AI','Ship models as real services: APIs, containers, monitoring and CI/CD, not just notebooks.','MinutePilot · AI Support Platform · PulseOps · Azure Churn MLOps'],
+    ['Deep search &amp; RAG','Retrieval pipelines over private documents with hybrid search, reranking and grounded answers.','SAP KBA Assistant · TelcoAssist · DossierCheck'],
+    ['Evaluation','Measure before claiming: test sets, retrieval and answer metrics, regression checks on every change.','RAG Evaluation Framework · EdgeBench · SAP KBA Assistant'],
+    ['Security &amp; privacy','Local models and on-prem data where it matters, access control and human approval before actions.','MinutePilot · SAP KBA Assistant · AI Support Platform'],
+    ['How I handle issues','Reproduce first, isolate the cause, fix it with a test, then document it so it does not come back.','PulseOps · PyTorch to ESP32-S3 · PatchCL-AE Reproduction'],
+    ['Soft skills','Clear communication with non-technical teams, ownership end to end, and fast learning in new domains.','Inria · TheXSol · DOTLESS'],
+  ];
 
   const head=`<div class="top"><div><h1>${esc(name)}</h1><div class="role">${esc(role)}</div><div class="deg">${esc(deg)}</div></div>
     <div class="web"><img src="photo.jpg" alt="Ubaid Ur Rehman"><span>Profile</span><a href="https://${esc(site)}">${esc(site)}</a></div>
     <div class="contact"><b>${esc(email)}</b><br>${esc(short(li))}<br>${esc(short(gh))}<br>${esc(loc)} · Available immediately</div></div>`;
-  // one page: first n1 bullets per role; two pages: all of them
   const org=(g,one)=>`<div class="og"><div class="ogh"><b>${esc(g.o)}</b> <span>· ${esc(g.m)}</span></div>${g.roles.map(r=>`<div class="entry"><div class="eh"><h3>${esc(r.t)}</h3><time>${esc(r.d)}</time></div>
     ${(one?r.b.slice(0,r.n1):r.b).length?`<ul>${(one?r.b.slice(0,r.n1):r.b).map(b=>`<li>${b}</li>`).join('')}</ul>`:''}</div>`).join('')}</div>`;
   const repo=h=>h.replace(/^https?:\/\/(www\.)?/,'');
   const proj=(p,full)=>`<div class="entry"><div class="eh"><h3>${p.href?`<a href="${esc(p.href)}">${esc(p.t)}</a>`:esc(p.t)} <span class="kind">· ${esc(p.k)}</span></h3></div>
     <p>${esc(firstSentence(p.p))}${p.r&&full?` <span class="res">${esc(p.r)}</span>`:''}</p>${p.href?`<a class="gh" href="${esc(p.href)}">${esc(repo(p.href))}</a>`:''}</div>`;
   const sk=n=>`<dl class="skills">${skills.map(s=>`<dt>${esc(s.h)}</dt><dd>${esc((n?s.c.slice(0,n):s.c).join(', '))}</dd>`).join('')}</dl>`;
-  // one page: title, result and repo link only
-  const projMini=p=>`<div class="entry"><h3><a href="${esc(p.href)}">${esc(p.t)}</a> <span class="kind">· ${esc(p.k)}</span></h3>${p.r?`<div class="res">${esc(p.r)}</div>`:''}<a class="gh" href="${esc(p.href)}">${esc(repo(p.href))}</a></div>`;
   const ed=`${edu.map(e=>`<div class="entry"><div class="eh"><h3>${esc(e.t)} <span class="org" style="font-weight:500">· ${esc(e.o)}</span></h3><time>${esc(e.d)}</time></div>${e.b.length?`<ul>${e.b.map(b=>`<li>${b}</li>`).join('')}</ul>`:''}</div>`).join('')}`;
 
-  const edShort=edu.map(e=>`<div class="entry"><div class="eh"><h3>${esc(e.t)} <span class="org" style="font-weight:500">· ${esc(e.o)}</span>${e.b.length?` <span class="edn">· ${e.b[0].replace(/<[^>]+>/g,'')}</span>`:''}</h3><time>${esc(e.d)}</time></div></div>`).join('');
   const cv=document.getElementById('cv');
-  if(!two){
-    // concise: results-first projects, trimmed bullets
-    const inXp=new Set($$(d,'#experience a[href]').map(a=>a.getAttribute('href').replace(/\/$/,'')));
-    const top=projs.filter(p=>p.best&&p.href&&!inXp.has(p.href)&&!/sap-kba/.test(p.href)).slice(0,4);
-    cv.innerHTML=`<div class="page">${head}<p class="summary">${esc(lead)}</p>
-      <h2>Experience</h2>${orgs.map(g=>org(g,true)).join('')}
-      <h2>Selected projects</h2><div class="proj">${top.map(projMini).join('')}</div>
-      <h2>Skills</h2>${sk(6)}<h2>Education</h2>${edShort}</div>`;
-    fit(cv);
-  }else{
-    cv.classList.add('c2');
-    const half=Math.ceil(projs.length/2);
-    cv.innerHTML=`<div class="page">${head}<p class="summary">${esc(lead)}</p>
-      <div class="metrics">${metrics.map(m=>`<div><strong>${esc(m.n)}</strong><span>${esc(m.p)}</span></div>`).join('')}</div>
-      <h2>Experience</h2>${orgs.map(g=>org(g,false)).join('')}
-      <h2>Education</h2>${ed}<h2>Skills</h2>${sk()}<h2>Projects</h2><div class="proj" style="grid-template-columns:1fr 1fr">${projs.filter(p=>p.best).concat(projs.filter(p=>!p.best)).filter(p=>p.href).slice(0,12).map(p=>proj(p,true)).join('')}</div></div>`;
-    fit(cv,2);
-  }
+  cv.classList.add('c2');
+  cv.innerHTML=`<div class="page">${head}<p class="summary">${esc(lead)}</p>
+    <div class="hl">${highlights.map(([h,p,e])=>`<div><strong>${h}</strong><p>${p}</p><em>${e}</em></div>`).join('')}</div>
+    <div class="hl-note">See details in Experience and Projects below ↓</div>
+    <h2>Technical skills</h2>${sk()}
+    <h2>Experience</h2>${orgs.map(g=>org(g,false)).join('')}
+    <h2>Projects</h2><div class="proj" style="grid-template-columns:1fr 1fr">${projs.filter(p=>p.best).concat(projs.filter(p=>!p.best)).filter(p=>p.href).slice(0,12).map(p=>proj(p,true)).join('')}</div>
+    <h2>Education</h2>${ed}
+    <h2>References</h2><p class="summary" style="margin:0">Available on request.</p></div>`;
+  fit(cv,2);
 }).catch(()=>{document.getElementById('cv').innerHTML='<div class="page">Could not load the site content. Open this page from the website.</div>'});
 
 // shrink font until content fits the target number of A4 pages
 function fit(cv,pages=1){
-  const mm=96/25.4,area=277*mm,pad=23*mm;let fs=pages===1?9.4:10;
+  const mm=96/25.4,area=277*mm,pad=23*mm;let fs=10;
   const ok=()=>{const h=cv.firstElementChild.scrollHeight-pad;return pages===1?h<=area:h<=2*area-40};
   const run=()=>{cv.style.setProperty('--fs',fs+'pt');while(!ok()&&fs>7.6){fs-=.1;cv.style.setProperty('--fs',fs.toFixed(1)+'pt')}
     if(P.get('print')==='1')setTimeout(print,300)};
