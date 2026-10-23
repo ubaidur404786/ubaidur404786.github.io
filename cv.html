@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CV · Ubaid Ur Rehman</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* CV content is read from index.html at load time, so it always matches the site. */
+:root{--bg:#e9ebe4;--paper:#fff;--text:#11151a;--muted:#4a505b;--faint:#7f8590;--line:#dcdfd6;--accent:#0b5f58;--accent-soft:#e1eeeb;--fs:9.6pt}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.bar{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;padding:12px 16px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px)}
+.bar a,.bar button{font:600 .88rem Inter,sans-serif;padding:8px 16px;border-radius:99px;border:1px solid var(--line);background:var(--paper);color:var(--text);cursor:pointer}
+.bar .on{background:var(--text);color:#fff;border-color:var(--text)}
+.bar .dl{background:var(--accent);color:#fff;border-color:var(--accent)}
+.bar small{width:100%;text-align:center;color:var(--muted);font-size:.78rem}
+.sheet{width:210mm;min-width:210mm;margin:16px auto 40px;background:var(--paper);box-shadow:0 10px 40px rgba(0,0,0,.12);font-size:var(--fs);line-height:1.42}
+.page{padding:12mm 13mm 11mm}
+.wrapx{overflow-x:auto}
+.top{display:flex;justify-content:space-between;gap:16px;align-items:flex-end;padding-bottom:3.2mm;border-bottom:2px solid var(--accent)}
+h1{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:2.55em;letter-spacing:-.02em;line-height:1.05}
+.role{font-family:"JetBrains Mono",monospace;color:var(--accent);font-weight:500;font-size:1.08em;margin-top:1.2mm}
+.deg{font-weight:600;font-size:.95em;margin-top:.8mm}
+.web{text-align:center;font-weight:700;line-height:1.35;align-self:center}
+.web img{display:block;width:21mm;height:21mm;border-radius:50%;object-fit:cover;object-position:50% 20%;margin:0 auto 1.2mm;border:2px solid var(--accent)}
+.web span{display:block;font-size:.82em;color:var(--muted);letter-spacing:.04em}
+.web a{color:var(--accent);font-size:1.08em}
+.contact{text-align:right;font-size:.9em;color:var(--muted);line-height:1.55}
+.contact b{color:var(--text);font-weight:600}
+.summary{margin:3mm 0 0;color:var(--muted)}
+h2{font-family:"JetBrains Mono",monospace;font-size:.86em;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:500;margin:4mm 0 1.8mm;display:flex;align-items:center;gap:8px}
+h2::after{content:"";flex:1;height:1px;background:var(--line)}
+.entry{margin-bottom:2.4mm;break-inside:avoid}
+.eh{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.eh h3{font-size:1.04em;font-weight:700}
+.eh time{font-family:"JetBrains Mono",monospace;font-size:.84em;color:var(--faint);white-space:nowrap}
+.org{color:var(--accent);font-weight:500;font-size:.95em}
+ul{list-style:none;margin-top:.8mm}
+li{position:relative;padding-left:12px;margin:.6mm 0;color:var(--muted)}
+li::before{content:"";position:absolute;left:1px;top:.68em;width:6px;height:1.4px;background:var(--accent)}
+li b,.entry p b{color:var(--text);font-weight:600}
+.proj{display:grid;grid-template-columns:1fr 1fr;gap:2.2mm 6mm}
+.proj .entry{margin:0}
+.proj p{color:var(--muted);margin-top:.4mm}
+.kind{font-family:"JetBrains Mono",monospace;font-size:.78em;color:var(--faint);text-transform:uppercase;letter-spacing:.04em;font-weight:400}
+.res{font-family:"JetBrains Mono",monospace;font-size:.84em;color:var(--accent);margin-top:.4mm}
+.tech{font-size:.86em;color:var(--faint);margin-top:.3mm}
+.skills{display:grid;grid-template-columns:auto 1fr;gap:1mm 5mm}
+.skills dt{font-weight:600}
+.skills dd{color:var(--muted)}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:3mm;margin-top:3mm}
+.metrics div{background:var(--accent-soft);border-radius:2mm;padding:2mm 2.6mm}
+.metrics strong{display:block;font-size:1.35em;color:var(--accent)}
+.metrics span{font-size:.82em;color:var(--muted);line-height:1.3;display:block}
+.c2 .proj{grid-template-columns:1fr}
+.brk{break-before:page}
+@page{size:A4;margin:0}
+@media print{
+  body{background:#fff}
+  .bar{display:none}
+  .sheet{margin:0;box-shadow:none;width:auto;zoom:1!important}
+  .c2 .page2{break-before:page}
+  .page{height:296.5mm;overflow:hidden}
+  .wrapx{overflow:visible}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<div class="bar">
+  <a href="?pages=1" id="m1">One page</a>
+  <a href="?pages=2" id="m2">Two pages</a>
+  <button class="dl" id="dl">Download PDF</button>
+  <a href="./">← Back to site</a>
+  <small>In the print dialog, choose “Save as PDF”.</small>
+</div>
+<div class="wrapx"><div class="sheet" id="cv"><div class="page"><p style="color:#7f8590">Loading…</p></div></div></div>
+
+<script>
+const P=new URLSearchParams(location.search),two=P.get('pages')==='2';
+document.getElementById(two?'m2':'m1').classList.add('on');
+document.getElementById('dl').onclick=()=>print();
+const $=(r,s)=>r.querySelector(s),$$=(r,s)=>[...r.querySelectorAll(s)];
+const T=el=>el?el.textContent.replace(/\s+/g,' ').trim():'';
+const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+// keep <b> emphasis, drop links ending in ↗ and everything else
+function rich(li){const c=li.cloneNode(true);$$(c,'a').forEach(a=>{if(/↗/.test(a.textContent))a.remove();else a.replaceWith(a.textContent)});
+  return c.innerHTML.replace(/<(?!\/?b>)[^>]+>/g,'').replace(/\s+/g,' ').trim()}
+function firstSentence(s){const m=s.match(/^.+?[.:](\s|$)/);return (m?m[0]:s).trim().replace(/:$/,'.')}
+
+fetch('index.html?cv='+Date.now()).then(r=>r.text()).then(html=>{
+  const d=new DOMParser().parseFromString(html,'text/html');
+  const name=T($(d,'.hero h1')),role=T($(d,'.hero .role')),deg=T($(d,'.hero .degrees')).replace(/\|/g,' · ');
+  const status=T($(d,'.hero .status')),lead=T($(d,'.hero .lead'));
+  const loc=(status.split('·')[1]||'').trim();
+  const email=($(d,'a[href^="mailto:"]')||{}).getAttribute?.('href').slice(7)||'';
+  const li=[...d.querySelectorAll('a[href*="linkedin.com"]')][0]?.href||'',gh=[...d.querySelectorAll('a[href*="github.com/ubaidur404786"]')].find(a=>/^https:\/\/github\.com\/[^/]+\/?$/.test(a.href))?.href||'';
+  const short=u=>u.replace(/^https?:\/\/(www\.)?/,'').replace(/\/$/,'');
+  const site=location.origin.includes('github.io')?location.host:'ubaidur404786.github.io';
+
+  const jobs=$$(d,'#experience .item').map(it=>({t:T($(it,'h3')),o:T($(it,'.org')),d:T($(it,'time')),b:$$(it,'li').map(rich)}));
+  const projs=$$(d,'#projects .card').map(c=>({best:c.classList.contains('best'),t:T($(c,'h3')),k:T($(c,'.kind')).replace(/\s*·\s*(New|Academic)$/,''),p:T($(c,'p')),r:T($(c,'.result')),
+    chips:$$(c,'.chip').map(T),href:c.getAttribute('href')||''}));
+  const skills=$$(d,'#skills .skill').map(s=>({h:T($(s,'h4')),c:$$(s,'.chip').map(T)}));
+  const edu=$$(d,'#education .item').map(it=>({t:T($(it,'h3')),o:T($(it,'.org')),d:T($(it,'time')),b:$$(it,'li').map(rich)}));
+  const metrics=$$(d,'.metric').map(m=>({n:m.querySelector('[data-count]').dataset.count+T($(m,'em')),p:T($(m,'p'))}));
+
+  const head=`<div class="top"><div><h1>${esc(name)}</h1><div class="role">${esc(role)}</div><div class="deg">${esc(deg)}</div></div>
+    <div class="web"><img src="photo.jpg" alt="Ubaid Ur Rehman"><span>Profile</span><a href="https://${esc(site)}">${esc(site)}</a></div>
+    <div class="contact"><b>${esc(email)}</b><br>${esc(short(li))}<br>${esc(short(gh))}<br>${esc(loc)} · Available immediately</div></div>`;
+  const job=(j,n)=>`<div class="entry"><div class="eh"><h3>${esc(j.t)}</h3><time>${esc(j.d)}</time></div><div class="org">${esc(j.o)}</div>
+    <ul>${(n?pick(j.b,n):j.b).map(b=>`<li>${b}</li>`).join('')}</ul></div>`;
+  // one-page: prefer bullets with concrete results (bold numbers)
+  function pick(b,n){if(b.length<=n)return b;const s=b.map((x,i)=>({x,i,w:(x.match(/<b>/g)||[]).length})).sort((a,c)=>c.w-a.w||a.i-c.i).slice(0,n).sort((a,c)=>a.i-c.i);return s.map(o=>o.x)}
+  const proj=(p,full)=>`<div class="entry"><div class="eh"><h3>${esc(p.t)} <span class="kind">· ${esc(p.k)}</span></h3></div>
+    <p>${esc(full?p.p:firstSentence(p.p))}</p>${p.r?`<div class="res">${esc(p.r)}</div>`:''}<div class="tech">${esc(p.chips.slice(0,full?8:4).join(' · '))}</div></div>`;
+  const sk=`<dl class="skills">${skills.map(s=>`<dt>${esc(s.h)}</dt><dd>${esc(s.c.join(', '))}</dd>`).join('')}</dl>`;
+  const ed=`${edu.map(e=>`<div class="entry"><div class="eh"><h3>${esc(e.t)} <span class="org" style="font-weight:500">· ${esc(e.o)}</span></h3><time>${esc(e.d)}</time></div>${e.b.length?`<ul>${e.b.map(b=>`<li>${b}</li>`).join('')}</ul>`:''}</div>`).join('')}`;
+
+  const cv=document.getElementById('cv');
+  if(!two){
+    // concise: results-first projects, trimmed bullets
+    const top=projs.filter(p=>p.best).concat(projs.filter(p=>!p.best&&p.r)).slice(0,6);
+    cv.innerHTML=`<div class="page">${head}<p class="summary">${esc(lead)}</p>
+      <h2>Experience</h2>${jobs.map((j,i)=>job(j,i?2:4)).join('')}
+      <h2>Selected projects</h2><div class="proj">${top.map(p=>proj(p,false)).join('')}</div>
+      <h2>Skills</h2>${sk}<h2>Education</h2>${ed}</div>`;
+    fit(cv);
+  }else{
+    cv.classList.add('c2');
+    const half=Math.ceil(projs.length/2);
+    cv.innerHTML=`<div class="page">${head}<p class="summary">${esc(lead)}</p>
+      <div class="metrics">${metrics.map(m=>`<div><strong>${esc(m.n)}</strong><span>${esc(m.p)}</span></div>`).join('')}</div>
+      <h2>Experience</h2>${jobs.map(j=>job(j)).join('')}
+      <h2>Education</h2>${ed}<h2>Skills</h2>${sk}</div>
+      <div class="page page2"><h2 style="margin-top:0">Projects</h2><div class="proj" style="grid-template-columns:1fr 1fr">${projs.filter(p=>p.best).concat(projs.filter(p=>!p.best)).slice(0,12).map(p=>proj(p,true)).join('')}</div></div>`;
+    fit(cv,2);
+  }
+}).catch(()=>{document.getElementById('cv').innerHTML='<div class="page">Could not load the site content. Open this page from the website.</div>'});
+
+// shrink font until content fits the target number of A4 pages
+function fit(cv,pages=1){
+  const pageH=297*96/25.4-24;let fs=pages===1?9.6:10;
+  const ok=()=>pages===1?cv.firstElementChild.scrollHeight<=pageH:[...cv.children].every(p=>p.scrollHeight<=pageH);
+  const run=()=>{cv.style.setProperty('--fs',fs+'pt');while(!ok()&&fs>7.4){fs-=.1;cv.style.setProperty('--fs',fs.toFixed(1)+'pt')}
+    if(P.get('print')==='1')setTimeout(print,300)};
+  (document.fonts?document.fonts.ready:Promise.resolve()).then(run);
+}
+</script>
+</body>
+</html>
