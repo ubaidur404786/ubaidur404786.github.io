@@ -56,15 +56,24 @@ li b,.entry p b{color:var(--text);font-weight:600}
 .metrics div{background:var(--accent-soft);border-radius:2mm;padding:2mm 2.6mm}
 .metrics strong{display:block;font-size:1.35em;color:var(--accent)}
 .metrics span{font-size:.82em;color:var(--muted);line-height:1.3;display:block}
+.og{margin-bottom:2.2mm}
+.ogh{font-size:1.02em;color:var(--accent);border-bottom:1px dotted var(--line);padding-bottom:.4mm;margin-bottom:1mm}
+.ogh b{font-weight:700}.ogh span{color:var(--faint);font-weight:400;font-size:.9em}
+.og .entry{margin-bottom:1.4mm}
+.proj h3 a{color:var(--text)}
+.proj .res{font-size:.92em;margin:0}
+.edn{color:var(--muted);font-weight:400;font-size:.92em}
+.edn{color:var(--muted);font-weight:400;font-size:.92em}
+.gh{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:.78em;color:var(--accent);margin-top:.3mm}
 .c2 .proj{grid-template-columns:1fr}
 .brk{break-before:page}
-@page{size:A4;margin:0}
+@page{size:A4;margin:10mm 0}
 @media print{
   body{background:#fff}
   .bar{display:none}
   .sheet{margin:0;box-shadow:none;width:auto;zoom:1!important}
-  .c2 .page2{break-before:page}
-  .page{height:296.5mm;overflow:hidden}
+  .page{padding:0 13mm;height:276mm;overflow:hidden}
+  .c2 .page{height:auto;overflow:visible}
   .wrapx{overflow:visible}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
@@ -102,7 +111,9 @@ fetch('index.html?cv='+Date.now()).then(r=>r.text()).then(html=>{
   const short=u=>u.replace(/^https?:\/\/(www\.)?/,'').replace(/\/$/,'');
   const site=location.origin.includes('github.io')?location.host:'ubaidur404786.github.io';
 
-  const jobs=$$(d,'#experience .item').map(it=>({t:T($(it,'h3')),o:T($(it,'.org')),d:T($(it,'time')),b:$$(it,'li').map(rich)}));
+  // experience: one group per organization, each role with its short CV bullets
+  const orgs=$$(d,'#experience .org-card').map(c=>({o:T($(c,'.org-head h3')),m:T($(c,'.org-head .meta')).split('·')[0].trim(),
+    roles:$$(c,'.xp-role').map(r=>{const u=$(r,'.cv-pts');return {t:T($(r,'h4')),d:T($(r,'time')),n1:+(u?.dataset.n1??1),b:u?$$(u,'li').map(rich):[]}})}));
   const projs=$$(d,'#projects .card').map(c=>({best:c.classList.contains('best'),t:T($(c,'h3')),k:T($(c,'.kind')).replace(/\s*·\s*(New|Academic)$/,''),p:T($(c,'p')),r:T($(c,'.result')),
     chips:$$(c,'.chip').map(T),href:c.getAttribute('href')||''}));
   const skills=$$(d,'#skills .skill').map(s=>({h:T($(s,'h4')),c:$$(s,'.chip').map(T)}));
@@ -112,41 +123,44 @@ fetch('index.html?cv='+Date.now()).then(r=>r.text()).then(html=>{
   const head=`<div class="top"><div><h1>${esc(name)}</h1><div class="role">${esc(role)}</div><div class="deg">${esc(deg)}</div></div>
     <div class="web"><img src="photo.jpg" alt="Ubaid Ur Rehman"><span>Profile</span><a href="https://${esc(site)}">${esc(site)}</a></div>
     <div class="contact"><b>${esc(email)}</b><br>${esc(short(li))}<br>${esc(short(gh))}<br>${esc(loc)} · Available immediately</div></div>`;
-  const job=(j,n)=>`<div class="entry"><div class="eh"><h3>${esc(j.t)}</h3><time>${esc(j.d)}</time></div><div class="org">${esc(j.o)}</div>
-    <ul>${(n?pick(j.b,n):j.b).map(b=>`<li>${b}</li>`).join('')}</ul></div>`;
-  // one-page: prefer bullets with concrete results (bold numbers)
-  function pick(b,n){if(b.length<=n)return b;const s=b.map((x,i)=>({x,i,w:(x.match(/<b>/g)||[]).length})).sort((a,c)=>c.w-a.w||a.i-c.i).slice(0,n).sort((a,c)=>a.i-c.i);return s.map(o=>o.x)}
-  const proj=(p,full)=>`<div class="entry"><div class="eh"><h3>${esc(p.t)} <span class="kind">· ${esc(p.k)}</span></h3></div>
-    <p>${esc(full?p.p:firstSentence(p.p))}</p>${p.r?`<div class="res">${esc(p.r)}</div>`:''}<div class="tech">${esc(p.chips.slice(0,full?8:4).join(' · '))}</div></div>`;
-  const sk=`<dl class="skills">${skills.map(s=>`<dt>${esc(s.h)}</dt><dd>${esc(s.c.join(', '))}</dd>`).join('')}</dl>`;
+  // one page: first n1 bullets per role; two pages: all of them
+  const org=(g,one)=>`<div class="og"><div class="ogh"><b>${esc(g.o)}</b> <span>· ${esc(g.m)}</span></div>${g.roles.map(r=>`<div class="entry"><div class="eh"><h3>${esc(r.t)}</h3><time>${esc(r.d)}</time></div>
+    ${(one?r.b.slice(0,r.n1):r.b).length?`<ul>${(one?r.b.slice(0,r.n1):r.b).map(b=>`<li>${b}</li>`).join('')}</ul>`:''}</div>`).join('')}</div>`;
+  const repo=h=>h.replace(/^https?:\/\/(www\.)?/,'');
+  const proj=(p,full)=>`<div class="entry"><div class="eh"><h3>${p.href?`<a href="${esc(p.href)}">${esc(p.t)}</a>`:esc(p.t)} <span class="kind">· ${esc(p.k)}</span></h3></div>
+    <p>${esc(firstSentence(p.p))}${p.r&&full?` <span class="res">${esc(p.r)}</span>`:''}</p>${p.href?`<a class="gh" href="${esc(p.href)}">${esc(repo(p.href))}</a>`:''}</div>`;
+  const sk=n=>`<dl class="skills">${skills.map(s=>`<dt>${esc(s.h)}</dt><dd>${esc((n?s.c.slice(0,n):s.c).join(', '))}</dd>`).join('')}</dl>`;
+  // one page: title, result and repo link only
+  const projMini=p=>`<div class="entry"><h3><a href="${esc(p.href)}">${esc(p.t)}</a> <span class="kind">· ${esc(p.k)}</span></h3>${p.r?`<div class="res">${esc(p.r)}</div>`:''}<a class="gh" href="${esc(p.href)}">${esc(repo(p.href))}</a></div>`;
   const ed=`${edu.map(e=>`<div class="entry"><div class="eh"><h3>${esc(e.t)} <span class="org" style="font-weight:500">· ${esc(e.o)}</span></h3><time>${esc(e.d)}</time></div>${e.b.length?`<ul>${e.b.map(b=>`<li>${b}</li>`).join('')}</ul>`:''}</div>`).join('')}`;
 
+  const edShort=edu.map(e=>`<div class="entry"><div class="eh"><h3>${esc(e.t)} <span class="org" style="font-weight:500">· ${esc(e.o)}</span>${e.b.length?` <span class="edn">· ${e.b[0].replace(/<[^>]+>/g,'')}</span>`:''}</h3><time>${esc(e.d)}</time></div></div>`).join('');
   const cv=document.getElementById('cv');
   if(!two){
     // concise: results-first projects, trimmed bullets
-    const top=projs.filter(p=>p.best).concat(projs.filter(p=>!p.best&&p.r)).slice(0,6);
+    const inXp=new Set($$(d,'#experience a[href]').map(a=>a.getAttribute('href').replace(/\/$/,'')));
+    const top=projs.filter(p=>p.best&&p.href&&!inXp.has(p.href)&&!/sap-kba/.test(p.href)).slice(0,4);
     cv.innerHTML=`<div class="page">${head}<p class="summary">${esc(lead)}</p>
-      <h2>Experience</h2>${jobs.map((j,i)=>job(j,i?2:4)).join('')}
-      <h2>Selected projects</h2><div class="proj">${top.map(p=>proj(p,false)).join('')}</div>
-      <h2>Skills</h2>${sk}<h2>Education</h2>${ed}</div>`;
+      <h2>Experience</h2>${orgs.map(g=>org(g,true)).join('')}
+      <h2>Selected projects</h2><div class="proj">${top.map(projMini).join('')}</div>
+      <h2>Skills</h2>${sk(6)}<h2>Education</h2>${edShort}</div>`;
     fit(cv);
   }else{
     cv.classList.add('c2');
     const half=Math.ceil(projs.length/2);
     cv.innerHTML=`<div class="page">${head}<p class="summary">${esc(lead)}</p>
       <div class="metrics">${metrics.map(m=>`<div><strong>${esc(m.n)}</strong><span>${esc(m.p)}</span></div>`).join('')}</div>
-      <h2>Experience</h2>${jobs.map(j=>job(j)).join('')}
-      <h2>Education</h2>${ed}<h2>Skills</h2>${sk}</div>
-      <div class="page page2"><h2 style="margin-top:0">Projects</h2><div class="proj" style="grid-template-columns:1fr 1fr">${projs.filter(p=>p.best).concat(projs.filter(p=>!p.best)).slice(0,12).map(p=>proj(p,true)).join('')}</div></div>`;
+      <h2>Experience</h2>${orgs.map(g=>org(g,false)).join('')}
+      <h2>Education</h2>${ed}<h2>Skills</h2>${sk()}<h2>Projects</h2><div class="proj" style="grid-template-columns:1fr 1fr">${projs.filter(p=>p.best).concat(projs.filter(p=>!p.best)).filter(p=>p.href).slice(0,12).map(p=>proj(p,true)).join('')}</div></div>`;
     fit(cv,2);
   }
 }).catch(()=>{document.getElementById('cv').innerHTML='<div class="page">Could not load the site content. Open this page from the website.</div>'});
 
 // shrink font until content fits the target number of A4 pages
 function fit(cv,pages=1){
-  const pageH=297*96/25.4-24;let fs=pages===1?9.6:10;
-  const ok=()=>pages===1?cv.firstElementChild.scrollHeight<=pageH:[...cv.children].every(p=>p.scrollHeight<=pageH);
-  const run=()=>{cv.style.setProperty('--fs',fs+'pt');while(!ok()&&fs>7.4){fs-=.1;cv.style.setProperty('--fs',fs.toFixed(1)+'pt')}
+  const mm=96/25.4,area=277*mm,pad=23*mm;let fs=pages===1?9.4:10;
+  const ok=()=>{const h=cv.firstElementChild.scrollHeight-pad;return pages===1?h<=area:h<=2*area-40};
+  const run=()=>{cv.style.setProperty('--fs',fs+'pt');while(!ok()&&fs>7.6){fs-=.1;cv.style.setProperty('--fs',fs.toFixed(1)+'pt')}
     if(P.get('print')==='1')setTimeout(print,300)};
   (document.fonts?document.fonts.ready:Promise.resolve()).then(run);
 }
