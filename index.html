@@ -397,102 +397,41 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
       <div class="roles">
         <section class="xp-role">
           <h4>Machine Learning Engineer</h4><time>Apr 2026 – Oct 2026</time>
-          <ul class="cv-pts" data-n1="1" hidden><li>Designed <b>SEA-Net</b>, a small, inherently interpretable network for time-series classification (Separable TCN + Top-k Conjunction Pooling).</li><li>Versus MILLET: <b>90.2% fewer parameters</b>, <b>91% fewer FLOPs</b>, and <b>94% vs 89% accuracy</b> on webtraffic. Paper submitted to ICLR.</li><li>Tuned with Optuna and MLflow, trained on Grid'5000 GPUs; built SEA-Net Studio (FastAPI + React) to explain predictions in plain English.</li></ul>
+          <ul class="cv-pts" data-n1="1" hidden><li>Designed <b>SEA-Net</b>, a small, inherently interpretable network for time-series classification (Separable TCN + Top-k Conjunction Pooling).</li><li>Versus MILLET: <b>90.2% fewer parameters</b>, <b>91% fewer FLOPs</b>, and <b>94% vs 89% accuracy</b> on webtraffic. Paper submitted to ICLR.</li><li>Tuned with Optuna and MLflow, trained on Grid'5000 GPUs; built SEA-Net Studio (FastAPI + React) to explain predictions in plain English.</li><li>Technical lead for <b>3 M1 students</b> (Université de Lille) on a room-overcrowding alert: fine-tuned YOLO for labels; CNN → TCN raised accuracy <b>72% → 92%</b>.</li></ul>
           <div class="body">
-            <p>I designed <b>SEA-Net</b>, a small and inherently interpretable neural network for time-series classification.</p>
-            <p>If you're not a very technical person and want to understand it first like a story, I'd recommend my Medium article on this model idea: <a href="https://medium.com/@ubaidfr404786/every-second-counts-uncovering-the-temporal-evidence-behind-model-predictions-00282d1ac963" target="_blank" rel="noopener">“Every Second Counts: Uncovering the Temporal Evidence Behind Model Predictions” ↗</a></p>
-            <p>Now the technical part: to our knowledge, we are the first to build a model like SEA-Net for interpretation using <b>Separable Temporal Convolutional Layers + Top-k Conjunction</b>.</p>
-            <p>Compared with the baseline (MILLET: Inherently Interpretable Time Series Classification via Multiple Instance Learning), our model has <b>90.2% fewer parameters</b>, needs <b>91.0% fewer FLOPs</b> and is <b>35.5% more efficient</b>, while reaching <b>94% accuracy</b> on the webtraffic dataset compared to 89% for MILLET. I also submitted a paper to ICLR.</p>
-            <p>I used Optuna and MLflow to select and analyze the best parameters, then trained the model on all datasets with Grid'5000 GPUs. I also used tmux + the Telegram API, so even when a training took 10 or 20 hours I could close the lid and get a notification on my phone each time a dataset finished.</p>
-            <p>Try the model on different domains in the live app: <a href="https://github.com/ubaidur404786/seanet-studio" target="_blank" rel="noopener">SEA-Net Studio on GitHub ↗</a></p>
+            <p>I built <b>SEA-Net</b>, a tiny time-series model that shows which seconds of the signal drove each prediction: <b>90% fewer parameters</b> than the MILLET baseline and better accuracy (<b>94% vs 89%</b> on WebTraffic). Paper submitted to ICLR.</p>
+            <ul>
+              <li>Picked hyperparameters with Optuna, tracked everything in MLflow and trained on Grid'5000 GPUs. Some runs took 10–20 hours, so I set up tmux + a Telegram bot to ping my phone when each dataset finished. Lid closed, life continued.</li>
+              <li>Turned it into <a href="https://github.com/ubaidur404786/seanet-studio" target="_blank" rel="noopener">SEA-Net Studio ↗</a>, a live demo (ONNX + FastAPI + React) where an LLM explains each prediction in plain English.</li>
+              <li>Technical lead for <b>3 first-year Master's (M1) students</b> from Université de Lille, building a room-overcrowding alert (CO₂, temperature, door sensor, camera). I fine-tuned YOLO to label the data, helped switch the model from a CNN to a TCN (<b>72% → 92%</b>), and compared it on CPU vs a microcontroller. Real teamwork, and I loved it.</li>
+            </ul>
+            <p>Not very technical? Start with my Medium article <a href="https://medium.com/@ubaidfr404786/every-second-counts-uncovering-the-temporal-evidence-behind-model-predictions-00282d1ac963" target="_blank" rel="noopener">“Every Second Counts” ↗</a>. It tells the idea like a story.</p>
           </div>
         </section>
         <section class="xp-role">
           <h4>Computer Vision Intern (Co-Researcher), Spiking Vision Transformers</h4><time>Jul 2026 – Sep 2026</time>
           <ul class="cv-pts" data-n1="1" hidden><li>Co-designed <b>HP-STAtten</b> attention for Spiking Transformers: <b>96.10%</b> CIFAR-10, <b>81.75%</b> CIFAR-10-DVS, above published baselines.</li><li>Built a first spiking-neuron version of VCA; ablations with Optuna and MLflow (PyTorch, SpikingJelly); extending to ImageNet.</li></ul>
           <div class="body">
+            <p>Co-designed <b>HP-STAtten</b> (Hybrid-Precision Spatio-Temporal Attention) for spiking vision transformers, and beat published spiking-transformer baselines: about <b>96.10%</b> on CIFAR-10 (HP-STAtten-binary) and <b>81.75%</b> on CIFAR-10-DVS (HP-STAtten-hybrid).</p>
             <ul>
-              <li>Co-designed <b>HP-STAtten</b> (Hybrid-Precision Spatio-Temporal Attention) for Spiking Transformers.</li>
               <li>Built a first spiking-neuron version of VCA, plus a classical attention path based on similarity instead of difference. As far as we know, among the first implementations like this.</li>
-              <li>Beat published Spiking Transformer baselines on CIFAR-10 and CIFAR-10-DVS: about <b>96.10%</b> with HP-STAtten-binary and <b>81.75%</b> with HP-STAtten-hybrid.</li>
               <li>Ran lots of ablations with Optuna and MLflow on Grid'5000 (PyTorch, SpikingJelly).</li>
               <li>Now extending the work to ImageNet.</li>
             </ul>
           </div>
         </section>
-        <section class="xp-role">
-          <h4>Data Analysis &amp; Computer Vision Lead</h4><time>Jun 2026 – Jul 2026</time>
-          <ul class="cv-pts" data-n1="1" hidden><li>Led 3 M1 students (Université de Lille) on a crowd-alert system; CNN → TCN raised accuracy <b>72% → 92%</b>.</li><li>Used CO₂, temperature, door activity and a camera; fine-tuned <b>YOLO</b> for true labels; deployed and compared CPU vs MCU.</li><li>Checked data in Power BI, reviewed code and architecture, and presented progress in 6 supervisor meetings.</li></ul>
-          <div class="body">
-            <p>The project was an automatic alert system that tells the admin when a room has too many people, so they can clear the crowd. It used CO₂, temperature, door-angle activity and a camera.</p>
-            <p>I was the senior technical lead for 3 M1 students from Université de Lille:</p>
-            <ul>
-              <li><b>Data analysis student:</b> worked on the data and resources we needed, compared devices by price, and made the architecture and requirement documents. I helped her find problems in the dataset by visualizing it in Power BI, Jupyter (Python) and Excel.</li>
-              <li><b>Robotics/IoT student:</b> connected all the sensors, camera, server, Wi-Fi and authentication, and got all the data saving automatically into CSV files on the server. For true labels, I fine-tuned a YOLO model on real pictures of people and matched them with the CO₂ readings. We also tested it on tiny devices to trigger the alert.</li>
-              <li><b>ML engineer student:</b> built the prediction model from scratch. He started with a CNN at 72% accuracy. I helped him switch to a TCN, which fits time series much better, and we reached <b>92%</b>.</li>
-            </ul>
-            <p>My part was checking the data in Power BI, reviewing the code and model architecture and making changes where needed. At the end I deployed the model and compared accuracy and efficiency on CPU vs MCU (tiny device). We had 6 meetings, and in each one I presented the progress, the dataset and IoT issues, the model and the final results. It was real teamwork and I loved it. Big thanks to my supervisor for guiding me while I mentored my juniors.</p>
-          </div>
-        </section>
       </div>
     </article>
     <article class="item org-card reveal">
-      <header class="org-head"><span class="logo" data-mono="UCA"><img src="img/logo-uca.png" alt="" onerror="this.remove()"></span><div><h3>Université Côte d'Azur</h3><div class="meta">Projects · Jan 2025 – Apr 2026 · Nice, France · On-site</div></div></header>
-      <div class="roles">
+      <header class="org-head"><span class="logo" data-mono="UCA"><img src="img/logo-uca.png" alt="" onerror="this.remove()"></span><div><h3>Université Côte d'Azur</h3><div class="meta">Research · Nov 2025 – Apr 2026 · Nice, France · On-site</div></div></header>
+      <div class="roles single">
         <section class="xp-role">
-          <h4>Deep Learning Engineer (Research Project)</h4><time>Nov 2025 – Apr 2026</time>
+          <h4>Student Researcher, Deep Learning</h4><time>Nov 2025 – Apr 2026</time>
           <ul class="cv-pts" data-n1="1" hidden><li>LC-MS bacteria recognition with CHU Laval: PCA + AE / VAE / CAE encoders with an MLP, <b>87% vs 82%</b> for classical ML on 28 bacteria.</li><li>Each sample is a ~100K-value spectrum with a strong batch effect across processing days.</li></ul>
           <div class="body">
-            <p><b>LC-MS Bacteria Recognition</b>, in collaboration with Prof. Arnaud Droit's team at CHU Laval (Canada), supervised by Frédéric Precioso.</p>
-            <p>The goal was to detect bladder infections in pregnant women from urine samples using Liquid Chromatography–Mass Spectrometry data, and to classify 28 types of bacteria. The data was really hard: each sample is a histogram of about 100,000 values, and because samples were processed on different days, there was a strong batch effect.</p>
-            <p>Classical ML methods had already reached 82% on this dataset. We were the ones who brought a deep learning approach. Most of the work went into the data: we cleaned it with feature engineering and PCA, then compressed the samples with an Autoencoder, a VAE and a CAE.</p>
-            <p>We built the best encoder into a pipeline and attached an MLP for classification, which reached <b>87%</b>, 5 points above the previous best.</p>
-          </div>
-        </section>
-        <section class="xp-role">
-          <h4>Computer Vision Engineer (Kaggle Competition)</h4><time>Jun 2025 – Sep 2025</time>
-          <ul class="cv-pts" data-n1="1" hidden><li>PlantCLEF 2025: fine-tuned <b>DINOv2 ViT-B/14</b> for multi-label plant species prediction in plot photos (0.237 public).</li></ul>
-          <div class="body">
-            <p><b>PlantCLEF 2025</b> is about identifying many plant species in a single vegetation plot photo, not one plant per image.</p>
-            <p>We fine-tuned the DINOv2 Vision Transformer (ViT-B/14 with registers) that PlantNet had pretrained on the PlantCLEF 2024 flora of south-western Europe, then built the multi-label prediction pipeline with timm and PyTorch.</p>
-            <p>Final score: <b>0.237 public / 0.217 private</b>. That's an average result, but I learned a lot about large pretrained vision models and how messy real field images are compared to clean datasets.</p>
-          </div>
-        </section>
-        <section class="xp-role">
-          <h4>LLM Engineer (Use Case Study)</h4><time>Mar 2025 – Jul 2025</time>
-          <ul class="cv-pts" data-n1="1" hidden><li>SAP KBA assistant: tested <b>28 systems</b>; final scope gate + BM25 + <b>Qwen3-0.6B LoRA</b> finds 80% of key facts, refuses 94% off-topic.</li><li>Selection rule fixed before results; runs in 1.5 GB GPU with a FastAPI + React app.</li></ul>
-          <div class="body">
-            <p><b>SAP HANA Knowledge-Base Assistant.</b> Support engineers lose time searching long SAP Knowledge Base Articles for one parameter, one SQL view or one setting. A normal chatbot doesn't help: it doesn't know the article and it makes up confident answers. I wanted an assistant that answers only from the article and says "not covered" when the answer isn't there.</p>
-            <p>Constraints: small open models only (≤1.1B parameters), a 6 GB laptop GPU, no paid API and no data leaving the machine.</p>
-            <p>How I picked the model: I tested <b>28 systems</b> (5 small Hugging Face models with different setups), with the selection rule fixed before seeing any results so the comparison stayed fair. Fine-tuning alone didn't teach the model the facts: LoRA, QLoRA, IA3, prompt tuning, full fine-tuning and domain pretraining all stayed at or below 0.03 recall. Retrieval alone wasn't enough either. Only the two together worked.</p>
-            <p>Final system:</p>
-            <ul>
-              <li>A scope gate refuses off-topic questions without even calling the model</li>
-              <li>BM25 retrieval picks the 3 most relevant chunks</li>
-              <li>Qwen3-0.6B + LoRA, trained on question + retrieved chunks → answer (RAG-SFT), writes the answer</li>
-            </ul>
-            <p>Results:</p>
-            <ul>
-              <li>Finds <b>80%</b> of the key facts on unseen questions</li>
-              <li>Refuses <b>94%</b> of off-topic questions</li>
-              <li>Wrongly refuses only <b>3%</b> of real questions</li>
-              <li>Runs on <b>1.5 GB</b> of GPU memory with a 49 MB adapter</li>
-            </ul>
-            <p>I wrapped it in a local FastAPI + React app that shows the answer with its sources. <a href="https://github.com/ubaidur404786/sap-kba-assistant-rag-finetuning" target="_blank" rel="noopener">Public repo ↗</a> (the original one is private for privacy reasons).</p>
-          </div>
-        </section>
-        <section class="xp-role">
-          <h4>Computer Vision Engineer (Project)</h4><time>Jan 2025 – Feb 2025</time>
-          <ul class="cv-pts" data-n1="1" hidden><li>AI attendance from one class photo: Haar detection + SVM, CNN and transfer learning: <b>87%</b> identification, <b>92%</b> gender.</li></ul>
-          <div class="body">
-            <p><b>AI Attendance System.</b> The idea was to take one photo of the class and mark everyone's attendance automatically.</p>
-            <p>First I detected faces with Haar Cascades, using eye detection to confirm each face was real, then cropped the facial regions. For recognition I tried three approaches and compared them:</p>
-            <ul>
-              <li>A classical SVM on wavelet-transformed features, tuned with HalvingGridSearchCV</li>
-              <li>A CNN from scratch, improved with data augmentation, starting from only 20 images per student</li>
-              <li>Transfer learning with VGG16, InceptionV3, ResNet50 and EfficientNetB0</li>
-            </ul>
-            <p>The best model reached <b>87%</b> student identification. I also added gender classification at <b>92%</b> accuracy, and wrote about bias, privacy and the ethical limits of this kind of system.</p>
+            <p>Can a urine sample tell you which of 28 bacteria is causing an infection in a pregnant woman? Classical ML had reached 82% on this data. Our deep learning pipeline reached <b>87%</b>.</p>
+            <p>The data fought back: each sample is about 100,000 values, and samples processed on different days carried a strong batch effect. Most of the work went into the data: feature engineering and PCA, then compressing samples with an Autoencoder, a VAE and a CAE. The best encoder plus an MLP classifier gave the 87%.</p>
+            <p>Supervised by Frédéric Precioso, in collaboration with Prof. Arnaud Droit's team at CHU Laval (Canada).</p>
           </div>
         </section>
       </div>
@@ -501,44 +440,51 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
       <header class="org-head"><span class="logo" data-mono="TX"><img src="img/logo-thexsol.png" alt="" onerror="this.remove()"></span><div><h3>TheXSol</h3><div class="meta">Full-time · Sep 2022 – Jul 2024 · 1 yr 11 mos · On-site</div></div></header>
       <div class="roles single">
         <section class="xp-role">
-          <h4>Mobile Application Developer · AI Integration</h4><time>Sep 2022 – Jul 2024</time>
-          <ul class="cv-pts" data-n1="1" hidden><li>Built and shipped AI-powered Android apps end to end (Kotlin, Java, REST APIs, SQL); apps reached <b>200K+ Play Store downloads</b>.</li><li>Deployed OCR, text classification, segmentation, summarization and fraud detection with on-device models (TFLite, quantization, pruning) and cloud AI APIs.</li><li>Worked with ML and backend engineers on API endpoints and AI flows, and owned each feature through QA and release.</li></ul>
+          <h4>Software Engineer — AI Integration</h4><time>Sep 2022 – Jul 2024</time>
+          <ul class="cv-pts" data-n1="1" hidden><li>Owned AI features end to end in Android apps (Kotlin, Java) with <b>200K+ Play Store downloads</b>: the app, the backend API and the model.</li><li>Shipped OCR, text classification, segmentation, summarization and fraud detection with on-device models (TFLite, quantization, pruning) and cloud AI APIs.</li><li>Built Python/FastAPI endpoints to serve ML models and worked on REST APIs and SQL schemas with ML and backend engineers.</li></ul>
           <div class="body">
-            <p>After my BSc in Software Engineering, I started as a mobile developer. As AI became part of real products, I moved into building and integrating AI features, also working on the backend APIs and taking responsibility for the whole app pipeline.</p>
+            <p>I joined as an Android developer and ended up owning AI features end to end: the app, the backend API and the model behind it. The apps passed <b>200K+ downloads</b> on the Play Store.</p>
             <ul>
-              <li>Built and shipped AI-powered Android apps end to end in Kotlin and Java: frontend architecture, REST APIs, SQL schemas and backend logic. The apps reached <b>200K+ Play Store downloads</b>.</li>
-              <li>Integrated and deployed AI features in production: OCR, text classification, image segmentation, text summarization and fraud detection, using on-device models (optimized with TFLite, quantization and pruning) and cloud AI APIs.</li>
-              <li>Built and changed backend API endpoints and AI flows, working closely with ML engineers and backend developers.</li>
-              <li>Followed every feature end to end, from UI and database to backend APIs and AI models, and prepared each release for QA.</li>
+              <li>Shipped 5 AI features to real users: OCR, text classification, image segmentation, text summarization and fraud detection.</li>
+              <li>Squeezed models onto phones with TensorFlow Lite (quantization, pruning), and plugged in cloud AI APIs where that made more sense.</li>
+              <li>Built Python/FastAPI endpoints to serve ML models, and worked on the REST APIs and SQL schemas behind the AI flows with ML and backend engineers.</li>
+              <li>Built the Android side in Kotlin and Java, and took every feature through QA to release.</li>
             </ul>
-            <p>This is where I learned that a model is only useful when it fits into a real product. After almost 2 years, I wanted to understand the AI side more deeply, so I started my Master's in Data Science and AI.</p>
+            <p>The biggest lesson: a model is only useful once it works inside a real product, on a real phone, for real users. After almost 2 years of plugging models in, I wanted to build them myself, so I started my Master's in Data Science &amp; AI.</p>
           </div>
         </section>
       </div>
     </article>
     <article class="item org-card reveal">
-      <header class="org-head"><span class="logo" data-mono="D"><img src="img/logo-dotless.png" alt="" onerror="this.remove()"></span><div><h3>DOTLESS</h3><div class="meta">Contract · Jun 2021 – Nov 2021 · Islamabad, Pakistan · Remote</div></div></header>
+      <header class="org-head"><span class="logo" data-mono="D"><img src="img/logo-dotless.png" alt="" onerror="this.remove()"></span><div><h3>DOTLESS</h3><div class="meta">Remote · Jun 2021 – Nov 2021 · 6 mos</div></div></header>
       <div class="roles single">
         <section class="xp-role">
-          <h4>Software Developer &amp; Product Analyst</h4><time>Jun 2021 – Nov 2021</time>
-          <ul class="cv-pts" data-n1="1" hidden><li>Turned client problems into scope, timeline and cost; built a roadside-assistance platform, using location data to tune matching.</li><li>Tracked usage and drop-off after launch and ran demos and client meetings through sign-off.</li></ul>
+          <h4>Software Developer &amp; Data Analyst</h4><time>Jun 2021 – Nov 2021</time>
+          <ul class="cv-pts" data-n1="1" hidden><li>Built a roadside-assistance platform on the <b>MERN stack</b> with the Google Maps API; used location data to tune search radius and provider ranking.</li><li>Turned client problems into scope, timeline and cost; tracked usage and drop-off after launch and ran demos through sign-off.</li></ul>
           <div class="body">
-            <p>I worked directly with clients from different industries. My job was to understand their business problem, look at their data and turn it into a clear plan with features, timeline and cost.</p>
-            <p>The main project was a roadside-assistance platform that connects users to the nearest mechanic, driver or tow service. I built it and also analysed the location and service data to decide the search radius and how providers should be ranked, so users got matched faster.</p>
-            <p>After launch I kept an eye on how people used it and where they dropped off, and brought those findings back to the client as the next improvements. I also ran the demos and client meetings until final sign-off.</p>
+            <p>Half developer, half analyst. I sat with clients from different industries, dug into their data and turned their problem into a clear plan with features, timeline and cost.</p>
+            <p>The main project was a roadside-assistance platform: your car breaks down, the app finds the nearest mechanic, driver or tow truck. I built it on the <b>MERN stack</b> (MongoDB, Express, React, Node.js) with the Google Maps API.</p>
+            <ul>
+              <li>Analysed location and service data to choose the search radius and how providers were ranked, so people got matched faster.</li>
+              <li>After launch, watched where users dropped off and brought those findings back to the client as the next improvements.</li>
+              <li>Ran the demos and client meetings until final sign-off.</li>
+            </ul>
           </div>
         </section>
       </div>
     </article>
     <article class="item org-card reveal">
-      <header class="org-head"><span class="logo" data-mono="BA"></span><div><h3>Best Apps Entertainment Studio</h3><div class="meta">Internship · Jun 2020 – Jul 2020 · Islamabad, Pakistan · On-site</div></div></header>
+      <header class="org-head"><span class="logo" data-mono="BA"></span><div><h3>Best Apps Entertainment Studio</h3><div class="meta">Internship · Jun 2020 – Jul 2020 · On-site</div></div></header>
       <div class="roles single">
         <section class="xp-role">
           <h4>Application Development Intern</h4><time>Jun 2020 – Jul 2020</time>
           <ul class="cv-pts" data-n1="0" hidden><li>Built small Android apps and fixes for live Play Store apps; grouped user reviews into feature requests and tested releases.</li></ul>
           <div class="body">
-            <p>My first real experience in a software company. I built small Android apps under senior guidance and added features and fixes to apps already live on the Play Store.</p>
-            <p>I also helped the product side by reading through user reviews and feedback, grouping the most common complaints and requests, and sharing them with the team for the next updates. Before each release I tested the features, which taught me how a product moves from idea to users.</p>
+            <p>My first time inside a real software company. I built small Android apps in Java under senior guidance and shipped fixes and features to apps already live on Google Play.</p>
+            <ul>
+              <li>Read through user reviews, grouped the most common complaints and requests, and shared them with the team for the next updates. My first taste of data-driven product work.</li>
+              <li>Tested every feature before release and saw how a product goes from idea to users.</li>
+            </ul>
           </div>
         </section>
       </div>
@@ -723,6 +669,13 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
       <div class="result">Private leaderboard 0.217</div>
       <div class="chips"><span class="chip">PyTorch</span><span class="chip">timm</span><span class="chip">ViT · DINOv2</span><span class="chip">Multi-label</span></div>
       <span class="go">View on GitHub <span>↗</span></span></a>
+
+    <div class="card reveal" data-t="vision">
+      <div class="top"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></div><span class="kind">Vision · Academic</span></div>
+      <h3>AI Attendance System</h3>
+      <p>Marks a whole class's attendance from one photo: Haar Cascade face detection with eye checks, then an SVM, a CNN from scratch and transfer learning (VGG16, InceptionV3, ResNet50, EfficientNetB0) compared for recognition.</p>
+      <div class="result">87% identification · 92% gender</div>
+      <div class="chips"><span class="chip">OpenCV</span><span class="chip">SVM</span><span class="chip">CNN</span><span class="chip">Transfer learning</span></div></div>
 
     <a class="card reveal" data-t="vision" href="https://github.com/ubaidur404786/med-vision-ai" target="_blank" rel="noopener">
       <div class="top"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M8 12c1.5-3 6.5-3 8 0-1.5 3-6.5 3-8 0z"/></svg></div><span class="kind">Medical Vision</span></div>
