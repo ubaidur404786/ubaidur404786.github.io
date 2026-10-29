@@ -252,9 +252,16 @@ a.chip{text-decoration:none}
 .skills-hint{font-size:.9rem;color:var(--muted);margin:-28px 0 28px}
 .chip[data-tip]{cursor:help;border-style:dashed}
 .chip[data-tip]:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.tip{position:fixed;left:0;top:0;z-index:80;width:min(460px,calc(100vw - 32px));max-height:calc(100vh - 16px);overflow:auto;overscroll-behavior:contain;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow-lg);padding:14px 16px;font-size:.82rem;line-height:1.5;color:var(--muted);visibility:hidden;opacity:0;transform:translateY(4px);transition:opacity .15s,transform .15s,visibility .15s}
+#skills.pinned .skill:hover{transform:none;box-shadow:none}
+#skills.pinned .chip:hover{color:var(--muted);border-color:var(--line)}
+#skills.pinned .chip[data-tip]{cursor:default}
+#skills .chip[aria-expanded="true"],#skills.pinned .chip[aria-expanded="true"]{color:var(--accent);border-color:var(--accent);border-style:solid}
+.tip{position:fixed;left:0;top:0;z-index:80;display:flex;flex-direction:column;width:min(460px,calc(100vw - 32px));max-height:calc(100vh - 16px);overflow:hidden;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow-lg);font-size:.82rem;line-height:1.5;color:var(--muted);visibility:hidden;opacity:0;transform:translateY(4px);transition:opacity .15s,transform .15s,visibility .15s}
 .tip.on{visibility:visible;opacity:1;transform:none}
-.tip b{display:block;color:var(--text);font-size:.92rem;margin-bottom:2px}
+.tip-scroll{overflow:auto;overscroll-behavior:contain;padding:14px 16px;min-height:0}
+.tip-x{position:absolute;top:8px;right:8px;z-index:1;width:26px;height:26px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--muted);font-size:1rem;line-height:1;cursor:pointer;display:grid;place-items:center}
+.tip-x:hover{color:var(--text);border-color:var(--accent)}
+.tip b{display:block;color:var(--text);font-size:.92rem;margin-bottom:2px;padding-right:28px}
 .tip p{margin-bottom:10px}
 .tip .k{font-family:"JetBrains Mono",monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:4px}
 .tip pre{font-family:"JetBrains Mono",monospace;font-size:.72rem;background:var(--soft);color:var(--text);border-radius:8px;padding:8px 10px;white-space:pre-wrap;word-break:break-word;margin-bottom:10px}
@@ -1355,13 +1362,15 @@ az login
 az account show`,l:'Good habits',s:'Use an IAM user or role, never root → turn on MFA → set a budget alert → tag resources → delete what you no longer use'},
 };
 const tip=document.createElement('div');tip.className='tip';tip.id='tip';tip.setAttribute('role','tooltip');document.body.append(tip);
-let cur=null,t;
+const skills=document.getElementById('skills');
+let cur=null,t,pinned=false,ay=0;
+const pin=on=>{pinned=on;skills.classList.toggle('pinned',on)};
 // show "See more" only when the preview is cut off
-const fit=()=>{const body=tip.firstChild,more=tip.lastChild,clip=tip.classList.contains('open')||body.scrollHeight>body.clientHeight+4;
+const fit=()=>{const body=tip.querySelector('.tip-body'),more=tip.querySelector('.tip-more'),clip=tip.classList.contains('open')||body.scrollHeight>body.clientHeight+4;
   more.hidden=!clip;tip.classList.toggle('clip',clip)};
 // put the popup below, above, right or left of the chip, never on top of it;
 // if there is not enough room, shorten the preview so "See more" stays visible
-const place=c=>{const r=c.getBoundingClientRect(),g=8,m=8,W=innerWidth,H=innerHeight,body=tip.firstChild;
+const place=c=>{const r=c.getBoundingClientRect(),g=8,m=8,W=innerWidth,H=innerHeight,body=tip.querySelector('.tip-body');
   tip.style.maxHeight='';body.style.maxHeight='';fit();const w=tip.offsetWidth;let h=tip.offsetHeight;
   const sp={below:H-r.bottom-g-m,above:r.top-g-m,right:W-r.right-g-m,left:r.left-g-m};
   const side=h<=sp.below?'below':h<=sp.above?'above':w<=sp.right?'right':w<=sp.left?'left':sp.below>=sp.above?'below':'above';
@@ -1370,32 +1379,38 @@ const place=c=>{const r=c.getBoundingClientRect(),g=8,m=8,W=innerWidth,H=innerHe
   if(h>room){h=room;tip.style.maxHeight=h+'px'}
   if(side==='below'||side==='above'){tip.style.left=Math.max(m,Math.min(r.left,W-w-m))+'px';tip.style.top=(side==='below'?r.bottom+g:r.top-g-h)+'px'}
   else{tip.style.left=(side==='right'?r.right+g:r.left-g-w)+'px';tip.style.top=Math.max(m,Math.min(r.top,H-h-m))+'px'}
-  tip.dataset.side=side;tip.dataset.mh=body.style.maxHeight};
+  tip.dataset.side=side;tip.dataset.mh=body.style.maxHeight;ay=r.top};
 // see more / less: keep the edge nearest the chip fixed so the popup stays under the pointer
 const grow=r=>{const m=8;tip.style.maxHeight='';const h=tip.offsetHeight;
   if(tip.dataset.side==='above'){const nh=Math.min(h,r.bottom-m);tip.style.maxHeight=nh+'px';tip.style.top=(r.bottom-nh)+'px'}
   else tip.style.maxHeight=Math.min(h,innerHeight-r.top-m)+'px'};
-const show=c=>{const x=tips[c.textContent];clearTimeout(t);tip.replaceChildren();tip.classList.remove('open','clip');tip.scrollTop=0;
+const close=()=>{clearTimeout(t);tip.classList.remove('on');cur?.setAttribute('aria-expanded','false');cur=null;pin(false)};
+const show=c=>{const x=tips[c.textContent];clearTimeout(t);tip.replaceChildren();tip.classList.remove('open','clip');
   const add=(p,tag,txt,cls)=>{const e=document.createElement(tag);if(txt)e.textContent=txt;if(cls)e.className=cls;p.append(e);return e};
-  const body=add(tip,'div',null,'tip-body');
+  const xb=add(tip,'button','×','tip-x');xb.type='button';xb.setAttribute('aria-label','Close');xb.onclick=close;
+  const sc=add(tip,'div',null,'tip-scroll'),body=add(sc,'div',null,'tip-body');
   add(body,'b',x.t);add(body,'p',x.d);if(x.u)add(body,'p','Used in: '+x.u,'u');
-  add(body,'div','Code','k');add(body,'pre',x.c);add(body,'div',x.l||'Flow','k');
+  add(body,'div','Example','k');add(body,'pre',x.c);add(body,'div',x.l||'Flow','k');
   const ol=add(body,'ol');x.s.split(' → ').forEach(s=>add(ol,'li',s));
-  const more=add(tip,'button','See more','tip-more');more.type='button';
+  const more=add(sc,'button','See more','tip-more');more.type='button';
   more.onclick=()=>{const r=tip.getBoundingClientRect(),o=tip.classList.toggle('open');more.textContent=o?'See less':'See more';
-    body.style.maxHeight=o?'none':tip.dataset.mh;tip.scrollTop=0;grow(r)};
+    body.style.maxHeight=o?'none':tip.dataset.mh;sc.scrollTop=0;grow(r)};
   cur?.setAttribute('aria-expanded','false');cur=c;c.setAttribute('aria-expanded','true');place(c);tip.classList.add('on')};
-const hide=now=>{clearTimeout(t);t=setTimeout(()=>{if(!now&&tip.matches(':hover'))return;tip.classList.remove('on');cur?.setAttribute('aria-expanded','false');cur=null},now?0:200)};
+// hover only previews; a click on the skill, See more or anywhere in the popup keeps it open
+// until ×, Esc or a click outside, and other skills ignore hover meanwhile
+const hide=()=>{if(pinned)return;clearTimeout(t);t=setTimeout(()=>{if(!pinned&&!tip.matches(':hover'))close()},200)};
 document.querySelectorAll('#skills .chip').forEach(c=>{if(!tips[c.textContent])return;
   c.dataset.tip='';c.tabIndex=0;c.setAttribute('role','button');c.setAttribute('aria-describedby','tip');c.setAttribute('aria-expanded','false');
-  c.addEventListener('mouseenter',()=>show(c));c.addEventListener('mouseleave',()=>hide());
-  c.addEventListener('focus',()=>show(c));c.addEventListener('blur',()=>hide());
-  c.addEventListener('click',e=>{e.stopPropagation();if(cur!==c)show(c)});
-  c.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&cur===c){e.preventDefault();const b=tip.querySelector('.tip-more');if(b&&!b.hidden)b.click()}})});
-tip.addEventListener('mouseleave',()=>hide());tip.addEventListener('click',e=>e.stopPropagation());
-document.addEventListener('click',()=>hide(true));
-addEventListener('keydown',e=>{if(e.key==='Escape')hide(true)});
-addEventListener('scroll',()=>{if(cur)hide(true)},{passive:true})})();
+  c.addEventListener('mouseenter',()=>{if(!pinned)show(c)});c.addEventListener('mouseleave',hide);
+  c.addEventListener('focus',()=>{if(!pinned)show(c)});c.addEventListener('blur',hide);
+  c.addEventListener('click',e=>{e.stopPropagation();if(cur!==c)show(c);pin(true)});
+  c.addEventListener('keydown',e=>{if(e.key!=='Enter'&&e.key!==' ')return;e.preventDefault();if(cur!==c)show(c);pin(true);
+    const b=tip.querySelector('.tip-more');if(b&&!b.hidden)b.click()})});
+tip.addEventListener('mouseleave',hide);tip.addEventListener('click',e=>{e.stopPropagation();if(cur)pin(true)});
+document.addEventListener('click',()=>{if(cur)close()});
+addEventListener('keydown',e=>{if(e.key==='Escape'&&cur)close()});
+// a kept-open popup follows its skill when the page scrolls; a hover preview just closes
+addEventListener('scroll',()=>{if(!cur)return;if(!pinned)return close();const y=cur.getBoundingClientRect().top;tip.style.top=(parseFloat(tip.style.top)+y-ay)+'px';ay=y},{passive:true})})();
 </script>
 </body>
 </html>
