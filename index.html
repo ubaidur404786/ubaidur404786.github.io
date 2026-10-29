@@ -249,6 +249,23 @@ a.chip{text-decoration:none}
 .skill h4{font-size:.98rem;margin-bottom:14px;display:flex;align-items:center;gap:10px}
 .skill h4::before{content:"";width:6px;height:6px;border-radius:2px;background:var(--accent)}
 .skill.wide{grid-column:1/-1}
+.skills-hint{font-size:.9rem;color:var(--muted);margin:-28px 0 28px}
+.chip[data-tip]{cursor:help;border-style:dashed}
+.chip[data-tip]:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.tip{position:fixed;left:0;top:0;z-index:80;width:min(460px,calc(100vw - 32px));max-height:calc(100vh - 16px);overflow:auto;overscroll-behavior:contain;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow-lg);padding:14px 16px;font-size:.82rem;line-height:1.5;color:var(--muted);visibility:hidden;opacity:0;transform:translateY(4px);transition:opacity .15s,transform .15s,visibility .15s}
+.tip.on{visibility:visible;opacity:1;transform:none}
+.tip b{display:block;color:var(--text);font-size:.92rem;margin-bottom:2px}
+.tip p{margin-bottom:10px}
+.tip .k{font-family:"JetBrains Mono",monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:4px}
+.tip pre{font-family:"JetBrains Mono",monospace;font-size:.72rem;background:var(--soft);color:var(--text);border-radius:8px;padding:8px 10px;white-space:pre-wrap;word-break:break-word;margin-bottom:10px}
+.tip ol{padding-left:18px}
+.tip .u{color:var(--text)}
+.tip-body{max-height:340px;overflow:hidden}
+.tip.open .tip-body{max-height:none}
+.tip.clip:not(.open) .tip-body{-webkit-mask-image:linear-gradient(#000 75%,transparent);mask-image:linear-gradient(#000 75%,transparent)}
+.tip-more{margin-top:6px;background:none;border:0;padding:0;color:var(--accent);font:600 .8rem Inter,system-ui,sans-serif;cursor:pointer}
+.tip-more:hover{text-decoration:underline}
+@media (prefers-reduced-motion:reduce){.tip{transition:none}}
 @media (max-width:860px){.skills{grid-template-columns:1fr 1fr}}
 @media (max-width:560px){.skills{grid-template-columns:1fr}}
 
@@ -730,14 +747,15 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 <section id="skills"><div class="wrap">
   <div class="eyebrow reveal">03 · Skills</div>
   <h2 class="serif reveal">Toolkit</h2>
+  <p class="skills-hint reveal">Hover or tap a skill to see what it does, where I used it, a code example and the steps.</p>
   <div class="skills">
     <div class="skill reveal"><h4>ML &amp; Deep Learning</h4><div class="chips"><span class="chip">PyTorch</span><span class="chip">TensorFlow</span><span class="chip">scikit-learn</span><span class="chip">OpenCV</span><span class="chip">Time series</span><span class="chip">Computer Vision</span></div></div>
     <div class="skill reveal"><h4>LLM / RAG / Agents</h4><div class="chips"><span class="chip">LangChain</span><span class="chip">LangGraph</span><span class="chip">Hugging Face</span><span class="chip">QLoRA</span><span class="chip">Chroma</span><span class="chip">Ollama</span><span class="chip">OpenAI API</span></div></div>
     <div class="skill reveal"><h4>Data &amp; Statistics</h4><div class="chips"><span class="chip">pandas</span><span class="chip">NumPy</span><span class="chip">SciPy</span><span class="chip">statsmodels</span><span class="chip">A/B testing</span><span class="chip">SQL</span><span class="chip">PostgreSQL</span></div></div>
     <div class="skill reveal"><h4>Edge AI</h4><div class="chips"><span class="chip">TFLite</span><span class="chip">TFLite Micro</span><span class="chip">ONNX</span><span class="chip">ESP32-S3</span><span class="chip">Edge Impulse</span><span class="chip">Quantization</span></div></div>
-    <div class="skill reveal"><h4>Engineering &amp; MLOps</h4><div class="chips"><span class="chip">FastAPI</span><span class="chip">Flask</span><span class="chip">Docker</span><span class="chip">Git</span><span class="chip">GitHub Actions</span><span class="chip">MLflow</span><span class="chip">Optuna</span><span class="chip">Streamlit</span></div></div>
+    <div class="skill reveal"><h4>Engineering &amp; MLOps</h4><div class="chips"><span class="chip">FastAPI</span><span class="chip">Flask</span><span class="chip">Git</span><span class="chip">GitHub Actions</span><span class="chip">MLflow</span><span class="chip">Optuna</span><span class="chip">Streamlit</span></div></div>
     <div class="skill reveal"><h4>Languages</h4><div class="chips"><span class="chip">Python</span><span class="chip">SQL</span><span class="chip">Kotlin</span><span class="chip">Java</span><span class="chip">C/C++</span><span class="chip">English · fluent</span><span class="chip">French · elementary</span></div></div>
-    <div class="skill wide reveal"><h4>Cloud · AWS &amp; Azure</h4><div class="chips"><span class="chip">Amazon EC2</span><span class="chip">Amazon S3</span><span class="chip">Amazon RDS</span><span class="chip">Amazon DynamoDB</span><span class="chip">AWS CLI</span><span class="chip">Azure ML</span><span class="chip">Azure Container Apps</span><span class="chip">Azure Bicep</span></div></div>
+    <div class="skill wide reveal"><h4>Cloud · AWS &amp; Azure</h4><div class="chips"><span class="chip">EC2</span><span class="chip">S3</span><span class="chip">RDS</span><span class="chip">DynamoDB</span><span class="chip">ECR</span><span class="chip">ECS</span><span class="chip">EKS</span><span class="chip">Azure ML</span><span class="chip">Container Apps</span><span class="chip">ACR</span><span class="chip">AKS</span><span class="chip">Docker</span><span class="chip">Kubernetes</span><span class="chip">Terraform</span><span class="chip">Bicep</span><span class="chip">CLI &amp; Console</span></div></div>
   </div>
 </div></section>
 
@@ -854,6 +872,530 @@ render();
 (()=>{const f=document.getElementById('cvfab'),b=f.querySelector('button');
   b.onclick=e=>{e.stopPropagation();const o=f.classList.toggle('open');b.setAttribute('aria-expanded',o)};
   document.addEventListener('click',()=>{f.classList.remove('open');b.setAttribute('aria-expanded',false)})})();
+// skill popups: what it is, where I used it, a code example and the flow or console steps
+(()=>{const tips={
+  // ML & Deep Learning
+  'PyTorch':{t:'PyTorch',d:'Deep learning framework I use for research models: define the network, train it on GPU, export it.',u:'SEA-Net and HP-STAtten at Inria',c:`import torch, torch.nn as nn
+
+model = nn.Sequential(nn.Linear(64, 32), nn.ReLU(), nn.Linear(32, 2)).to("cuda")
+opt = torch.optim.AdamW(model.parameters(), lr=1e-3)
+loss_fn = nn.CrossEntropyLoss()
+
+for x, y in train_loader:
+    x, y = x.cuda(), y.cuda()
+    loss = loss_fn(model(x), y)
+    opt.zero_grad()
+    loss.backward()
+    opt.step()
+
+torch.onnx.export(model.cpu(), torch.randn(1, 64), "model.onnx")`,s:'Load data into a DataLoader → define the model → train loop: forward, loss, backward, step → validate each epoch → save the best checkpoint → export to ONNX'},
+  'TensorFlow':{t:'TensorFlow',d:'Google\'s deep learning framework. I mostly used Keras for transfer learning and TFLite to put models on phones.',u:'On-device models in the Android apps at TheXSol',c:`import tensorflow as tf
+
+base = tf.keras.applications.EfficientNetB0(include_top=False, pooling="avg")
+base.trainable = False
+model = tf.keras.Sequential([base, tf.keras.layers.Dense(10, activation="softmax")])
+model.compile(optimizer="adam", loss="sparse_categorical_crossentropy", metrics=["accuracy"])
+model.fit(train_ds, validation_data=val_ds, epochs=5)
+
+tflite = tf.lite.TFLiteConverter.from_keras_model(model).convert()
+open("model.tflite", "wb").write(tflite)`,s:'Load images with tf.data → reuse a pretrained backbone → train a new head → unfreeze the top layers to fine-tune → convert to TFLite'},
+  'scikit-learn':{t:'scikit-learn',d:'Classical ML in a few lines: preprocessing, models, cross-validation and hyperparameter search.',u:'SVM tuned with HalvingGridSearchCV in the AI Attendance System',c:`from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.svm import SVC
+from sklearn.experimental import enable_halving_search_cv  # noqa
+from sklearn.model_selection import HalvingGridSearchCV
+
+pipe = make_pipeline(StandardScaler(), SVC())
+grid = {"svc__C": [1, 10, 100], "svc__kernel": ["rbf", "linear"]}
+search = HalvingGridSearchCV(pipe, grid, cv=5).fit(X_train, y_train)
+print(search.best_params_, search.score(X_test, y_test))`,s:'Split train and test → build a pipeline (scaling + model) → search hyperparameters with cross-validation → evaluate once on the test set'},
+  'OpenCV':{t:'OpenCV',d:'Image and video processing: reading frames, resizing, filtering and classical detectors like Haar Cascades.',u:'Face and eye detection in the AI Attendance System',c:`import cv2
+
+img = cv2.imread("class.jpg")
+gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+faces = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+
+for (x, y, w, h) in faces.detectMultiScale(gray, 1.1, 5):
+    face = img[y:y + h, x:x + w]          # crop for the recognition model
+    cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)`,s:'Read the image → convert to grayscale → detect faces → confirm each one with eye detection → crop faces for the recognition model'},
+  'Time series':{t:'Time series',d:'Classifying signals over time and showing which moments drove the prediction.',u:'SEA-Net (interpretable classification) and the TCN occupancy model',c:`import torch.nn as nn
+
+class TCNBlock(nn.Module):
+    def __init__(self, c_in, c_out, k=3, dilation=1):
+        super().__init__()
+        self.pad = (k - 1) * dilation
+        self.conv = nn.Conv1d(c_in, c_out, k, padding=self.pad, dilation=dilation)
+        self.relu = nn.ReLU()
+
+    def forward(self, x):                     # x: (batch, channels, time)
+        out = self.conv(x)[..., :x.size(-1)]  # causal: never look at future steps
+        return self.relu(out)`,s:'Clean and resample the signal → cut it into windows → normalise each channel → train a TCN or 1D CNN → check which time steps drive each prediction'},
+  'Computer Vision':{t:'Computer Vision',d:'Detection, classification and segmentation on images, from YOLO to Vision Transformers.',u:'PlantCLEF (DINOv2), YOLO labels in the occupancy project, HP-STAtten',c:`from ultralytics import YOLO
+
+model = YOLO("yolov8n.pt")
+model.train(data="people.yaml", epochs=50, imgsz=640)   # fine-tune on my own images
+results = model("room.jpg")
+people = sum(int(c) == 0 for c in results[0].boxes.cls)  # class 0 = person`,s:'Collect and label images → split train and validation → fine-tune a pretrained model → check mAP or accuracy → export for the target device'},
+  // LLM / RAG / Agents
+  'LangChain':{t:'LangChain',d:'Chains prompts, retrievers and LLMs into one pipeline.',c:`from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+from langchain_ollama import ChatOllama
+
+prompt = ChatPromptTemplate.from_template(
+    "Answer only from the context.\\nContext: {context}\\nQuestion: {question}")
+chain = prompt | ChatOllama(model="qwen2.5:3b") | StrOutputParser()
+print(chain.invoke({"context": top_chunks, "question": "What is the timeout?"}))`,s:'Load and split documents → embed them into a vector store → retrieve the top chunks → fill the prompt → call the LLM → return the answer with its sources'},
+  'LangGraph':{t:'LangGraph',d:'Builds agents as graphs: each node is a step, edges decide what runs next, and the state is shared. Example: send data questions to SQL and policy questions to RAG.',c:`from typing import TypedDict
+from langgraph.graph import StateGraph, END
+
+class State(TypedDict):
+    question: str
+    route: str
+    answer: str
+
+def router(s): return {"route": "sql" if "how many" in s["question"].lower() else "rag"}
+def sql(s):    return {"answer": run_text_to_sql(s["question"])}
+def rag(s):    return {"answer": answer_from_docs(s["question"])}
+
+g = StateGraph(State)
+g.add_node("router", router)
+g.add_node("sql", sql)
+g.add_node("rag", rag)
+g.set_entry_point("router")
+g.add_conditional_edges("router", lambda s: s["route"], {"sql": "sql", "rag": "rag"})
+g.add_edge("sql", END)
+g.add_edge("rag", END)
+app = g.compile()
+print(app.invoke({"question": "How many customers churned?"})["answer"])`,s:'Define the shared state → write one function per step → connect them with edges and conditions → compile → invoke with a question'},
+  'Hugging Face':{t:'Hugging Face',d:'Hub of open models and datasets, plus Transformers to load and fine-tune them.',u:'Comparing 5 small models for the SAP KBA Assistant',c:`from transformers import AutoTokenizer, AutoModelForCausalLM
+
+name = "Qwen/Qwen3-0.6B"
+tok = AutoTokenizer.from_pretrained(name)
+model = AutoModelForCausalLM.from_pretrained(name, torch_dtype="auto", device_map="auto")
+
+inputs = tok("What does SAP HANA store in column tables?", return_tensors="pt").to(model.device)
+out = model.generate(**inputs, max_new_tokens=80)
+print(tok.decode(out[0], skip_special_tokens=True))`,s:'Pick a model on the Hub → load the tokenizer and model → test prompts → fine-tune with PEFT if needed → push the adapter back to the Hub'},
+  'QLoRA':{t:'QLoRA',d:'Fine-tunes a 4-bit model by training small LoRA adapters, so it fits on a small GPU.',u:'Tested against LoRA, IA3 and full fine-tuning in the SAP KBA Assistant',c:`import torch
+from transformers import AutoModelForCausalLM, BitsAndBytesConfig
+from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
+
+bnb = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4",
+                         bnb_4bit_compute_dtype=torch.bfloat16)
+model = AutoModelForCausalLM.from_pretrained("Qwen/Qwen3-0.6B", quantization_config=bnb)
+model = prepare_model_for_kbit_training(model)
+
+lora = LoraConfig(r=16, lora_alpha=32, lora_dropout=0.05,
+                  target_modules=["q_proj", "v_proj"], task_type="CAUSAL_LM")
+model = get_peft_model(model, lora)
+model.print_trainable_parameters()   # only a small share of the weights train`,s:'Load the base model in 4-bit → add LoRA adapters → train on question and answer pairs → evaluate on held-out questions → save only the small adapter'},
+  'Chroma':{t:'Chroma',d:'Lightweight vector database: store embeddings and search by meaning.',c:`import chromadb
+
+client = chromadb.PersistentClient(path="./db")
+col = client.get_or_create_collection("docs")
+col.add(ids=["kb1", "kb2"],
+        documents=["Restart the index server after...", "Set the memory limit in..."])
+
+hits = col.query(query_texts=["how do I change the memory limit?"], n_results=2)
+print(hits["documents"])`,s:'Chunk the documents → embed them and add them to a collection → query with the user question → pass the top chunks to the LLM'},
+  'Ollama':{t:'Ollama',d:'Runs open LLMs locally with one command, behind a simple HTTP API. Nothing leaves the machine.',c:`ollama pull qwen2.5:3b
+ollama run qwen2.5:3b "Summarise this ticket in one line: ..."
+
+curl http://localhost:11434/api/generate -d '{
+  "model": "qwen2.5:3b",
+  "prompt": "Classify this request: billing, technical or other?",
+  "stream": false
+}'`,s:'Install Ollama → pull a model → test it in the terminal → call the local API from Python or FastAPI'},
+  'OpenAI API':{t:'OpenAI API',d:'Hosted LLMs through an API: chat, structured outputs and embeddings.',c:`from openai import OpenAI
+
+client = OpenAI()   # reads OPENAI_API_KEY from the environment
+resp = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[{"role": "system", "content": "Answer in one sentence."},
+              {"role": "user", "content": "What is RAG?"}])
+print(resp.choices[0].message.content)`,s:'Keep the key in an environment variable → send system and user messages → parse the answer → log tokens and cost → add retries and timeouts'},
+  // Data & Statistics
+  'pandas':{t:'pandas',d:'Tables in Python: load, clean, join and summarise data.',c:`import pandas as pd
+
+df = pd.read_csv("customers.csv", parse_dates=["signup"])
+df = df.dropna(subset=["region"]).drop_duplicates("customer_id")
+
+churn = (df.groupby("region")
+           .agg(customers=("customer_id", "count"), churn_rate=("churned", "mean"))
+           .sort_values("churn_rate", ascending=False))
+print(churn.head())`,s:'Load the data → check types and missing values → clean and deduplicate → group and aggregate → plot or export the result'},
+  'NumPy':{t:'NumPy',d:'Fast arrays and vector maths, the base of most Python ML libraries.',c:`import numpy as np
+
+X = np.random.default_rng(0).normal(size=(1000, 64))
+X = (X - X.mean(axis=0)) / X.std(axis=0)        # standardise each column
+
+q = X[0]
+cos = X @ q / (np.linalg.norm(X, axis=1) * np.linalg.norm(q))
+top5 = np.argsort(-cos)[:5]                      # most similar rows`,s:'Load data as arrays → vectorise the maths instead of Python loops → check the shapes at each step'},
+  'SciPy':{t:'SciPy',d:'Scientific tools on top of NumPy: statistics, signal processing and optimisation.',c:`from scipy import signal, stats
+
+b, a = signal.butter(4, 20, btype="low", fs=50)   # low-pass filter for 50 Hz sensor data
+smooth = signal.filtfilt(b, a, raw)
+
+t, p = stats.ttest_ind(group_a, group_b, equal_var=False)
+print(f"t={t:.2f}, p={p:.4f}")`,s:'Filter noisy signals → compute features → run the right statistical test → report the effect size and p-value'},
+  'statsmodels':{t:'statsmodels',d:'Statistical models with full summaries: regression, confidence intervals and time-series models.',c:`import statsmodels.formula.api as smf
+
+model = smf.ols("revenue ~ price + C(region) + ads", data=df).fit()
+print(model.summary())      # coefficients, p-values, R²
+print(model.conf_int())     # 95% confidence intervals`,s:'Write the model as a formula → fit → read the coefficients and p-values → check the residuals → explain the effect in plain words'},
+  'A/B testing':{t:'A/B testing',d:'Compare two versions on one real metric and check the difference is not just chance.',c:`from statsmodels.stats.proportion import proportions_ztest
+
+conversions = [420, 480]     # A, B
+visitors    = [5000, 5000]
+z, p = proportions_ztest(conversions, visitors)
+lift = (conversions[1] / visitors[1]) / (conversions[0] / visitors[0]) - 1
+print(f"lift={lift:.1%}, p={p:.4f}")   # ship B only if p < 0.05`,s:'Pick one primary metric → compute the sample size → split users randomly → run until the planned size → test significance → decide and write it down'},
+  'SQL':{t:'SQL',d:'Query, join and aggregate data directly in the database.',u:'The text-to-SQL engine in TelcoAssist',c:`SELECT c.region,
+       COUNT(*)                                             AS customers,
+       ROUND(AVG(CASE WHEN c.churned THEN 1.0 ELSE 0 END), 3) AS churn_rate
+FROM customers c
+JOIN plans p ON p.plan_id = c.plan_id
+WHERE p.type = 'mobile'
+GROUP BY c.region
+ORDER BY churn_rate DESC
+LIMIT 5;`,s:'Understand the tables and keys → join → filter → aggregate with GROUP BY → check the numbers against a known total'},
+  'PostgreSQL':{t:'PostgreSQL',d:'Open-source relational database, with extensions like pgvector for embeddings.',c:`CREATE EXTENSION IF NOT EXISTS vector;
+
+CREATE TABLE chunks (
+  id        serial PRIMARY KEY,
+  content   text,
+  embedding vector(384)
+);
+CREATE INDEX ON chunks USING hnsw (embedding vector_cosine_ops);
+
+SELECT content FROM chunks
+ORDER BY embedding <=> '[0.12, -0.03, ...]'
+LIMIT 3;`,s:'Design tables and keys → add indexes for the frequent queries → use pgvector for semantic search → back up and watch slow queries'},
+  // Edge AI
+  'TFLite':{t:'TensorFlow Lite',d:'Runs TensorFlow models on phones: small and fast after conversion and quantization.',u:'On-device AI at TheXSol and the Offline Activity Recognition app',c:`// Android (Kotlin): run a .tflite model on the phone
+val interpreter = Interpreter(loadModelFile(context, "model.tflite"))
+val input = Array(1) { Array(100) { FloatArray(6) } }   // 100 steps × 6 sensor axes
+val output = Array(1) { FloatArray(4) }                  // 4 activities
+interpreter.run(input, output)
+val activity = output[0].indices.maxBy { output[0][it] }`,s:'Train in TensorFlow → convert to .tflite with quantization → bundle it in the app → run the Interpreter on the device → measure latency and battery'},
+  'TFLite Micro':{t:'TensorFlow Lite Micro',d:'TensorFlow Lite for microcontrollers: no operating system and only a few hundred KB of RAM.',u:'Running models on the ESP32-S3',c:`// C++ on a microcontroller
+constexpr int kArenaSize = 60 * 1024;
+static uint8_t arena[kArenaSize];
+
+const tflite::Model* model = tflite::GetModel(g_model_data);
+static tflite::MicroMutableOpResolver<4> ops;
+ops.AddConv2D(); ops.AddFullyConnected(); ops.AddRelu(); ops.AddSoftmax();
+static tflite::MicroInterpreter interp(model, ops, arena, kArenaSize);
+interp.AllocateTensors();
+
+// copy sensor values into interp.input(0)->data.int8, then:
+interp.Invoke();
+int8_t* scores = interp.output(0)->data.int8;`,s:'Train and fully int8-quantize the model → turn it into a C array (xxd -i) → register only the ops it needs → call Invoke() on sensor data'},
+  'ONNX':{t:'ONNX',d:'Open model format: export once, then run the same model with ONNX Runtime on CPU, GPU or edge devices.',u:'SEA-Net Studio serves the model with ONNX Runtime',c:`import torch, onnxruntime as ort
+
+torch.onnx.export(model, torch.randn(1, 1, 500), "seanet.onnx",
+                  input_names=["signal"], output_names=["logits"],
+                  dynamic_axes={"signal": {0: "batch"}})
+
+sess = ort.InferenceSession("seanet.onnx", providers=["CPUExecutionProvider"])
+logits = sess.run(None, {"signal": x.numpy()})[0]`,s:'Export from PyTorch → check the outputs match the original → serve with ONNX Runtime → optionally quantize for speed'},
+  'ESP32-S3':{t:'ESP32-S3',d:'Low-cost microcontroller with vector instructions, good for small on-device models.',u:'PyTorch to ESP32-S3 and Edge Impulse on ESP32-S3',c:`# build and flash the firmware with ESP-IDF
+idf.py set-target esp32s3
+idf.py build
+idf.py -p COM5 flash monitor`,s:'Quantize the model → embed it in the firmware → read sensors in a loop → run inference → act on the result (LED, alert, message)'},
+  'Edge Impulse':{t:'Edge Impulse',d:'Platform to collect sensor data, train small models and export firmware for microcontrollers.',u:'Edge Impulse on ESP32-S3',c:`edge-impulse-daemon          # connect the board and stream sensor data
+edge-impulse-run-impulse     # run the deployed model on the device`,s:'Connect the device → collect and label data → design the impulse (signal processing + model) → train and test → deploy as a library or firmware → run it on the board'},
+  'Quantization':{t:'Quantization',d:'Stores weights in int8 instead of float32: about 4× smaller and faster, for a small accuracy cost.',u:'On-device models at TheXSol',c:`import tensorflow as tf
+
+conv = tf.lite.TFLiteConverter.from_keras_model(model)
+conv.optimizations = [tf.lite.Optimize.DEFAULT]
+conv.representative_dataset = lambda: ([x[None]] for x in calib_samples[:200])
+conv.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS_INT8]
+conv.inference_input_type = conv.inference_output_type = tf.int8
+open("model_int8.tflite", "wb").write(conv.convert())`,s:'Pick about 200 representative samples → convert with int8 quantization → compare accuracy with the float model → measure size and latency on the device'},
+  // Engineering & MLOps
+  'FastAPI':{t:'FastAPI',d:'Python web framework for model APIs: typed inputs, automatic docs and async support.',u:'SEA-Net Studio and the SAP KBA Assistant',c:`from fastapi import FastAPI
+from pydantic import BaseModel
+import numpy as np, onnxruntime as ort
+
+app = FastAPI()
+sess = ort.InferenceSession("model.onnx")   # load once at startup
+
+class Signal(BaseModel):
+    values: list[float]
+
+@app.post("/predict")
+def predict(s: Signal):
+    x = np.array(s.values, dtype=np.float32)[None, None, :]
+    logits = sess.run(None, {"signal": x})[0][0]
+    return {"label": int(logits.argmax())}
+
+# run: uvicorn main:app --reload   → interactive docs at /docs`,s:'Load the model once at startup → define input and output schemas → write the endpoint → test it in /docs → put it in Docker'},
+  'Flask':{t:'Flask',d:'Minimal Python web framework, good for small services and prototypes.',c:`from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+@app.post("/predict")
+def predict():
+    text = request.get_json()["text"]
+    return jsonify(label=classifier(text))
+
+if __name__ == "__main__":
+    app.run(port=5000)`,s:'Create the app → add routes → validate the JSON input → return JSON → run behind gunicorn in production'},
+  'Git':{t:'Git',d:'Version control: branches, reviews and a clean history.',c:`git switch -c feature/rag-eval
+git add -p                         # stage only the lines I mean to
+git commit -m "Add retrieval recall to the eval report"
+git push -u origin feature/rag-eval
+# open a pull request, get it reviewed, merge into main`,s:'Branch from main → small focused commits → push → pull request and review → merge → delete the branch'},
+  'GitHub Actions':{t:'GitHub Actions',d:'CI/CD: run the tests and deploy automatically on every push.',u:'Tests and Azure deploys in Azure Churn MLOps',c:`# .github/workflows/ci.yml
+name: ci
+on: [push]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - run: pip install -r requirements.txt
+      - run: pytest -q`,s:'Push code → the workflow starts → install dependencies → run tests and lint → build the Docker image → deploy if main passes'},
+  'MLflow':{t:'MLflow',d:'Tracks experiments: parameters, metrics and model files, so runs can be compared and reproduced.',u:'Comparing SEA-Net runs at Inria',c:`import mlflow
+
+mlflow.set_experiment("seanet")
+with mlflow.start_run():
+    mlflow.log_params({"lr": 1e-3, "k": 8, "kernel": 5})
+    for epoch in range(epochs):
+        mlflow.log_metric("val_acc", evaluate(model), step=epoch)
+    mlflow.log_artifact("model.onnx")
+
+# mlflow ui   → compare runs in the browser`,s:'Start a run → log parameters → log metrics every epoch → save the model → compare runs in the UI → register the best one'},
+  'Optuna':{t:'Optuna',d:'Hyperparameter search that learns which values work and stops weak trials early.',u:'Tuning SEA-Net and HP-STAtten at Inria',c:`import optuna
+
+def objective(trial):
+    lr = trial.suggest_float("lr", 1e-4, 1e-2, log=True)
+    k = trial.suggest_int("k", 2, 16)
+    for epoch in range(20):
+        acc = train_one_epoch(lr, k)
+        trial.report(acc, epoch)
+        if trial.should_prune():
+            raise optuna.TrialPruned()
+    return acc
+
+study = optuna.create_study(direction="maximize")
+study.optimize(objective, n_trials=50)
+print(study.best_params)`,s:'Define the search space → write the objective → report progress so weak trials get pruned → run N trials → retrain with the best parameters'},
+  'Streamlit':{t:'Streamlit',d:'Turns a Python script into a small web app, good for quick demos.',c:`import streamlit as st
+
+st.title("Churn predictor")
+tenure = st.slider("Tenure (months)", 0, 72, 12)
+pro = st.selectbox("Plan", ["basic", "pro"]) == "pro"
+if st.button("Predict"):
+    risk = model.predict_proba([[tenure, pro]])[0, 1]
+    st.metric("Churn risk", f"{risk:.0%}")
+
+# run: streamlit run app.py`,s:'Load the model with caching → add inputs → run the prediction → show the result → share the link'},
+  // Languages
+  'Python':{t:'Python',d:'My main language for data, ML and APIs.',c:`from dataclasses import dataclass
+from pathlib import Path
+
+@dataclass
+class Sample:
+    path: Path
+    label: str
+
+def load(folder: str) -> list[Sample]:
+    return [Sample(p, p.parent.name) for p in Path(folder).glob("*/*.png")]
+
+samples = load("data/train")
+print(len(samples), samples[0])`,s:'Virtual environment → small typed functions → tests with pytest → format and lint'},
+  'Kotlin':{t:'Kotlin',d:'Modern Android language. I built app screens and AI features with it.',u:'Android apps at TheXSol',c:`class ScanViewModel(private val ocr: OcrRepository) : ViewModel() {
+    private val _text = MutableStateFlow("")
+    val text: StateFlow<String> = _text
+
+    fun scan(bitmap: Bitmap) = viewModelScope.launch {
+        _text.value = ocr.recognize(bitmap)   // on-device model or cloud API
+    }
+}`,s:'Screen (UI) → ViewModel → repository → on-device model or API → result back on the screen'},
+  'Java':{t:'Java',d:'Used for Android apps and backend logic.',u:'Android apps at TheXSol and Best Apps',c:`public class Prediction {
+    private final String label;
+    private final float score;
+
+    public Prediction(String label, float score) {
+        this.label = label;
+        this.score = score;
+    }
+
+    public boolean isConfident() { return score >= 0.8f; }
+}`,s:'Model classes → business logic → REST API calls → show the results in the UI'},
+  'C/C++':{t:'C / C++',d:'For microcontroller code, where memory and speed matter.',u:'Running models on the ESP32-S3',c:`void loop() {
+  float ax, ay, az;
+  readImu(&ax, &ay, &az);                 // read the sensor
+  window.push(ax, ay, az);                // keep the last 2 s of data
+  if (window.full()) {
+    int label = runModel(window.data());  // TFLite Micro inference
+    if (label == ALERT) triggerAlert();
+  }
+  delay(20);                              // 50 Hz sampling
+}`,s:'Read sensors at a fixed rate → buffer a window → run inference → act on the result'},
+  // Cloud · AWS & Azure
+  'EC2':{t:'Amazon EC2 · Elastic Compute Cloud',d:'Virtual servers in the cloud, e.g. a GPU machine for training or a small VM that hosts an API.',c:`aws ec2 run-instances --image-id ami-0abcd1234 --instance-type t3.micro \\
+  --key-name my-key --security-group-ids sg-0123 --count 1
+aws ec2 describe-instances --filters "Name=instance-state-name,Values=running"
+ssh -i my-key.pem ubuntu@<public-ip>`,l:'In the console',s:'EC2 → Launch instance → pick an Ubuntu AMI → t3.micro → key pair → security group (SSH 22, HTTP 80) → Launch → connect with SSH'},
+  'S3':{t:'Amazon S3 · Simple Storage Service',d:'Object storage for datasets, model files and backups.',c:`aws s3 mb s3://my-ml-models
+aws s3 cp model.onnx s3://my-ml-models/seanet/
+aws s3 ls s3://my-ml-models/seanet/
+aws s3 sync ./data s3://my-ml-models/data/`,l:'In the console',s:'S3 → Create bucket → unique name + region → keep Block Public Access on → Create → Upload files'},
+  'RDS':{t:'Amazon RDS · Relational Database Service',d:'Managed PostgreSQL or MySQL: AWS handles backups, patches and failover.',c:`aws rds create-db-instance --db-instance-identifier app-db \\
+  --engine postgres --db-instance-class db.t3.micro --allocated-storage 20 \\
+  --master-username dbadmin --manage-master-user-password
+aws rds describe-db-instances --db-instance-identifier app-db \\
+  --query "DBInstances[0].Endpoint.Address"`,l:'In the console',s:'RDS → Create database → PostgreSQL → Free tier → DB name and admin user → VPC and security group → Create → connect with the endpoint'},
+  'DynamoDB':{t:'Amazon DynamoDB',d:'Serverless NoSQL key-value database with fast reads and no servers to manage.',c:`aws dynamodb create-table --table-name Users \\
+  --attribute-definitions AttributeName=id,AttributeType=S \\
+  --key-schema AttributeName=id,KeyType=HASH --billing-mode PAY_PER_REQUEST
+aws dynamodb put-item --table-name Users --item '{"id": {"S": "u1"}, "plan": {"S": "pro"}}'
+aws dynamodb get-item --table-name Users --key '{"id": {"S": "u1"}}'`,l:'In the console',s:'DynamoDB → Create table → table name + partition key (id) → on-demand capacity → Create → Explore items to add data'},
+  'ECR':{t:'Amazon ECR · Elastic Container Registry',d:'Private registry for Docker images, ready for ECS or EKS to pull.',c:`aws ecr create-repository --repository-name api
+aws ecr get-login-password | docker login --username AWS \\
+  --password-stdin <account>.dkr.ecr.<region>.amazonaws.com
+docker tag api:latest <account>.dkr.ecr.<region>.amazonaws.com/api:latest
+docker push <account>.dkr.ecr.<region>.amazonaws.com/api:latest`,l:'In the console',s:'ECR → Create repository → open it → View push commands → run login, build, tag and push'},
+  'ECS':{t:'Amazon ECS · Elastic Container Service',d:'Runs Docker containers as long-lived services, serverless with Fargate.',c:`aws ecs create-cluster --cluster-name ml
+aws ecs register-task-definition --cli-input-json file://task.json   # image from ECR, port 8000
+aws ecs create-service --cluster ml --service-name api \\
+  --task-definition api:1 --desired-count 1 --launch-type FARGATE \\
+  --network-configuration file://net.json`,l:'In the console',s:'ECS → Create cluster (Fargate) → Task definitions → new: image from ECR, port 8000, CPU and memory → Create service from it → open the public IP or load balancer URL'},
+  'EKS':{t:'Amazon EKS · Elastic Kubernetes Service',d:'Managed Kubernetes on AWS: AWS runs the control plane, you run the workloads.',c:`eksctl create cluster --name ml --region eu-west-3 --nodes 2
+aws eks update-kubeconfig --name ml --region eu-west-3
+kubectl get nodes
+kubectl apply -f deployment.yaml`,l:'In the console',s:'EKS → Create cluster → cluster IAM role + VPC subnets → Compute → Add node group → update kubeconfig from the CLI → deploy with kubectl'},
+  'Azure ML':{t:'Azure Machine Learning',d:'Workspace to train, track, register and deploy models.',u:'Azure Churn MLOps',c:`az ml job create --file train-job.yml --resource-group ml-rg --workspace-name ml-ws
+az ml model create --name churn --path azureml://jobs/<job-id>/outputs/model \\
+  --resource-group ml-rg --workspace-name ml-ws`,l:'In the portal',s:'Create an Azure Machine Learning workspace → open Studio → Compute: create a cluster → Jobs: run training → Models: register → Endpoints: deploy'},
+  'Container Apps':{t:'Azure Container Apps',d:'Serverless containers with HTTPS ingress and autoscaling, no cluster to manage.',u:'Azure Churn MLOps serves its API here',c:`az containerapp up --name api --resource-group ml-rg \\
+  --source . --ingress external --target-port 8000
+az containerapp show --name api --resource-group ml-rg \\
+  --query properties.configuration.ingress.fqdn`,l:'In the portal',s:'Container Apps → Create → new environment → image from ACR → Ingress: external, port 8000 → Review + create → open the app URL'},
+  'ACR':{t:'ACR · Azure Container Registry',d:'Private Docker image registry for Container Apps and AKS.',c:`az acr create --name myregistry --resource-group ml-rg --sku Basic
+az acr login --name myregistry
+docker tag api:latest myregistry.azurecr.io/api:v1
+docker push myregistry.azurecr.io/api:v1`,l:'In the portal',s:'Container registries → Create → name + Basic SKU → Create → tag the image as <name>.azurecr.io/api:v1 → push'},
+  'AKS':{t:'AKS · Azure Kubernetes Service',d:'Managed Kubernetes on Azure.',c:`az aks create --resource-group ml-rg --name ml-aks --node-count 2 \\
+  --attach-acr myregistry --generate-ssh-keys
+az aks get-credentials --resource-group ml-rg --name ml-aks
+kubectl get nodes
+kubectl apply -f deployment.yaml`,l:'In the portal',s:'Kubernetes services → Create cluster → node size and count → attach ACR → Review + create → Connect → run kubectl'},
+  'Docker':{t:'Docker',d:'Packages the app, the model and its dependencies into one image that runs the same on a laptop or in the cloud.',c:`# Dockerfile
+FROM python:3.11-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
+EXPOSE 8000
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+
+# build, run, then push to ECR or ACR
+docker build -t api .
+docker run -p 8000:8000 api`,s:'Write the Dockerfile → build the image → run and test it locally → tag it → push to ECR or ACR → deploy on ECS, Container Apps or Kubernetes'},
+  'Kubernetes':{t:'Kubernetes',d:'Runs containers across a cluster: restarts failed pods, scales replicas and spreads the traffic.',c:`# deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: api }
+spec:
+  replicas: 2
+  selector: { matchLabels: { app: api } }
+  template:
+    metadata: { labels: { app: api } }
+    spec:
+      containers:
+        - name: api
+          image: myregistry.azurecr.io/api:v1
+          ports: [{ containerPort: 8000 }]
+---
+apiVersion: v1
+kind: Service
+metadata: { name: api }
+spec:
+  type: LoadBalancer
+  selector: { app: api }
+  ports: [{ port: 80, targetPort: 8000 }]
+
+# kubectl apply -f deployment.yaml && kubectl get pods
+# kubectl scale deployment api --replicas=3`,s:'Write the Deployment (image, replicas, port) → expose it with a Service → kubectl apply → check the pods → scale up or roll out a new image'},
+  'Terraform':{t:'Terraform',d:'Infrastructure as code: describe cloud resources in files, review the plan, then apply it the same way every time.',c:`provider "aws" {
+  region = "eu-west-3"
+}
+
+resource "aws_s3_bucket" "models" {
+  bucket = "my-ml-models"
+}
+
+resource "aws_instance" "api" {
+  ami           = "ami-0abcd1234"
+  instance_type = "t3.micro"
+  tags          = { Name = "ml-api" }
+}
+
+# terraform init && terraform plan && terraform apply
+# terraform destroy   → remove everything when done`,s:'Write main.tf with the provider and resources → terraform init → terraform plan to review → terraform apply → terraform destroy to clean up'},
+  'Bicep':{t:'Bicep',d:'Azure\'s infrastructure-as-code language.',u:'The Azure resources in Azure Churn MLOps',c:`param location string = resourceGroup().location
+
+resource acr 'Microsoft.ContainerRegistry/registries@2023-07-01' = {
+  name: 'myregistry'
+  location: location
+  sku: { name: 'Basic' }
+}
+
+// az deployment group create -g ml-rg --template-file main.bicep`,s:'Write main.bicep with the resources → az bicep build to check it → deploy to a resource group → follow the deployment in the portal'},
+  'CLI & Console':{t:'CLI & Console',d:'Set up and check resources by hand in the AWS Console and Azure Portal, or script them from the terminal.',c:`aws configure
+aws sts get-caller-identity      # which account am I using?
+az login
+az account show`,l:'Good habits',s:'Use an IAM user or role, never root → turn on MFA → set a budget alert → tag resources → delete what you no longer use'},
+};
+const tip=document.createElement('div');tip.className='tip';tip.id='tip';tip.setAttribute('role','tooltip');document.body.append(tip);
+let cur=null,t;
+// show "See more" only when the preview is cut off
+const fit=()=>{const body=tip.firstChild,more=tip.lastChild,clip=tip.classList.contains('open')||body.scrollHeight>body.clientHeight+4;
+  more.hidden=!clip;tip.classList.toggle('clip',clip)};
+// put the popup below, above, right or left of the chip, never on top of it;
+// if there is not enough room, shorten the preview so "See more" stays visible
+const place=c=>{const r=c.getBoundingClientRect(),g=8,m=8,W=innerWidth,H=innerHeight,body=tip.firstChild;
+  tip.style.maxHeight='';body.style.maxHeight='';fit();const w=tip.offsetWidth;let h=tip.offsetHeight;
+  const sp={below:H-r.bottom-g-m,above:r.top-g-m,right:W-r.right-g-m,left:r.left-g-m};
+  const side=h<=sp.below?'below':h<=sp.above?'above':w<=sp.right?'right':w<=sp.left?'left':sp.below>=sp.above?'below':'above';
+  const room=side==='below'||side==='above'?sp[side]:H-2*m;
+  if(h>room){body.style.maxHeight=Math.max(80,body.clientHeight-(h-room)-28)+'px';fit();h=tip.offsetHeight}
+  if(h>room){h=room;tip.style.maxHeight=h+'px'}
+  if(side==='below'||side==='above'){tip.style.left=Math.max(m,Math.min(r.left,W-w-m))+'px';tip.style.top=(side==='below'?r.bottom+g:r.top-g-h)+'px'}
+  else{tip.style.left=(side==='right'?r.right+g:r.left-g-w)+'px';tip.style.top=Math.max(m,Math.min(r.top,H-h-m))+'px'}
+  tip.dataset.side=side;tip.dataset.mh=body.style.maxHeight};
+// see more / less: keep the edge nearest the chip fixed so the popup stays under the pointer
+const grow=r=>{const m=8;tip.style.maxHeight='';const h=tip.offsetHeight;
+  if(tip.dataset.side==='above'){const nh=Math.min(h,r.bottom-m);tip.style.maxHeight=nh+'px';tip.style.top=(r.bottom-nh)+'px'}
+  else tip.style.maxHeight=Math.min(h,innerHeight-r.top-m)+'px'};
+const show=c=>{const x=tips[c.textContent];clearTimeout(t);tip.replaceChildren();tip.classList.remove('open','clip');tip.scrollTop=0;
+  const add=(p,tag,txt,cls)=>{const e=document.createElement(tag);if(txt)e.textContent=txt;if(cls)e.className=cls;p.append(e);return e};
+  const body=add(tip,'div',null,'tip-body');
+  add(body,'b',x.t);add(body,'p',x.d);if(x.u)add(body,'p','Used in: '+x.u,'u');
+  add(body,'div','Code','k');add(body,'pre',x.c);add(body,'div',x.l||'Flow','k');
+  const ol=add(body,'ol');x.s.split(' → ').forEach(s=>add(ol,'li',s));
+  const more=add(tip,'button','See more','tip-more');more.type='button';
+  more.onclick=()=>{const r=tip.getBoundingClientRect(),o=tip.classList.toggle('open');more.textContent=o?'See less':'See more';
+    body.style.maxHeight=o?'none':tip.dataset.mh;tip.scrollTop=0;grow(r)};
+  cur?.setAttribute('aria-expanded','false');cur=c;c.setAttribute('aria-expanded','true');place(c);tip.classList.add('on')};
+const hide=now=>{clearTimeout(t);t=setTimeout(()=>{if(!now&&tip.matches(':hover'))return;tip.classList.remove('on');cur?.setAttribute('aria-expanded','false');cur=null},now?0:200)};
+document.querySelectorAll('#skills .chip').forEach(c=>{if(!tips[c.textContent])return;
+  c.dataset.tip='';c.tabIndex=0;c.setAttribute('role','button');c.setAttribute('aria-describedby','tip');c.setAttribute('aria-expanded','false');
+  c.addEventListener('mouseenter',()=>show(c));c.addEventListener('mouseleave',()=>hide());
+  c.addEventListener('focus',()=>show(c));c.addEventListener('blur',()=>hide());
+  c.addEventListener('click',e=>{e.stopPropagation();if(cur!==c)show(c)});
+  c.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&cur===c){e.preventDefault();const b=tip.querySelector('.tip-more');if(b&&!b.hidden)b.click()}})});
+tip.addEventListener('mouseleave',()=>hide());tip.addEventListener('click',e=>e.stopPropagation());
+document.addEventListener('click',()=>hide(true));
+addEventListener('keydown',e=>{if(e.key==='Escape')hide(true)});
+addEventListener('scroll',()=>{if(cur)hide(true)},{passive:true})})();
 </script>
 </body>
 </html>
