@@ -779,7 +779,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
     <div class="skill reveal"><h4>Edge AI</h4><div class="chips"><span class="chip">TFLite</span><span class="chip">TFLite Micro</span><span class="chip">ONNX</span><span class="chip">ESP32-S3</span><span class="chip">Edge Impulse</span><span class="chip">Quantization</span></div></div>
     <div class="skill reveal"><h4>Engineering &amp; MLOps</h4><div class="chips"><span class="chip">FastAPI</span><span class="chip">Flask</span><span class="chip">Git</span><span class="chip">GitHub Actions</span><span class="chip">MLflow</span><span class="chip">Optuna</span><span class="chip">Streamlit</span></div></div>
     <div class="skill reveal"><h4>Languages</h4><div class="chips"><span class="chip">Python</span><span class="chip">SQL</span><span class="chip">Kotlin</span><span class="chip">Java</span><span class="chip">C/C++</span><span class="chip">English · fluent</span><span class="chip">French · elementary</span></div></div>
-    <div class="skill wide reveal"><h4>Cloud · AWS &amp; Azure</h4><div class="chips"><span class="chip">EC2</span><span class="chip">S3</span><span class="chip">RDS</span><span class="chip">DynamoDB</span><span class="chip">ECR</span><span class="chip">ECS</span><span class="chip">EKS</span><span class="chip">Azure ML</span><span class="chip">Container Apps</span><span class="chip">ACR</span><span class="chip">AKS</span><span class="chip">Docker</span><span class="chip">Kubernetes</span><span class="chip">Terraform</span><span class="chip">Bicep</span><span class="chip">CLI &amp; Console</span></div></div>
+    <div class="skill wide reveal"><h4>Cloud · AWS, Azure &amp; GCP</h4><div class="chips"><span class="chip">Compute &amp; VMs</span><span class="chip">SSH &amp; remote access</span><span class="chip">Containers &amp; serverless</span><span class="chip">Docker</span><span class="chip">Kubernetes</span><span class="chip">Autoscaling &amp; load balancing</span><span class="chip">Networking &amp; security</span><span class="chip">IAM &amp; secrets</span><span class="chip">Relational databases</span><span class="chip">NoSQL databases</span><span class="chip">Object storage</span><span class="chip">AI &amp; ML services</span><span class="chip">Monitoring &amp; logging</span><span class="chip">Cost control</span><span class="chip">Infrastructure as code</span><span class="chip">CI/CD to cloud</span><span class="chip">Scalable architecture</span><span class="chip">CLI &amp; Console</span></div></div>
   </div>
 </div></section>
 
@@ -1262,55 +1262,53 @@ print(len(samples), samples[0])`,s:'Virtual environment → small typed function
   }
   delay(20);                              // 50 Hz sampling
 }`,s:'Read sensors at a fixed rate → buffer a window → run inference → act on the result'},
-  // Cloud · AWS & Azure
-  'EC2':{t:'Amazon EC2 · Elastic Compute Cloud',d:'Virtual servers in the cloud, e.g. a GPU machine for training or a small VM that hosts an API.',u:'ML on AWS: the churn app on a t3.micro, launched by hand and with Terraform',c:`aws ec2 run-instances --image-id ami-0abcd1234 --instance-type t3.micro \\
-  --key-name my-key --security-group-ids sg-0123 --count 1
-aws ec2 describe-instances --filters "Name=instance-state-name,Values=running"
-ssh -i my-key.pem ec2-user@<public-ip>`,l:'In the console',s:'EC2 → Launch instance → pick an Amazon Linux 2023 AMI → t3.micro → key pair → security group (SSH 22 from my IP, HTTP 80) → Launch → connect with SSH → install Docker → docker compose up'},
-  'S3':{t:'Amazon S3 · Simple Storage Service',d:'Object storage for datasets, model files and backups.',c:`aws s3 mb s3://my-ml-models
-aws s3 cp model.onnx s3://my-ml-models/seanet/
-aws s3 ls s3://my-ml-models/seanet/
-aws s3 sync ./data s3://my-ml-models/data/`,l:'In the console',s:'S3 → Create bucket → unique name + region → keep Block Public Access on → Create → Upload files'},
-  'RDS':{t:'Amazon RDS · Relational Database Service',d:'Managed PostgreSQL or MySQL: AWS handles backups, patches and failover.',c:`aws rds create-db-instance --db-instance-identifier app-db \\
-  --engine postgres --db-instance-class db.t3.micro --allocated-storage 20 \\
-  --master-username dbadmin --manage-master-user-password
-aws rds describe-db-instances --db-instance-identifier app-db \\
-  --query "DBInstances[0].Endpoint.Address"`,l:'In the console',s:'RDS → Create database → PostgreSQL → Free tier → DB name and admin user → VPC and security group → Create → connect with the endpoint'},
-  'DynamoDB':{t:'Amazon DynamoDB',d:'Serverless NoSQL key-value database with fast reads and no servers to manage.',c:`aws dynamodb create-table --table-name Users \\
-  --attribute-definitions AttributeName=id,AttributeType=S \\
-  --key-schema AttributeName=id,KeyType=HASH --billing-mode PAY_PER_REQUEST
-aws dynamodb put-item --table-name Users --item '{"id": {"S": "u1"}, "plan": {"S": "pro"}}'
-aws dynamodb get-item --table-name Users --key '{"id": {"S": "u1"}}'`,l:'In the console',s:'DynamoDB → Create table → table name + partition key (id) → on-demand capacity → Create → Explore items to add data'},
-  'ECR':{t:'Amazon ECR · Elastic Container Registry',d:'Private registry for Docker images, ready for ECS or EKS to pull.',c:`aws ecr create-repository --repository-name api
-aws ecr get-login-password | docker login --username AWS \\
-  --password-stdin <account>.dkr.ecr.<region>.amazonaws.com
-docker tag api:latest <account>.dkr.ecr.<region>.amazonaws.com/api:latest
-docker push <account>.dkr.ecr.<region>.amazonaws.com/api:latest`,l:'In the console',s:'ECR → Create repository → open it → View push commands → run login, build, tag and push'},
-  'ECS':{t:'Amazon ECS · Elastic Container Service',d:'Runs Docker containers as long-lived services, serverless with Fargate.',c:`aws ecs create-cluster --cluster-name ml
-aws ecs register-task-definition --cli-input-json file://task.json   # image from ECR, port 8000
-aws ecs create-service --cluster ml --service-name api \\
-  --task-definition api:1 --desired-count 1 --launch-type FARGATE \\
-  --network-configuration file://net.json`,l:'In the console',s:'ECS → Create cluster (Fargate) → Task definitions → new: image from ECR, port 8000, CPU and memory → Create service from it → open the public IP or load balancer URL'},
-  'EKS':{t:'Amazon EKS · Elastic Kubernetes Service',d:'Managed Kubernetes on AWS: AWS runs the control plane, you run the workloads.',c:`eksctl create cluster --name ml --region eu-west-3 --nodes 2
-aws eks update-kubeconfig --name ml --region eu-west-3
-kubectl get nodes
-kubectl apply -f deployment.yaml`,l:'In the console',s:'EKS → Create cluster → cluster IAM role + VPC subnets → Compute → Add node group → update kubeconfig from the CLI → deploy with kubectl'},
-  'Azure ML':{t:'Azure Machine Learning',d:'Workspace to train, track, register and deploy models.',u:'Azure Churn MLOps',c:`az ml job create --file train-job.yml --resource-group ml-rg --workspace-name ml-ws
-az ml model create --name churn --path azureml://jobs/<job-id>/outputs/model \\
-  --resource-group ml-rg --workspace-name ml-ws`,l:'In the portal',s:'Create an Azure Machine Learning workspace → open Studio → Compute: create a cluster → Jobs: run training → Models: register → Endpoints: deploy'},
-  'Container Apps':{t:'Azure Container Apps',d:'Serverless containers with HTTPS ingress and autoscaling, no cluster to manage.',u:'Azure Churn MLOps serves its API here',c:`az containerapp up --name api --resource-group ml-rg \\
-  --source . --ingress external --target-port 8000
-az containerapp show --name api --resource-group ml-rg \\
-  --query properties.configuration.ingress.fqdn`,l:'In the portal',s:'Container Apps → Create → new environment → image from ACR → Ingress: external, port 8000 → Review + create → open the app URL'},
-  'ACR':{t:'ACR · Azure Container Registry',d:'Private Docker image registry for Container Apps and AKS.',c:`az acr create --name myregistry --resource-group ml-rg --sku Basic
-az acr login --name myregistry
-docker tag api:latest myregistry.azurecr.io/api:v1
-docker push myregistry.azurecr.io/api:v1`,l:'In the portal',s:'Container registries → Create → name + Basic SKU → Create → tag the image as <name>.azurecr.io/api:v1 → push'},
-  'AKS':{t:'AKS · Azure Kubernetes Service',d:'Managed Kubernetes on Azure.',c:`az aks create --resource-group ml-rg --name ml-aks --node-count 2 \\
-  --attach-acr myregistry --generate-ssh-keys
-az aks get-credentials --resource-group ml-rg --name ml-aks
-kubectl get nodes
-kubectl apply -f deployment.yaml`,l:'In the portal',s:'Kubernetes services → Create cluster → node size and count → attach ACR → Review + create → Connect → run kubectl'},
+  // Cloud · AWS, Azure & GCP (picked per project need)
+  'Compute & VMs':{t:'Compute & virtual machines',d:'Create and size cloud servers for an API, a worker or a GPU job, then stop them when idle. AWS EC2, Azure Virtual Machines, GCP Compute Engine.',u:'ML on AWS (EC2), DOTLESS (GCP)',c:`aws ec2 run-instances --image-id ami-0abcd1234 --instance-type t3.micro --key-name my-key
+az vm create -g app-rg -n api-vm --image Ubuntu2204 --size Standard_B1s --generate-ssh-keys
+gcloud compute instances create api-vm --machine-type=e2-micro --zone=europe-west1-b`,l:'In the console',s:'Pick region and image → choose size → key pair → open only the needed ports → start → install the app → stop or delete when done'},
+  'SSH & remote access':{t:'SSH & remote access',d:'Connect to cloud servers securely with keys, copy files and run the app; no passwords, no open admin ports for everyone.',c:`ssh -i my-key.pem ec2-user@<public-ip>
+scp -i my-key.pem app.tar.gz ec2-user@<public-ip>:~/
+gcloud compute ssh api-vm --zone=europe-west1-b
+az ssh vm -g app-rg -n api-vm`,l:'Good habits',s:'Key pair only → allow SSH from my IP only → run the app as a service → close port 22 when not needed'},
+  'Containers & serverless':{t:'Managed containers & serverless',d:'Run Docker images without managing servers, with HTTPS and scale to zero. AWS ECS/Fargate, Azure Container Apps, GCP Cloud Run; images in ECR, ACR or Artifact Registry.',u:'Azure Churn MLOps (Container Apps + ACR)',c:`az containerapp up --name api --resource-group ml-rg --source . --ingress external --target-port 8000
+gcloud run deploy api --image europe-docker.pkg.dev/proj/repo/api:v1 --region europe-west1
+aws ecs create-service --cluster ml --service-name api --task-definition api:1 --launch-type FARGATE`,l:'Flow',s:'Build the image → push to the registry → create the service → set CPU, memory and min/max instances → check the HTTPS URL'},
+  'Autoscaling & load balancing':{t:'Autoscaling & load balancing',d:'Spread traffic over several copies of a service and add or remove copies with the load. Load balancers, auto scaling groups, Kubernetes replicas and HPA.',u:'AI Support Platform (replicas, load tests: 2.2× throughput)',c:`kubectl scale deployment api --replicas=3
+kubectl autoscale deployment api --min=1 --max=5 --cpu-percent=70
+aws autoscaling update-auto-scaling-group --auto-scaling-group-name api-asg --min-size 1 --max-size 4`,l:'Flow',s:'Load test first → find the busy service → scale that one only → set min/max → watch latency and cost'},
+  'Networking & security':{t:'Networking & security',d:'Private networks, subnets, firewall rules and HTTPS so only what must be public is public. AWS VPC and security groups, Azure VNet and NSG, GCP VPC firewall rules.',u:'ML on AWS (only port 80 open)',c:`aws ec2 authorize-security-group-ingress --group-id sg-0123 --protocol tcp --port 80 --cidr 0.0.0.0/0
+gcloud compute firewall-rules create allow-http --allow=tcp:80
+az network nsg rule create -g app-rg --nsg-name api-nsg -n http --priority 100 --destination-port-ranges 80`,l:'Good habits',s:'Database in a private subnet → app opens only 80/443 → SSH from my IP only → HTTPS everywhere'},
+  'IAM & secrets':{t:'IAM, roles & secrets',d:'Least-privilege access for people and services: IAM users and roles, managed identities, service accounts, OIDC from CI, secrets in a vault, never in Git.',u:'Azure Churn MLOps (managed identity, Key Vault, OIDC)',c:`aws iam attach-role-policy --role-name app-role --policy-arn arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+az role assignment create --assignee <identity-id> --role "Key Vault Secrets User" --scope <vault-id>
+gcloud projects add-iam-policy-binding proj --member=serviceAccount:app@proj.iam.gserviceaccount.com --role=roles/storage.objectViewer`,l:'Good habits',s:'No root use → MFA → one role per service → only the rights it needs → secrets in Key Vault / Secrets Manager / Secret Manager'},
+  'Relational databases':{t:'Managed relational databases',d:'PostgreSQL or MySQL without running the server: backups, patches and failover handled. AWS RDS, Azure Database for PostgreSQL, GCP Cloud SQL.',u:'AI Support Platform (PostgreSQL + pgvector)',c:`aws rds create-db-instance --db-instance-identifier app-db --engine postgres --db-instance-class db.t3.micro --allocated-storage 20
+gcloud sql instances create app-db --database-version=POSTGRES_16 --tier=db-f1-micro --region=europe-west1
+psql "host=<endpoint> user=dbadmin dbname=app sslmode=require"`,l:'Flow',s:'Create the instance → private network → app user with limited rights → connection string as a secret → connect over SSL'},
+  'NoSQL databases':{t:'NoSQL databases',d:'Key-value and document stores for fast, flexible data. AWS DynamoDB, Azure Cosmos DB, GCP Firestore; MongoDB.',u:'DOTLESS (MongoDB)',c:`aws dynamodb create-table --table-name Users --attribute-definitions AttributeName=id,AttributeType=S --key-schema AttributeName=id,KeyType=HASH --billing-mode PAY_PER_REQUEST
+az cosmosdb create -n app-cosmos -g app-rg
+gcloud firestore databases create --location=europe-west1`,l:'Flow',s:'Pick the key from the access pattern → on-demand billing → create the table → read and write from the app'},
+  'Object storage':{t:'Object storage',d:'Store datasets, model files, uploads and backups. AWS S3, Azure Blob Storage, GCP Cloud Storage.',u:'Azure Churn MLOps (Azure Storage), DOTLESS (GCP)',c:`aws s3 cp model.onnx s3://my-ml-models/seanet/
+az storage blob upload --account-name mlstore -c models -f model.onnx
+gcloud storage cp model.onnx gs://my-ml-models/seanet/`,l:'Good habits',s:'Block public access → versioning for models → lifecycle rules to cheaper tiers → signed URLs to share'},
+  'AI & ML services':{t:'Cloud AI & ML services',d:'Train, track, register and serve models on managed platforms, or call hosted AI APIs when that fits better. Azure Machine Learning, AWS SageMaker, GCP Vertex AI, cloud AI APIs.',u:'Azure Churn MLOps (Azure ML), TheXSol (cloud AI APIs)',c:`az ml job create --file train-job.yml --resource-group ml-rg --workspace-name ml-ws
+az ml model create --name churn --path azureml://jobs/<job-id>/outputs/model -g ml-rg -w ml-ws`,l:'Flow',s:'Compute cluster that scales to 0 → training job → log runs with MLflow → register the model → deploy behind an API'},
+  'Monitoring & logging':{t:'Monitoring & logging',d:'See latency, errors and resource use, and get an alert before users notice. AWS CloudWatch, Azure Application Insights + Log Analytics (KQL), GCP Cloud Monitoring and Logging.',u:'Azure Churn MLOps (Application Insights, KQL alert)',c:`requests
+| where timestamp > ago(1h)
+| summarize count(), avg(duration) by resultCode`,l:'Flow',s:'Send app logs and metrics → dashboard → alert on errors and latency → read the logs when it fires'},
+  'Cost control':{t:'Cost control',d:'Know what each part costs and keep it small: budgets and alerts, tags per feature, right-sizing, scale to zero, deleting what is unused.',u:'Azure Churn MLOps (budget alert, total EUR 0.12)',c:`aws budgets create-budget --account-id <id> --budget file://budget.json
+az consumption budget create --budget-name ml --amount 10 --time-grain Monthly --category Cost
+gcloud billing budgets create --billing-account=<id> --display-name=ml --budget-amount=10EUR`,l:'Good habits',s:'Budget alert on day one → tag every resource → scale to zero when idle → review the bill weekly → destroy test stacks'},
+  'Infrastructure as code':{t:'Infrastructure as code',d:'Describe cloud resources in files, review the plan, and rebuild the same setup every time. Terraform (any cloud) and Bicep (Azure).',u:'ML on AWS (Terraform), Azure Churn MLOps (Bicep)',c:`terraform init && terraform plan && terraform apply
+terraform destroy
+az deployment group create -g ml-rg --template-file main.bicep`,l:'Flow',s:'Write the resources → plan and review → apply → commit to Git → destroy when done'},
+  'CI/CD to cloud':{t:'CI/CD to the cloud',d:'Every push runs the tests, builds the image and deploys it, signing in to the cloud without stored secrets (OIDC).',u:'Azure Churn MLOps, AI Support Platform (GitHub Actions → Docker Hub)',c:`- uses: azure/login@v2
+  with: { client-id: \${{ secrets.AZURE_CLIENT_ID }}, tenant-id: \${{ secrets.AZURE_TENANT_ID }}, subscription-id: \${{ secrets.AZURE_SUBSCRIPTION_ID }} }
+- run: docker build -t $REGISTRY/api:\${{ github.sha }} . && docker push $REGISTRY/api:\${{ github.sha }}`,l:'Flow',s:'Test → build → tag image with the commit → push to registry → deploy → smoke test the URL'},
+  'Scalable architecture':{t:'Scalable, cost-aware architecture',d:'Choose the simplest design that meets the need: one VM, managed containers or Kubernetes; stateless services, a managed database, a cache and a queue where they help. Measure before scaling.',u:'AI Support Platform (19 versions, from one file to microservices)',c:`users → HTTPS load balancer → API (2+ stateless replicas)
+                              ↘ queue → worker
+API → managed PostgreSQL · Redis cache · object storage
+logs + metrics → monitoring → alerts · budget alert`,l:'How I decide',s:'Start simple → load test → find the bottleneck → scale or split only that part → check the cost of each step'},
   'Docker':{t:'Docker',d:'Packages the app, the model and its dependencies into one image that runs the same on a laptop or in the cloud.',c:`# Dockerfile
 FROM python:3.11-slim
 WORKDIR /app
@@ -1373,7 +1371,7 @@ resource acr 'Microsoft.ContainerRegistry/registries@2023-07-01' = {
 }
 
 // az deployment group create -g ml-rg --template-file main.bicep`,s:'Write main.bicep with the resources → az bicep build to check it → deploy to a resource group → follow the deployment in the portal'},
-  'CLI & Console':{t:'CLI & Console',d:'Set up and check resources by hand in the AWS Console and Azure Portal, or script them from the terminal.',c:`aws configure
+  'CLI & Console':{t:'CLI & Console',d:'Set up and check resources by hand in the AWS Console, Azure Portal and Google Cloud Console, or script them with aws, az and gcloud.',c:`aws configure
 aws sts get-caller-identity      # which account am I using?
 az login
 az account show`,l:'Good habits',s:'Use an IAM user or role, never root → turn on MFA → set a budget alert → tag resources → delete what you no longer use'},
