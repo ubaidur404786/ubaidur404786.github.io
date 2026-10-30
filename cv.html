@@ -118,7 +118,7 @@ fetch('index.html?cv='+Date.now()).then(r=>r.text()).then(html=>{
   const edu=$$(d,'#education .item').map(it=>({t:T($(it,'h3')),o:T($(it,'.org')),d:T($(it,'time')),b:$$(it,'li').map(rich)}));
   // what I do and how I work, each pointing to the projects that show it
   const highlights=[
-    ['Production AI','Ship models as real services: APIs, containers, monitoring and CI/CD, not just notebooks.','MinutePilot · AI Support Platform · PulseOps · Azure Churn MLOps'],
+    ['Production AI','Ship models as real services: APIs, containers, CI/CD and cloud deploys on AWS and Azure.','AI Support Platform · ML on AWS · Azure Churn MLOps · MinutePilot'],
     ['Deep search &amp; RAG','Retrieval pipelines over private documents with hybrid search, reranking and grounded answers.','SAP KBA Assistant · TelcoAssist · DossierCheck'],
     ['Evaluation','Measure before claiming: test sets, retrieval and answer metrics, regression checks on every change.','RAG Evaluation Framework · EdgeBench · SAP KBA Assistant'],
     ['Security &amp; privacy','Local models and on-prem data where it matters, access control and human approval before actions.','MinutePilot · SAP KBA Assistant · AI Support Platform'],
