@@ -426,7 +426,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
   <h2 class="serif reveal">Where I've worked</h2>
   <div class="timeline">
     <article class="item org-card reveal">
-      <header class="org-head"><span class="logo" data-mono="In"><img src="img/logo-inria.png" alt="" onerror="this.remove()"></span><div><h3>Inria</h3><div class="meta">Internship · 7 mos · Villeneuve-d'Ascq, France · On-site</div></div></header>
+      <header class="org-head"><span class="logo" data-mono="CN"><img src="img/cnrs_logo.jpg" alt="" onerror="this.remove()"></span><div><h3>CNRS</h3><div class="meta">Internship · 7 mos · Villeneuve-d'Ascq, France · On-site</div></div></header>
       <div class="roles">
         <section class="xp-role">
           <h4>Machine Learning Engineer</h4><time>Apr 2026 – Oct 2026</time>
@@ -898,7 +898,7 @@ render();
 // skill popups: what it is, where I used it, a code example and the flow or console steps
 (()=>{const tips={
   // ML & Deep Learning
-  'PyTorch':{t:'PyTorch',d:'Deep learning framework I use for research models: define the network, train it on GPU, export it.',u:'SEA-Net and HP-STAtten at Inria',c:`import torch, torch.nn as nn
+  'PyTorch':{t:'PyTorch',d:'Deep learning framework I use for research models: define the network, train it on GPU, export it.',u:'SEA-Net and HP-STAtten at CNRS',c:`import torch, torch.nn as nn
 
 model = nn.Sequential(nn.Linear(64, 32), nn.ReLU(), nn.Linear(32, 2)).to("cuda")
 opt = torch.optim.AdamW(model.parameters(), lr=1e-3)
@@ -1183,7 +1183,7 @@ jobs:
         with: { python-version: "3.11" }
       - run: pip install -r requirements.txt
       - run: pytest -q`,s:'Push code → the workflow starts → install dependencies → run tests and lint → build the Docker image → deploy if main passes'},
-  'MLflow':{t:'MLflow',d:'Tracks experiments: parameters, metrics and model files, so runs can be compared and reproduced.',u:'Comparing SEA-Net runs at Inria',c:`import mlflow
+  'MLflow':{t:'MLflow',d:'Tracks experiments: parameters, metrics and model files, so runs can be compared and reproduced.',u:'Comparing SEA-Net runs at CNRS',c:`import mlflow
 
 mlflow.set_experiment("seanet")
 with mlflow.start_run():
@@ -1193,7 +1193,7 @@ with mlflow.start_run():
     mlflow.log_artifact("model.onnx")
 
 # mlflow ui   → compare runs in the browser`,s:'Start a run → log parameters → log metrics every epoch → save the model → compare runs in the UI → register the best one'},
-  'Optuna':{t:'Optuna',d:'Hyperparameter search that learns which values work and stops weak trials early.',u:'Tuning SEA-Net and HP-STAtten at Inria',c:`import optuna
+  'Optuna':{t:'Optuna',d:'Hyperparameter search that learns which values work and stops weak trials early.',u:'Tuning SEA-Net and HP-STAtten at CNRS',c:`import optuna
 
 def objective(trial):
     lr = trial.suggest_float("lr", 1e-4, 1e-2, log=True)
