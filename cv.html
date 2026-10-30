@@ -68,12 +68,14 @@ li b,.entry p b{color:var(--text);font-weight:600}
 .gh{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:.78em;color:var(--accent);margin-top:.3mm}
 .c2 .proj{grid-template-columns:1fr}
 .brk{break-before:page}
-@page{size:A4;margin:10mm 0}
+/* no page margin, so the browser has no room for its date/title/URL header and footer;
+   the 10mm top and bottom space comes from padding repeated on every printed page */
+@page{size:A4;margin:0}
 @media print{
   body{background:#fff}
   .bar{display:none}
   .sheet{margin:0;box-shadow:none;width:auto;zoom:1!important}
-  .page{padding:0 13mm;height:276mm;overflow:hidden}
+  .page{padding:10mm 13mm;height:296mm;overflow:hidden;-webkit-box-decoration-break:clone;box-decoration-break:clone}
   .c2 .page{height:auto;overflow:visible}
   .wrapx{overflow:visible}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
