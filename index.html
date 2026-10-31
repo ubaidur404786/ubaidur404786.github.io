@@ -775,7 +775,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
   <div class="skills">
     <div class="skill reveal"><h4>ML &amp; Deep Learning</h4><div class="chips"><span class="chip">PyTorch</span><span class="chip">TensorFlow</span><span class="chip">scikit-learn</span><span class="chip">LightGBM</span><span class="chip">SHAP</span><span class="chip">OpenCV</span><span class="chip">Time series</span><span class="chip">Computer Vision</span></div></div>
     <div class="skill reveal"><h4>LLM / RAG / Agents</h4><div class="chips"><span class="chip">LangChain</span><span class="chip">LangGraph</span><span class="chip">n8n</span><span class="chip">Hugging Face</span><span class="chip">LoRA</span><span class="chip">QLoRA</span><span class="chip">Chroma</span><span class="chip">pgvector</span><span class="chip">Ollama</span><span class="chip">OpenAI API</span></div></div>
-    <div class="skill reveal"><h4>Data &amp; Statistics</h4><div class="chips"><span class="chip">pandas</span><span class="chip">NumPy</span><span class="chip">SciPy</span><span class="chip">statsmodels</span><span class="chip">A/B testing</span><span class="chip">SQL</span><span class="chip">PostgreSQL</span></div></div>
+    <div class="skill reveal"><h4>Data &amp; Statistics</h4><div class="chips"><span class="chip">Databricks</span><span class="chip">PySpark</span><span class="chip">Spark SQL</span><span class="chip">Jupyter</span><span class="chip">CSV · JSON · Parquet</span><span class="chip">pandas</span><span class="chip">NumPy</span><span class="chip">SciPy</span><span class="chip">statsmodels</span><span class="chip">A/B testing</span><span class="chip">SQL</span><span class="chip">PostgreSQL</span></div></div>
     <div class="skill reveal"><h4>Edge AI</h4><div class="chips"><span class="chip">TFLite</span><span class="chip">TFLite Micro</span><span class="chip">ONNX</span><span class="chip">ESP32-S3</span><span class="chip">Edge Impulse</span><span class="chip">Quantization</span></div></div>
     <div class="skill reveal"><h4>Engineering &amp; MLOps</h4><div class="chips"><span class="chip">FastAPI</span><span class="chip">Flask</span><span class="chip">Docker</span><span class="chip">Kubernetes</span><span class="chip">Terraform</span><span class="chip">Bicep</span><span class="chip">Git</span><span class="chip">GitHub Actions</span><span class="chip">MLflow</span><span class="chip">Optuna</span><span class="chip">Streamlit</span></div></div>
     <div class="skill reveal"><h4>Languages</h4><div class="chips"><span class="chip">Python</span><span class="chip">SQL</span><span class="chip">Kotlin</span><span class="chip">Java</span><span class="chip">C/C++</span><span class="chip">English · fluent</span><span class="chip">French · elementary</span></div></div>
@@ -1083,6 +1083,49 @@ resp = client.chat.completions.create(
               {"role": "user", "content": "What is RAG?"}])
 print(resp.choices[0].message.content)`,s:'Keep the key in an environment variable → send system and user messages → parse the answer → log tokens and cost → add retries and timeouts'},
   // Data & Statistics
+  'Databricks':{t:'Databricks',d:'Cloud platform for Spark: notebooks, catalogs, schemas, tables and volumes in one workspace.',c:`# Unity Catalog: catalog → schema (database) → tables + volumes
+spark.sql("CREATE SCHEMA IF NOT EXISTS main.churn")
+spark.sql("CREATE VOLUME IF NOT EXISTS main.churn.raw")
+
+# raw files uploaded to the volume, read back as a DataFrame
+df = spark.read.csv("/Volumes/main/churn/raw/customers.csv", header=True, inferSchema=True)
+df.write.mode("overwrite").saveAsTable("main.churn.customers")   # managed Delta table
+display(spark.table("main.churn.customers").limit(5))`,s:'Create a schema (database) → create a volume and upload raw files → read them with Spark → save clean data as tables → analyse in notebooks'},
+  'PySpark':{t:'PySpark',d:'Spark DataFrames in Python: the same ideas as pandas, but distributed over many machines.',c:`from pyspark.sql import functions as F
+
+df = spark.read.parquet("/Volumes/main/churn/raw/events.parquet")
+
+summary = (df.filter(F.col("tenure") > 0)
+             .withColumn("high_bill", F.col("monthly_charges") > 70)
+             .groupBy("contract", "high_bill")
+             .agg(F.count("*").alias("customers"),
+                  F.avg(F.col("churned").cast("int")).alias("churn_rate"))
+             .orderBy(F.desc("churn_rate")))
+summary.show()`,s:'Read files into a DataFrame → check the schema and nulls → filter and add columns → group and aggregate → write the result as Parquet or a table'},
+  'Spark SQL':{t:'Spark SQL',d:'Plain SQL on Spark tables and DataFrames, for joins and aggregations at scale.',c:`df.createOrReplaceTempView("customers")
+
+spark.sql('''
+  SELECT contract,
+         COUNT(*)                     AS customers,
+         ROUND(AVG(CAST(churned AS INT)), 3) AS churn_rate
+  FROM customers
+  GROUP BY contract
+  ORDER BY churn_rate DESC
+''').show()`,s:'Register a DataFrame or use a catalog table → write the SQL → check the plan with EXPLAIN → save the result as a table'},
+  'Jupyter':{t:'Jupyter',d:'Notebooks for exploring data step by step, with code, charts and notes together.',c:`# one cell: load, inspect, plot
+import pandas as pd
+df = pd.read_parquet("events.parquet")
+df.info()                       # types and missing values
+df.describe()                   # quick statistics
+df["monthly_charges"].hist(bins=30)`,s:'Load the data → inspect types, nulls and statistics → plot distributions → write findings as notes → move the final code into scripts'},
+  'CSV · JSON · Parquet':{t:'CSV, JSON and Parquet',d:'Common data file formats: CSV and JSON are easy to read, Parquet is columnar, compressed and fast for big data.',c:`# pandas
+df = pd.read_csv("customers.csv")
+logs = pd.read_json("events.jsonl", lines=True)
+df.to_parquet("customers.parquet")       # smaller, keeps types
+
+# Spark
+sdf = spark.read.option("multiLine", True).json("/Volumes/main/churn/raw/events.json")
+sdf.write.mode("overwrite").partitionBy("region").parquet("/Volumes/main/churn/clean/events")`,s:'Pick the reader for the format → set options (header, schema, multiLine) → clean → save as Parquet (partitioned when large) for fast reads later'},
   'pandas':{t:'pandas',d:'Tables in Python: load, clean, join and summarise data.',c:`import pandas as pd
 
 df = pd.read_csv("customers.csv", parse_dates=["signup"])
