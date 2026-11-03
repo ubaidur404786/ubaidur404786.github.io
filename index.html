@@ -838,8 +838,8 @@ document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(
 // counters
 const co=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const el=e.target,end=+el.dataset.count,t0=performance.now();
   (function step(t){const p=Math.min((t-t0)/1400,1);el.textContent=Math.round(end*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(step)})(t0);co.unobserve(el)}),{threshold:.6});
-// the HTML holds the real number (no-JS readers, previews); count up to it unless motion is reduced
-if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.querySelectorAll('[data-count]').forEach(el=>{el.textContent='0';co.observe(el)});
+// the real number stays in the page until the count-up starts, so text readers, previews and parsers never see 0
+if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.querySelectorAll('[data-count]').forEach(el=>co.observe(el));
 
 // typed roles
 const roles=['Data Science','LLM & RAG','Python AI Backend','MLOps','Edge AI','Android AI'],tEl=document.getElementById('typed');
