@@ -688,6 +688,14 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
       <div class="chips"><span class="chip">PyTorch</span><span class="chip">Shapelets</span><span class="chip">ResNet1d</span><span class="chip">XAI</span></div>
       <span class="go">View on GitHub <span>↗</span></span></a>
 
+    <a class="card reveal best" data-t="vision ts" href="https://github.com/ubaidur404786/evidence-mil" target="_blank" rel="noopener">
+      <div class="top"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></div><span class="kind">Explainable AI · Pathology · New</span></div>
+      <h3>EvidenceMIL</h3>
+      <p>See why the model decided. Reads a huge medical image as a bag of small patches, scores it, and shows exactly which patches produced the score. A reviewer can check the evidence, test it ("what if these patches were absent?") and sign off a report whose every number is verified. Live demo with recorded runs on real CAMELYON16 slides.</p>
+      <div class="result">Patch-level evidence · counterfactual test · Live demo online</div>
+      <div class="chips"><span class="chip">PyTorch</span><span class="chip">MIL</span><span class="chip">XAI</span><span class="chip">CAMELYON16</span></div>
+      <span class="go">View on GitHub <span>↗</span></span></a>
+
     <a class="card reveal" data-t="ts" href="https://github.com/ubaidur404786/millet_ecg" target="_blank" rel="noopener">
       <div class="top"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h4l3-8 4 16 3-8h6"/></svg></div><span class="kind">Explainable AI</span></div>
       <h3>MILLET on ECG</h3>
@@ -766,7 +774,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
   <h2 class="serif reveal">Toolkit</h2>
   <p class="skills-hint reveal">Hover or tap a skill to see what it does, where I used it, a code example and the steps.</p>
   <div class="skills">
-    <div class="skill reveal"><h4>ML &amp; Deep Learning</h4><div class="chips"><span class="chip">PyTorch</span><span class="chip">TensorFlow</span><span class="chip">scikit-learn</span><span class="chip">LightGBM</span><span class="chip">SHAP</span><span class="chip">OpenCV</span><span class="chip">Time series</span><span class="chip">Computer Vision</span></div></div>
+    <div class="skill reveal"><h4>ML &amp; Deep Learning</h4><div class="chips"><span class="chip">PyTorch</span><span class="chip">TensorFlow</span><span class="chip">scikit-learn</span><span class="chip">LightGBM</span><span class="chip">SHAP</span><span class="chip">OpenCV</span><span class="chip">Time series</span><span class="chip">Computer Vision</span><span class="chip">Multiple-instance learning</span><span class="chip">Explainable AI</span></div></div>
     <div class="skill reveal"><h4>LLM / RAG / Agents</h4><div class="chips"><span class="chip">LangChain</span><span class="chip">LangGraph</span><span class="chip">n8n</span><span class="chip">Hugging Face</span><span class="chip">LoRA</span><span class="chip">QLoRA</span><span class="chip">Chroma</span><span class="chip">pgvector</span><span class="chip">Ollama</span><span class="chip">OpenAI API</span></div></div>
     <div class="skill reveal"><h4>Data &amp; Statistics</h4><div class="chips"><span class="chip">Databricks</span><span class="chip">PySpark</span><span class="chip">Spark SQL</span><span class="chip">Jupyter</span><span class="chip">CSV · JSON · Parquet</span><span class="chip">pandas</span><span class="chip">NumPy</span><span class="chip">SciPy</span><span class="chip">statsmodels</span><span class="chip">A/B testing</span><span class="chip">SQL</span><span class="chip">PostgreSQL</span></div></div>
     <div class="skill reveal"><h4>Edge AI</h4><div class="chips"><span class="chip">TFLite</span><span class="chip">TFLite Micro</span><span class="chip">ONNX</span><span class="chip">ESP32-S3</span><span class="chip">Edge Impulse</span><span class="chip">Quantization</span></div></div>
@@ -965,6 +973,13 @@ model.fit(X_train, y_train)
 
 risk = model.predict_proba(X_test)[:, 1]
 print(roc_auc_score(y_test, risk), brier_score_loss(y_test, risk))`,s:'Clean and encode the table → split by patient → train the trees → calibrate the probabilities → check AUROC and Brier score'},
+  'Multiple-instance learning':{t:'Multiple-instance learning',d:'Treats one huge input (a slide, a long signal) as a bag of small pieces with a single label, and learns which pieces matter.',u:'EvidenceMIL on CAMELYON16 slides and MILLET on ECG',c:`# attention-based MIL pooling
+a = softmax(w(tanh(V(h))), dim=0)   # one weight per patch
+bag = (a * h).sum(0)                # weighted bag embedding
+score = classifier(bag)             # a also shows which patches mattered`,s:'Cut the input into patches → embed each → attention-pool into a bag → score → read the attention as evidence'},
+  'Explainable AI':{t:'Explainable AI',d:'Methods that show why a model gave a score, so a human can check it.',u:'EvidenceMIL, MILLET on ECG, MedReadmit AI (SHAP)',c:`# counterfactual check: remove the top evidence patches
+top = a.topk(k).indices
+score_wo = model(h[~mask(top)])   # does the score drop?`,s:'Score → highlight the evidence → test it by removing it → verify every number in the report'},
   'SHAP':{t:'SHAP',d:'Explains a prediction: how much each feature pushed the risk up or down, for one case or for the whole dataset.',u:'MedReadmit AI: an explanation next to each readmission risk',c:`import shap
 
 explainer = shap.TreeExplainer(lgbm_model)
