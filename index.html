@@ -449,7 +449,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
             <ul>
               <li>Built a first spiking-neuron version of VCA, plus a classical attention path based on similarity instead of difference. As far as we know, among the first implementations like this.</li>
               <li>Ran lots of ablations with Optuna and MLflow on Grid'5000 (PyTorch, SpikingJelly).</li>
-              <li>Co-author of the HP-STAtten paper: first draft done, to be submitted to CVPR 2027 (deadline 16 Nov 2026).</li>
+              <li>Co-author of the HP-STAtten paper, submitted to a major computer-vision conference (under review).</li>
               <li>Now extending the work to ImageNet.</li>
             </ul>
           </div>
@@ -777,6 +777,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
   <div class="skills">
     <div class="skill reveal"><h4>ML &amp; Deep Learning</h4><div class="chips"><span class="chip">PyTorch</span><span class="chip">TensorFlow</span><span class="chip">scikit-learn</span><span class="chip">LightGBM</span><span class="chip">SHAP</span><span class="chip">OpenCV</span><span class="chip">Time series</span><span class="chip">Computer Vision</span><span class="chip">Multiple-instance learning</span><span class="chip">Explainable AI</span></div></div>
     <div class="skill reveal"><h4>LLM / RAG / Agents</h4><div class="chips"><span class="chip">LangChain</span><span class="chip">LangGraph</span><span class="chip">n8n</span><span class="chip">Hugging Face</span><span class="chip">LoRA</span><span class="chip">QLoRA</span><span class="chip">Chroma</span><span class="chip">pgvector</span><span class="chip">Ollama</span><span class="chip">OpenAI API</span></div></div>
+    <div class="skill wide reveal"><h4>LLM lifecycle · build, evaluate, ship</h4><div class="chips"><span class="chip">Pre-training</span><span class="chip">SFT</span><span class="chip">RLHF · PPO</span><span class="chip">DPO</span><span class="chip">GRPO</span><span class="chip">RAG</span><span class="chip">LLM evaluation</span><span class="chip">DeepEval</span><span class="chip">LangSmith</span><span class="chip">vLLM</span><span class="chip">MCP</span></div></div>
     <div class="skill reveal"><h4>Data &amp; Statistics</h4><div class="chips"><span class="chip">Databricks</span><span class="chip">PySpark</span><span class="chip">Spark SQL</span><span class="chip">Jupyter</span><span class="chip">CSV · JSON · Parquet</span><span class="chip">pandas</span><span class="chip">NumPy</span><span class="chip">SciPy</span><span class="chip">statsmodels</span><span class="chip">A/B testing</span><span class="chip">SQL</span><span class="chip">PostgreSQL</span></div></div>
     <div class="skill reveal"><h4>Edge AI</h4><div class="chips"><span class="chip">TFLite</span><span class="chip">TFLite Micro</span><span class="chip">ONNX</span><span class="chip">ESP32-S3</span><span class="chip">Edge Impulse</span><span class="chip">Quantization</span></div></div>
     <div class="skill reveal"><h4>Engineering &amp; MLOps</h4><div class="chips"><span class="chip">FastAPI</span><span class="chip">Flask</span><span class="chip">Docker</span><span class="chip">Kubernetes</span><span class="chip">Terraform</span><span class="chip">Bicep</span><span class="chip">Git</span><span class="chip">GitHub Actions</span><span class="chip">MLflow</span><span class="chip">Optuna</span><span class="chip">Streamlit</span></div></div>
@@ -1092,6 +1093,65 @@ resp = client.chat.completions.create(
               {"role": "user", "content": "What is RAG?"}])
 print(resp.choices[0].message.content)`,s:'Keep the key in an environment variable → send system and user messages → parse the answer → log tokens and cost → add retries and timeouts'},
   // Data & Statistics
+  'Pre-training':{t:'LLM pre-training',d:'How a base model is made: clean a huge text corpus, turn text into tokens, and train a Transformer to predict the next token.',u:'LLM talk (Nov 2026): data cleaning, BPE tokenizer, self-attention and causal mask, step by step',c:`import tiktoken
+enc = tiktoken.get_encoding("gpt2")
+ids = enc.encode("Hello, My name is Ubaid")   # text -> token ids
+x, y = ids[:-1], ids[1:]                      # the next token is the label
+# loss = cross_entropy(model(x), y)  -> repeat for billions of tokens`,s:'Choose the data mix → clean (URL and language filter, dedup, remove PII) → train a BPE tokenizer → next-token training → evaluate the base model'},
+  'SFT':{t:'Supervised fine-tuning (SFT)',d:'Turns a base model into an assistant: train it on conversations written in a chat template, so it answers instead of continuing the text.',u:'SAP KBA Assistant (RAG-SFT with LoRA), LLM talk',c:`from trl import SFTTrainer, SFTConfig
+trainer = SFTTrainer(model="Qwen/Qwen3-0.6B",
+                     train_dataset=chats,            # [{"messages": [...]}]
+                     args=SFTConfig(output_dir="sft", num_train_epochs=2))
+trainer.train()`,s:'Collect good question and answer pairs → format with the chat template → fine-tune (full or LoRA) → compare with the base model on a held-out set'},
+  'RLHF · PPO':{t:'RLHF with PPO',d:'Learns from human preferences: a reward model scores answers, and PPO updates the policy while a reference copy keeps it close to the SFT model. Four models in memory, two trained.',u:'My notebook RLHF_with_PPO: policy, reference, reward and value models with Hugging Face',c:`# one PPO step (idea)
+answers = policy.generate(prompts)
+reward  = reward_model(prompts, answers)
+kl      = logp_policy - logp_reference      # stay close to the SFT model
+advantage = reward - beta * kl - value
+# clipped PPO loss updates the policy and the value head`,s:'SFT model → collect human rankings (A better than B) → train the reward model → PPO loop with a KL penalty → check reward and quality'},
+  'DPO':{t:'DPO · Direct Preference Optimization',d:'Uses the same chosen and rejected answers as RLHF, but with no reward model and no RL loop: two models in memory, only the policy is trained.',u:'Studied and explained in my LLM talk, next to PPO and GRPO',c:`import torch.nn.functional as F
+# log-prob ratios of the policy vs the frozen reference
+win  = logp_pol_chosen   - logp_ref_chosen
+lose = logp_pol_rejected - logp_ref_rejected
+loss = -F.logsigmoid(beta * (win - lose)).mean()`,s:'Build rows of prompt, chosen, rejected → freeze a reference copy → train the policy with the DPO loss → compare win rate against the SFT model'},
+  'GRPO':{t:'GRPO · Group Relative Policy Optimization',d:'Generates a group of answers for one prompt and asks: was this answer better than the group average? No value model, so it needs less memory than PPO.',u:'Studied and explained in my LLM talk',c:`answers = [policy.generate(prompt) for _ in range(8)]
+r = torch.tensor([reward(a) for a in answers])
+advantage = (r - r.mean()) / (r.std() + 1e-6)   # better than the group?
+# policy-gradient step with clipping + KL to the reference`,s:'Sample a group of answers → score each (rule or reward model) → normalise inside the group → update the policy → watch reward and KL'},
+  'RAG':{t:'RAG · Retrieval-augmented generation',d:'Answers from your own documents: retrieve the relevant chunks, then let the LLM answer only from them. Good for private data, recent facts and fewer hallucinations.',u:'AI Support Platform, TelcoAssist (RAG + SQL router), SAP KBA Assistant',c:`chunks = splitter.split_documents(docs)
+store  = FAISS.from_documents(chunks, embeddings)
+ctx    = store.as_retriever(k=3).invoke(question)
+answer = llm.invoke(prompt.format(context=ctx, question=question))`,s:'Load documents → split → embed into a vector store → retrieve top-k → answer from the context with sources, or refuse'},
+  'LLM evaluation':{t:'LLM evaluation',d:'Two questions: is the model good (benchmarks like MMLU-Pro, GSM8K, HumanEval) and is MY app good (golden set, recall@k, human rubric, LLM-as-judge). The second one is what makes users trust the app.',u:'deep_eval_pipeline, TelcoAssist (model chosen on golden sets), AI Support Platform (hit@3)',c:`def recall_at_k(retrieved, relevant, k=3):
+    return len(set(retrieved[:k]) & set(relevant)) / len(relevant)
+
+scores = [recall_at_k(r, g) for r, g in zip(runs, golden)]
+print(sum(scores) / len(scores))      # gate: ship only above the baseline`,s:'Define the task and success criteria → build a golden set → pick the method (code, human, LLM judge) → run → analyse failures → improve → monitor in production'},
+  'DeepEval':{t:'DeepEval',d:'Test framework for LLM apps: faithfulness, answer relevancy, contextual relevancy and GEval metrics with my own steps, run like unit tests.',u:'deep_eval_pipeline: retriever and full pipeline tested apart, same cases across 3 LLMs',c:`from deepeval import evaluate
+from deepeval.metrics import FaithfulnessMetric
+from deepeval.test_case import LLMTestCase
+
+case = LLMTestCase(input=q, actual_output=answer,
+                   retrieval_context=chunks, expected_output=gold)
+evaluate([case], [FaithfulnessMetric(threshold=0.7), correctness])`,s:'Write the rules in the system prompt → turn each rule into a metric → build test cases → run the suite → fix the retriever or the prompt'},
+  'LangSmith':{t:'LangSmith',d:'Traces every LLM call (prompt, answer, latency, tokens, cost) without slowing the chat, then runs online evaluators on a sample of real traffic.',u:'Online-eval loop in my LLM talk: flagged chats go back into the golden set',c:`import os
+os.environ["LANGSMITH_TRACING"] = "true"
+os.environ["LANGSMITH_PROJECT"] = "news-assistant"
+# every LangChain / LangGraph call is now traced
+# dashboards: latency, tokens, cost, errors -> alert on a threshold`,s:'Log every call async → dashboards for latency, tokens and cost → sample chats for an LLM judge → flag bad ones → add them to the golden set → offline eval → v2'},
+  'vLLM':{t:'vLLM',d:'Fast LLM serving: PagedAttention stores the KV cache in small blocks and continuous batching keeps the GPU busy, so many users are served at once.',u:'TinyLlama runs to study prefill, decode, KV-cache size, TTFT and throughput',c:`from vllm import LLM, SamplingParams
+llm = LLM(model="TinyLlama/TinyLlama-1.1B-Chat-v1.0")
+params = SamplingParams(temperature=0.8, top_p=0.95, max_tokens=50)
+outs = llm.generate(["Hi, my name is", "Hello there"], params)`,s:'Pick and quantize the model → serve with vLLM or llama.cpp → measure TTFT, time per token and throughput → tune batch size and memory'},
+  'MCP':{t:'MCP · Model Context Protocol',d:'A standard way to give an LLM tools and data: write a server once, and any MCP client (agent, IDE, chat app) can call its tools.',u:'Tool calling in my agent work (LangGraph, n8n)',c:`from mcp.server.fastmcp import FastMCP
+mcp = FastMCP("tickets")
+
+@mcp.tool()
+def open_tickets(team: str) -> list[dict]:
+    "Return the open tickets of a team."
+    return db.query(team)
+
+mcp.run()`,s:'Define the tools with clear names and types → run the MCP server → connect the agent → check every tool call in the logs → add auth and limits'},
   'Databricks':{t:'Databricks',d:'Cloud platform for Spark: notebooks, catalogs, schemas, tables and volumes in one workspace.',c:`# Unity Catalog: catalog → schema (database) → tables + volumes
 spark.sql("CREATE SCHEMA IF NOT EXISTS main.churn")
 spark.sql("CREATE VOLUME IF NOT EXISTS main.churn.raw")
