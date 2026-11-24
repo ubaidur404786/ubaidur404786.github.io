@@ -7,3 +7,5 @@
 !img/*.png
 !cv.html
 !img/*.jpg
+!cv/
+!cv/*.pdf
