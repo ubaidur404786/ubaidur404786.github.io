@@ -5,165 +5,61 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>CV · Ubaid Ur Rehman</title>
 <meta name="robots" content="noindex">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-/* CV content is read from index.html at load time, so it always matches the site. */
-:root{--bg:#e9ebe4;--paper:#fff;--text:#11151a;--muted:#4a505b;--faint:#7f8590;--line:#dcdfd6;--accent:#0b5f58;--accent-soft:#e1eeeb;--fs:9.6pt}
+:root{--bg:#f4f6f9;--paper:#fff;--text:#14213d;--muted:#5b6475;--line:#d9dee7;--navy:#1f3a5f}
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--text);font-family:Calibri,"Segoe UI",system-ui,sans-serif}
 a{color:inherit;text-decoration:none}
-.bar{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;padding:12px 16px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px)}
-.bar a,.bar button{font:600 .88rem Inter,sans-serif;padding:8px 16px;border-radius:99px;border:1px solid var(--line);background:var(--paper);color:var(--text);cursor:pointer}
-.bar .on{background:var(--text);color:#fff;border-color:var(--text)}
-.bar .dl{background:var(--accent);color:#fff;border-color:var(--accent)}
-.bar small{width:100%;text-align:center;color:var(--muted);font-size:.78rem}
-.sheet{width:210mm;min-width:210mm;margin:16px auto 40px;background:var(--paper);box-shadow:0 10px 40px rgba(0,0,0,.12);font-size:var(--fs);line-height:1.42}
-.page{padding:12mm 13mm 11mm}
-.wrapx{overflow-x:auto}
-.top{display:flex;justify-content:space-between;gap:16px;align-items:flex-end;padding-bottom:3.2mm;border-bottom:2px solid var(--accent)}
-h1{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:2.55em;letter-spacing:-.02em;line-height:1.05}
-.role{font-family:"JetBrains Mono",monospace;color:var(--accent);font-weight:500;font-size:1.08em;margin-top:1.2mm}
-.deg{font-weight:600;font-size:.95em;margin-top:.8mm}
-.web{text-align:center;font-weight:700;line-height:1.35;align-self:center}
-.web img{display:block;width:21mm;height:21mm;border-radius:50%;object-fit:cover;object-position:50% 20%;margin:0 auto 1.2mm;border:2px solid var(--accent)}
-.web span{display:block;font-size:.82em;color:var(--muted);letter-spacing:.04em}
-.web a{color:var(--accent);font-size:1.08em}
-.contact{text-align:right;font-size:.9em;color:var(--muted);line-height:1.55}
-.contact b{color:var(--text);font-weight:600}
-.summary{margin:3mm 0 0;color:var(--muted)}
-h2{font-family:"JetBrains Mono",monospace;font-size:.86em;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:500;margin:4mm 0 1.8mm;display:flex;align-items:center;gap:8px}
-h2::after{content:"";flex:1;height:1px;background:var(--line)}
-.entry{margin-bottom:2.4mm;break-inside:avoid}
-.eh{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
-.eh h3{font-size:1.04em;font-weight:700}
-.eh time{font-family:"JetBrains Mono",monospace;font-size:.84em;color:var(--faint);white-space:nowrap}
-.org{color:var(--accent);font-weight:500;font-size:.95em}
-ul{list-style:none;margin-top:.8mm}
-li{position:relative;padding-left:12px;margin:.6mm 0;color:var(--muted)}
-li::before{content:"";position:absolute;left:1px;top:.68em;width:6px;height:1.4px;background:var(--accent)}
-li b,.entry p b{color:var(--text);font-weight:600}
-.proj{display:grid;grid-template-columns:1fr 1fr;gap:2.2mm 6mm}
-.proj .entry{margin:0}
-.proj p{color:var(--muted);margin-top:.4mm}
-.kind{font-family:"JetBrains Mono",monospace;font-size:.78em;color:var(--faint);text-transform:uppercase;letter-spacing:.04em;font-weight:400}
-.res{font-family:"JetBrains Mono",monospace;font-size:.84em;color:var(--accent);margin-top:.4mm}
-.tech{font-size:.86em;color:var(--faint);margin-top:.3mm}
-.skills{display:grid;grid-template-columns:auto 1fr;gap:1mm 5mm}
-.skills dt{font-weight:600}
-.skills dd{color:var(--muted)}
-.hl{display:grid;grid-template-columns:repeat(3,1fr);gap:2.4mm;margin-top:3mm}
-.hl div{background:var(--accent-soft);border-radius:2mm;padding:2mm 2.6mm;break-inside:avoid}
-.hl strong{display:block;font-size:1em;color:var(--accent);margin-bottom:.5mm}
-.hl p{font-size:.86em;color:var(--muted);line-height:1.35}
-.hl em{display:block;font-style:normal;font-family:"JetBrains Mono",monospace;font-size:.76em;color:var(--text);margin-top:.8mm}
-.hl-note{font-size:.8em;color:var(--faint);text-align:right;margin-top:1mm}
-.og{margin-bottom:2.2mm}
-.ogh{font-size:1.02em;color:var(--accent);border-bottom:1px dotted var(--line);padding-bottom:.4mm;margin-bottom:1mm}
-.ogh b{font-weight:700}.ogh span{color:var(--faint);font-weight:400;font-size:.9em}
-.og .entry{margin-bottom:1.4mm}
-.proj h3 a{color:var(--text)}
-.proj .res{font-size:.92em;margin:0}
-.edn{color:var(--muted);font-weight:400;font-size:.92em}
-.gh{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:.78em;color:var(--accent);margin-top:.3mm}
-.c2 .proj{grid-template-columns:1fr}
-.brk{break-before:page}
-/* no page margin, so the browser has no room for its date/title/URL header and footer;
-   the 10mm top and bottom space comes from padding repeated on every printed page */
-@page{size:A4;margin:0}
-@media print{
-  body{background:#fff}
-  .bar{display:none}
-  .sheet{margin:0;box-shadow:none;width:auto;zoom:1!important}
-  .page{padding:10mm 13mm;height:296mm;overflow:hidden;-webkit-box-decoration-break:clone;box-decoration-break:clone}
-  .c2 .page{height:auto;overflow:visible}
-  .wrapx{overflow:visible}
-  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-}
+header{max-width:1000px;margin:0 auto;padding:22px 16px 6px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+h1{font-size:1.5rem;color:var(--navy)}
+header a{color:var(--muted);font-size:.95rem}
+.pick{max-width:1000px;margin:0 auto;padding:8px 16px}
+.lbl{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:10px 0 6px}
+.row{display:flex;flex-wrap:wrap;gap:8px}
+.row button{font:600 .95rem Calibri,"Segoe UI",sans-serif;padding:9px 16px;border-radius:99px;border:1px solid var(--line);background:var(--paper);color:var(--text);cursor:pointer}
+.row button.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.bar{max-width:1000px;margin:14px auto 8px;padding:0 16px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.bar b{color:var(--navy)}
+.dl{background:var(--navy);color:#fff;padding:10px 20px;border-radius:99px;font-weight:700}
+.view{max-width:1000px;margin:0 auto 40px;padding:0 16px}
+iframe{width:100%;height:1300px;border:1px solid var(--line);border-radius:8px;background:#fff}
+@media(max-width:700px){iframe{height:80vh}}
 </style>
 </head>
 <body>
-<div class="bar">
-  <a class="dl" href="cv/Ubaid_Ur_Rehman_CV_EN_1page.pdf" download>CV English · 1 page</a>
-  <a class="dl" href="cv/Ubaid_Ur_Rehman_CV_FR_1page.pdf" download>CV Français · 1 page</a>
-  <a href="cv/Ubaid_Ur_Rehman_CV_EN_2pages.pdf" download>Detailed CV English · 2 pages</a>
-  <a href="cv/Ubaid_Ur_Rehman_CV_FR_2pages.pdf" download>CV détaillé Français · 2 pages</a>
-  <button id="dl">Print this page</button>
-  <a href="./">← Back to site</a>
-  <small>Ready PDFs: one page for quick reading, two pages with all details.</small>
+<header><h1>Ubaid Ur Rehman · CV</h1><a href="./">← Back to site</a></header>
+<div class="pick">
+  <div class="lbl">Role</div>
+  <div class="row" id="roles">
+    <button data-r="ML_Engineer">Junior ML Engineer</button>
+    <button data-r="AI_Engineer">Junior AI Engineer</button>
+    <button data-r="Data_Scientist">Junior Data Scientist</button>
+    <button data-r="Detailed">Detailed CV · 2 pages</button>
+  </div>
+  <div class="lbl">Language</div>
+  <div class="row" id="langs">
+    <button data-l="EN">English</button>
+    <button data-l="FR">Français</button>
+  </div>
 </div>
-<div class="wrapx"><div class="sheet" id="cv"><div class="page"><p style="color:#7f8590">Loading…</p></div></div></div>
-
+<div class="bar"><span id="name"></span><a class="dl" id="dl" download>Download PDF</a></div>
+<div class="view"><iframe id="pdf" title="CV preview"></iframe></div>
 <script>
 const P=new URLSearchParams(location.search);
-document.getElementById('dl').onclick=()=>print();
-const $=(r,s)=>r.querySelector(s),$$=(r,s)=>[...r.querySelectorAll(s)];
-const T=el=>el?el.textContent.replace(/\s+/g,' ').trim():'';
-const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-// keep <b> emphasis, drop links ending in ↗ and everything else
-function rich(li){const c=li.cloneNode(true);$$(c,'a').forEach(a=>{if(/↗/.test(a.textContent))a.remove();else a.replaceWith(a.textContent)});
-  return c.innerHTML.replace(/<(?!\/?b>)[^>]+>/g,'').replace(/\s+/g,' ').trim()}
-function firstSentence(s){const m=s.match(/^.+?[.:](\s|$)/);return (m?m[0]:s).trim().replace(/:$/,'.')}
-
-fetch('index.html?cv='+Date.now()).then(r=>r.text()).then(html=>{
-  const d=new DOMParser().parseFromString(html,'text/html');
-  const name=T($(d,'.hero h1')),role=T($(d,'.hero .role')),deg=T($(d,'.hero .degrees')).replace(/\|/g,' · ');
-  const status=T($(d,'.hero .status')),lead=T($(d,'.hero .lead'));
-  const loc=(status.split('·')[1]||'').trim();
-  const email=($(d,'a[href^="mailto:"]')||{}).getAttribute?.('href').slice(7)||'';
-  const li=[...d.querySelectorAll('a[href*="linkedin.com"]')][0]?.href||'',gh=[...d.querySelectorAll('a[href*="github.com/ubaidur404786"]')].find(a=>/^https:\/\/github\.com\/[^/]+\/?$/.test(a.href))?.href||'';
-  const short=u=>u.replace(/^https?:\/\/(www\.)?/,'').replace(/\/$/,'');
-  const site=location.origin.includes('github.io')?location.host:'ubaidur404786.github.io';
-
-  // experience: one group per organization, each role with its short CV bullets
-  const orgs=$$(d,'#experience .org-card').map(c=>({o:T($(c,'.org-head h3')),m:T($(c,'.org-head .meta')).split('·')[0].trim(),
-    roles:$$(c,'.xp-role').map(r=>{const u=$(r,'.cv-pts');return {t:T($(r,'h4')),d:T($(r,'time')),n1:+(u?.dataset.n1??1),b:u?$$(u,'li').map(rich):[]}})}));
-  const projs=$$(d,'#projects .card').map(c=>({best:c.classList.contains('best'),t:T($(c,'h3')),k:T($(c,'.kind')).replace(/\s*·\s*(New|Academic)$/,''),p:T($(c,'p')),r:T($(c,'.result')),
-    chips:$$(c,'.chip').map(T),href:c.getAttribute('href')||''}));
-  const skills=$$(d,'#skills .skill').map(s=>({h:T($(s,'h4')),c:$$(s,'.chip').map(T)}));
-  const edu=$$(d,'#education .item').map(it=>({t:T($(it,'h3')),o:T($(it,'.org')),d:T($(it,'time')),b:$$(it,'li').map(rich)}));
-  // what I do and how I work, each pointing to the projects that show it
-  const highlights=[
-    ['Production AI','Ship models as real services: APIs, containers, CI/CD and cloud deploys on AWS and Azure.','AI Support Platform · ML on AWS · Azure Churn MLOps · MinutePilot'],
-    ['Deep search &amp; RAG','Retrieval pipelines over private documents with hybrid search, reranking and grounded answers.','SAP KBA Assistant · TelcoAssist · DossierCheck'],
-    ['Evaluation','Measure before claiming: test sets, retrieval and answer metrics, regression checks on every change.','RAG Evaluation Framework · EdgeBench · SAP KBA Assistant'],
-    ['Security &amp; privacy','Local models and on-prem data where it matters, access control and human approval before actions.','MinutePilot · SAP KBA Assistant · AI Support Platform'],
-    ['How I handle issues','Reproduce first, isolate the cause, fix it with a test, then document it so it does not come back.','PulseOps · PyTorch to ESP32-S3 · PatchCL-AE Reproduction'],
-    ['Soft skills','Clear communication with non-technical teams, ownership end to end, and fast learning in new domains.','CNRS · TheXSol · DOTLESS'],
-  ];
-
-  const head=`<div class="top"><div><h1>${esc(name)}</h1><div class="role">${esc(role)}</div><div class="deg">${esc(deg)}</div></div>
-    <div class="web"><img src="photo.jpg" alt="Ubaid Ur Rehman"><span>Profile</span><a href="https://${esc(site)}">${esc(site)}</a></div>
-    <div class="contact"><b>${esc(email)}</b><br>${esc(short(li))}<br>${esc(short(gh))}<br>${esc(loc)} · Available immediately</div></div>`;
-  const org=(g,one)=>`<div class="og"><div class="ogh"><b>${esc(g.o)}</b> <span>· ${esc(g.m)}</span></div>${g.roles.map(r=>`<div class="entry"><div class="eh"><h3>${esc(r.t)}</h3><time>${esc(r.d)}</time></div>
-    ${(one?r.b.slice(0,r.n1):r.b).length?`<ul>${(one?r.b.slice(0,r.n1):r.b).map(b=>`<li>${b}</li>`).join('')}</ul>`:''}</div>`).join('')}</div>`;
-  const repo=h=>h.replace(/^https?:\/\/(www\.)?/,'');
-  const proj=(p,full)=>`<div class="entry"><div class="eh"><h3>${p.href?`<a href="${esc(p.href)}">${esc(p.t)}</a>`:esc(p.t)} <span class="kind">· ${esc(p.k)}</span></h3></div>
-    <p>${esc(firstSentence(p.p))}${p.r&&full?` <span class="res">${esc(p.r)}</span>`:''}</p>${p.href?`<a class="gh" href="${esc(p.href)}">${esc(repo(p.href))}</a>`:''}</div>`;
-  const sk=n=>`<dl class="skills">${skills.map(s=>`<dt>${esc(s.h)}</dt><dd>${esc((n?s.c.slice(0,n):s.c).join(', '))}</dd>`).join('')}</dl>`;
-  const ed=`${edu.map(e=>`<div class="entry"><div class="eh"><h3>${esc(e.t)} <span class="org" style="font-weight:500">· ${esc(e.o)}</span></h3><time>${esc(e.d)}</time></div>${e.b.length?`<ul>${e.b.map(b=>`<li>${b}</li>`).join('')}</ul>`:''}</div>`).join('')}`;
-
-  const cv=document.getElementById('cv');
-  cv.classList.add('c2');
-  cv.innerHTML=`<div class="page">${head}<p class="summary">${esc(lead)}</p>
-    <div class="hl">${highlights.map(([h,p,e])=>`<div><strong>${h}</strong><p>${p}</p><em>${e}</em></div>`).join('')}</div>
-    <div class="hl-note">See details in Experience and Projects below ↓</div>
-    <h2>Technical skills</h2>${sk()}
-    <h2>Experience</h2>${orgs.map(g=>org(g,false)).join('')}
-    <h2>Projects</h2><div class="proj" style="grid-template-columns:1fr 1fr">${projs.filter(p=>p.best).concat(projs.filter(p=>!p.best)).filter(p=>p.href).slice(0,12).map(p=>proj(p,true)).join('')}</div>
-    <h2>Education</h2>${ed}
-    <h2>References</h2><p class="summary" style="margin:0">Available on request.</p></div>`;
-  fit(cv,2);
-}).catch(()=>{document.getElementById('cv').innerHTML='<div class="page">Could not load the site content. Open this page from the website.</div>'});
-
-// shrink font until content fits the target number of A4 pages
-function fit(cv,pages=1){
-  const mm=96/25.4,area=277*mm,pad=23*mm;let fs=10;
-  const ok=()=>{const h=cv.firstElementChild.scrollHeight-pad;return pages===1?h<=area:h<=2*area-40};
-  const run=()=>{cv.style.setProperty('--fs',fs+'pt');while(!ok()&&fs>7.6){fs-=.1;cv.style.setProperty('--fs',fs.toFixed(1)+'pt')}
-    if(P.get('print')==='1')setTimeout(print,300)};
-  (document.fonts?document.fonts.ready:Promise.resolve()).then(run);
+const label={ML_Engineer:'Junior ML Engineer',AI_Engineer:'Junior AI Engineer',Data_Scientist:'Junior Data Scientist',Detailed:'Detailed CV · 2 pages'};
+let r=label[P.get('role')]?P.get('role'):'AI_Engineer', l=P.get('lang')==='FR'?'FR':'EN';
+function show(){
+  const f=`cv/Ubaid_Ur_Rehman_CV_${r}_${l}.pdf`;
+  document.getElementById('pdf').src=f+'#view=FitH';
+  const d=document.getElementById('dl'); d.href=f; d.setAttribute('download',f.slice(3));
+  document.getElementById('name').innerHTML=`<b>${label[r]}</b> · ${l==='EN'?'English':'Français'}`;
+  document.querySelectorAll('#roles button').forEach(b=>b.classList.toggle('on',b.dataset.r===r));
+  document.querySelectorAll('#langs button').forEach(b=>b.classList.toggle('on',b.dataset.l===l));
+  history.replaceState(null,'',`?role=${r}&lang=${l}`);
 }
+document.querySelectorAll('#roles button').forEach(b=>b.onclick=()=>{r=b.dataset.r;show()});
+document.querySelectorAll('#langs button').forEach(b=>b.onclick=()=>{l=b.dataset.l;show()});
+show();
 </script>
 </body>
 </html>
